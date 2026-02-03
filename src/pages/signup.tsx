@@ -1,63 +1,137 @@
-import { useState } from 'react'
-import Head from 'next/head'
-import Link from 'next/link'
-import { supabase } from '../lib/supabase'
+import { useState } from 'react';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { Input } from '../lib/components/Input';
+import { Button } from '../lib/components/Button';
+import { signUp } from '../lib/auth';
 
 export default function Signup() {
-  const [form, setForm] = useState({ name: '', phone: '', email: '', password: '' })
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState(false)
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [form, setForm] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    password: '',
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
-    try {
-      const { data, error: authError } = await supabase.auth.signUp({
-        email: form.email,
-        password: form.password,
-        options: { data: { name: form.name, phone: form.phone } }
-      })
-      if (authError) throw authError
-      if (data.user) {
-        await supabase.from('users').insert({ id: data.user.id, name: form.name, phone: form.phone, email: form.email })
-      }
-      setSuccess(true)
-    } catch (err: any) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
-  if (success) return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-      <div className="bg-gray-800 p-8 rounded-2xl text-center">
-        <h1 className="text-2xl font-bold text-white mb-4">Check your email!</h1>
-        <p className="text-gray-400">Click the link to verify your account</p>
-        <Link href="/login" className="text-purple-400 mt-4 block">Go to Login</Link>
-      </div>
-    </div>
-  )
+    try {
+      await signUp(form);
+      router.push('/dashboard');
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
-      <Head><title>Sign Up - WakilChat</title></Head>
+      <Head>
+        <title>Create Account - WakilChat</title>
+      </Head>
+
       <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
-        <div className="max-w-md w-full bg-gray-800 rounded-2xl p-8">
-          <h1 className="text-3xl font-bold text-white text-center mb-8">Join WakilChat</h1>
-          {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input type="text" placeholder="Full Name" required className="w-full p-4 bg-gray-700 rounded-lg text-white" onChange={e => setForm({...form, name: e.target.value})} />
-            <input type="tel" placeholder="Phone Number" required className="w-full p-4 bg-gray-700 rounded-lg text-white" onChange={e => setForm({...form, phone: e.target.value})} />
-            <input type="email" placeholder="Email" required className="w-full p-4 bg-gray-700 rounded-lg text-white" onChange={e => setForm({...form, email: e.target.value})} />
-            <input type="password" placeholder="Password" required minLength={6} className="w-full p-4 bg-gray-700 rounded-lg text-white" onChange={e => setForm({...form, password: e.target.value})} />
-            <button type="submit" disabled={loading} className="w-full bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white p-4 rounded-lg font-bold">{loading ? 'Creating...' : 'Create Account'}</button>
-          </form>
-          <p className="text-gray-400 text-center mt-6">Already have an account? <Link href="/login" className="text-purple-400">Login</Link></p>
+        <div className="max-w-md w-full">
+          <div className="text-center mb-8">
+            <Link href="/" className="text-2xl font-bold text-white">
+              WakilChat
+            </Link>
+            <h1 className="text-3xl font-bold text-white mt-6 mb-2">
+              Create Your Free Account
+            </h1>
+            <p className="text-gray-400">
+              Join 40,000+ African entrepreneurs. Takes 30 seconds.
+            </p>
+          </div>
+
+          <div className="bg-gray-800 rounded-2xl p-8">
+            {error && (
+              <div className="bg-red-900/50 text-red-400 rounded-lg p-4 mb-6">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <Input
+                label="Full Name"
+                placeholder="Your full name"
+                required
+                value={form.fullName}
+                onChange={(e) =>
+                  setForm({ ...form, fullName: e.target.value })
+                }
+              />
+
+              <Input
+                label="Phone Number"
+                type="tel"
+                placeholder="+234..."
+                required
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              />
+
+              <Input
+                label="Email"
+                type="email"
+                placeholder="you@example.com"
+                optional
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+              />
+
+              <Input
+                label="Password"
+                type="password"
+                placeholder="Create a secure password"
+                required
+                value={form.password}
+                onChange={(e) =>
+                  setForm({ ...form, password: e.target.value })
+                }
+              />
+
+              <div className="pt-2">
+                <Button
+                  type="submit"
+                  fullWidth
+                  size="lg"
+                  isLoading={loading}
+                >
+                  Create My Account
+                </Button>
+              </div>
+            </form>
+
+            <div className="mt-6 text-center text-gray-400">
+              Already have an account?{' '}
+              <Link href="/login" className="text-purple-400 hover:text-purple-300">
+                Log in
+              </Link>
+            </div>
+
+            <div className="mt-8 flex items-center justify-center gap-4 text-gray-400 text-sm">
+              <div className="flex items-center gap-1">
+                <span>🔒</span> Secure
+              </div>
+              <div className="flex items-center gap-1">
+                <span>🆓</span> Free forever
+              </div>
+              <div className="flex items-center gap-1">
+                <span>⚡</span> Instant setup
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
-  )
+  );
 }
