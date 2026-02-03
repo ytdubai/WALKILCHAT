@@ -22,7 +22,7 @@ export default function CallPage() {
 
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
-  const peerRef = useRef<SimplePeer.Instance>(null);
+  const peerRef = useRef<SimplePeer.Instance | null>(null);
 
   useEffect(() => {
     if (!user || !callId) return;

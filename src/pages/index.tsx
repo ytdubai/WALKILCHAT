@@ -1,74 +1,12 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { Button } from '../lib/components/Button';
 import { Card } from '../lib/components/Card';
 
-const features = [
-  {
-    icon: '💰',
-    title: 'Get paid instantly',
-    description: 'Accept payments from anyone—M-Pesa, Telebirr, bank transfer, or cash. Money hits your account in seconds.'
-  },
-  {
-    icon: '🤖',
-    title: 'AI assistant works 24/7',
-    description: 'Wakil answers your customers, sends invoices, and reminds people to pay—while you sleep.'
-  },
-  {
-    icon: '🛒',
-    title: 'Sell anywhere',
-    description: 'List products, share to WhatsApp, get orders. Your shop is now open to 1 billion Africans.'
-  }
-];
-
-const testimonials = [
-  {
-    name: 'Amina K.',
-    role: 'Fashion Seller',
-    location: 'Nairobi',
-    image: '/testimonials/amina.jpg',
-    quote: 'Wakil doubled my sales in 2 months. The AI assistant handles everything while I focus on designing.'
-  },
-  {
-    name: 'Dawit T.',
-    role: 'Electronics Shop',
-    location: 'Addis Ababa',
-    image: '/testimonials/dawit.jpg',
-    quote: 'Getting paid is so simple now. My customers love using Telebirr to pay instantly.'
-  },
-  {
-    name: 'Chioma O.',
-    role: 'Food Vendor',
-    location: 'Lagos',
-    image: '/testimonials/chioma.jpg',
-    quote: 'From market stall to online business. Wakil made it possible. Now I serve customers across Nigeria.'
-  }
-];
-
-const steps = [
-  {
-    number: '1',
-    title: 'Create free account',
-    description: 'Takes 30 seconds'
-  },
-  {
-    number: '2',
-    title: 'Add your products',
-    description: 'List what you sell'
-  },
-  {
-    number: '3',
-    title: 'Share & get paid',
-    description: 'Money hits instantly'
-  }
-];
-
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <Head>
         <title>WakilChat - Your Business. Simplified.</title>
-        <meta name="description" content="Run your entire business from your phone. Payments, customers, and AI assistant - all free to start." />
       </Head>
 
       <div className="min-h-screen bg-gray-900">
@@ -78,18 +16,21 @@ export default function Home() {
             <Link href="/" className="text-2xl font-bold text-white">
               WakilChat
             </Link>
-            <div className="space-x-4">
+            <div className="flex items-center space-x-4">
               <Link href="/login" className="text-gray-300 hover:text-white">
                 Login
               </Link>
-              <Link href="/signup">
-                <Button size="sm">Start Free</Button>
+              <Link 
+                href="/signup"
+                className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+              >
+                Start Free
               </Link>
             </div>
           </div>
         </nav>
 
-        {/* Hero Section */}
+        {/* Hero */}
         <main>
           <div className="max-w-7xl mx-auto px-4 py-20 text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
@@ -99,7 +40,12 @@ export default function Home() {
               Payments. Customers. AI Assistant. All free to start.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-              <Button size="lg">Start Free—No Bank Needed</Button>
+              <Link 
+                href="/signup"
+                className="bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transition-colors inline-block"
+              >
+                Start Free—No Bank Needed
+              </Link>
             </div>
             <p className="text-gray-400 flex items-center justify-center gap-2">
               🔒 Bank-level security • 40,000+ businesses trust Wakil
@@ -109,111 +55,89 @@ export default function Home() {
           {/* Features */}
           <div className="max-w-7xl mx-auto px-4 py-16">
             <div className="grid md:grid-cols-3 gap-8">
-              {features.map((feature) => (
-                <Card key={feature.title} className="text-center p-6">
-                  <div className="text-4xl mb-4">{feature.icon}</div>
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-400">{feature.description}</p>
-                </Card>
-              ))}
-            </div>
-          </div>
+              <Card className="text-center p-6">
+                <div className="text-4xl mb-4">💰</div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Get paid instantly
+                </h3>
+                <p className="text-gray-400">
+                  Accept payments from anyone—M-Pesa, Telebirr, bank transfer, or cash.
+                </p>
+              </Card>
 
-          {/* Testimonials */}
-          <div className="bg-gray-800/50 py-16">
-            <div className="max-w-7xl mx-auto px-4">
-              <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-12">
-                Trusted by entrepreneurs across Africa
-              </h2>
-              <div className="grid md:grid-cols-3 gap-8">
-                {testimonials.map((testimonial) => (
-                  <Card key={testimonial.name} className="p-6">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-full bg-gray-700" />
-                      <div>
-                        <div className="font-medium text-white">
-                          {testimonial.name}
-                        </div>
-                        <div className="text-sm text-gray-400">
-                          {testimonial.role} • {testimonial.location}
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-gray-300">{testimonial.quote}</p>
-                  </Card>
-                ))}
-              </div>
+              <Card className="text-center p-6">
+                <div className="text-4xl mb-4">🤖</div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  AI assistant works 24/7
+                </h3>
+                <p className="text-gray-400">
+                  Wakil answers your customers, sends invoices, and reminds people to pay.
+                </p>
+              </Card>
+
+              <Card className="text-center p-6">
+                <div className="text-4xl mb-4">🛒</div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Sell anywhere
+                </h3>
+                <p className="text-gray-400">
+                  List products, share to WhatsApp, get orders. Your shop is now open.
+                </p>
+              </Card>
             </div>
           </div>
 
           {/* How it Works */}
           <div className="max-w-7xl mx-auto px-4 py-16">
-            <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-12">
-              How It Works
+            <h2 className="text-3xl font-bold text-white text-center mb-12">
+              How it works
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
-              {steps.map((step) => (
-                <div key={step.number} className="text-center">
-                  <div className="w-12 h-12 rounded-full bg-purple-600 text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">
-                    {step.number}
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-400">{step.description}</p>
-                </div>
-              ))}
+              <div className="text-center">
+                <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">1</div>
+                <h3 className="text-lg font-semibold text-white mb-2">Create free account</h3>
+                <p className="text-gray-400">Takes 30 seconds. No bank needed.</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">2</div>
+                <h3 className="text-lg font-semibold text-white mb-2">Add your products</h3>
+                <p className="text-gray-400">List what you sell with photos and prices.</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">3</div>
+                <h3 className="text-lg font-semibold text-white mb-2">Share & get paid</h3>
+                <p className="text-gray-400">Share your shop link and receive payments instantly.</p>
+              </div>
             </div>
           </div>
 
-          {/* Final CTA */}
+          {/* CTA */}
           <div className="max-w-7xl mx-auto px-4 py-16 text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
               Ready to grow your business?
             </h2>
-            <Button size="lg">Get Started Free</Button>
+            <Link 
+              href="/signup"
+              className="bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transition-colors inline-block"
+            >
+              Get Started Free
+            </Link>
           </div>
-        </main>
 
-        {/* Footer */}
-        <footer className="bg-gray-800/50 py-12">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-              <div className="col-span-2">
-                <div className="text-2xl font-bold text-white mb-4">WakilChat</div>
-                <p className="text-gray-400">Your Business. Simplified.</p>
-              </div>
-              <div>
-                <div className="font-medium text-white mb-4">Product</div>
-                <ul className="space-y-2 text-gray-400">
-                  <li>Features</li>
-                  <li>Pricing</li>
-                  <li>Security</li>
-                </ul>
-              </div>
-              <div>
-                <div className="font-medium text-white mb-4">Company</div>
-                <ul className="space-y-2 text-gray-400">
-                  <li>About</li>
-                  <li>Contact</li>
-                  <li>Careers</li>
-                </ul>
-              </div>
-              <div>
-                <div className="font-medium text-white mb-4">Legal</div>
-                <ul className="space-y-2 text-gray-400">
-                  <li>Privacy</li>
-                  <li>Terms</li>
-                </ul>
+          {/* Footer */}
+          <footer className="border-t border-gray-800 mt-16">
+            <div className="max-w-7xl mx-auto px-4 py-8">
+              <div className="flex flex-col md:flex-row justify-between items-center">
+                <p className="text-gray-400">Made with 🦁 in Africa</p>
+                <div className="flex space-x-6 mt-4 md:mt-0">
+                  <Link href="/about" className="text-gray-400 hover:text-white">About</Link>
+                  <Link href="/help" className="text-gray-400 hover:text-white">Help</Link>
+                  <Link href="/privacy" className="text-gray-400 hover:text-white">Privacy</Link>
+                </div>
               </div>
             </div>
-            <div className="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400">
-              Made with 🦁 in Africa
-            </div>
-          </div>
-        </footer>
+          </footer>
+        </main>
       </div>
     </>
   );

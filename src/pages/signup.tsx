@@ -2,11 +2,11 @@ import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Input } from '../lib/components/Input';
 import { Button } from '../lib/components/Button';
+import { Input } from '../lib/components/Input';
 import { signUp } from '../lib/auth';
 
-export default function Signup() {
+export default function SignupPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -62,53 +62,49 @@ export default function Signup() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <Input
                 label="Full Name"
-                placeholder="Your full name"
+                type="text"
                 required
                 value={form.fullName}
-                onChange={(e) =>
-                  setForm({ ...form, fullName: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, fullName: e.target.value })}
+                placeholder="Your full name"
               />
 
               <Input
                 label="Phone Number"
                 type="tel"
-                placeholder="+234..."
                 required
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                placeholder="+234..."
               />
 
               <Input
                 label="Email"
                 type="email"
-                placeholder="you@example.com"
                 optional
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
+                placeholder="you@example.com"
               />
 
               <Input
                 label="Password"
                 type="password"
-                placeholder="Create a secure password"
                 required
                 value={form.password}
-                onChange={(e) =>
-                  setForm({ ...form, password: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                placeholder="Create a secure password"
               />
 
-              <div className="pt-2">
-                <Button
-                  type="submit"
-                  fullWidth
-                  size="lg"
-                  isLoading={loading}
-                >
-                  Create My Account
-                </Button>
-              </div>
+              <Button
+                type="submit"
+                variant="primary"
+                fullWidth
+                size="lg"
+                isLoading={loading}
+              >
+                Create My Account
+              </Button>
             </form>
 
             <div className="mt-6 text-center text-gray-400">
