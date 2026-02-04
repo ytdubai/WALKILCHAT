@@ -8,6 +8,14 @@ export default function HomePage() {
       <Head>
         <title>WakilChat - Run Your Entire Business From One App</title>
         <meta name="description" content="The all-in-one super app for African entrepreneurs. Free calls, instant payments, and AI-powered business tools." />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        <meta name="theme-color" content="#FFD700" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/branding/logo-icon.jpg" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="WakilChat" />
+        <link rel="apple-touch-icon" href="/branding/logo-icon.jpg" />
         <style>{`
           body { 
             margin: 0; 
@@ -220,7 +228,7 @@ export default function HomePage() {
             {[
               {
                 step: '1',
-                title: 'Download WakilChat',
+                title: 'Get Started with WakilChat',
                 desc: 'Click "Start Free" above. No credit card. No payment info. Just your name and phone number. Takes 60 seconds.',
                 time: '60 seconds'
               },
@@ -539,7 +547,7 @@ export default function HomePage() {
               textDecoration: 'none',
               boxShadow: '0 0 50px rgba(255, 215, 0, 0.5)'
             }}>
-              YES! Get WakilChat FREE →
+              YES! Start FREE Now →
             </Link>
             <p style={{ marginTop: '1.5rem', fontSize: '0.875rem', color: '#666' }}>
               Free forever • No credit card • Setup in 60 seconds
