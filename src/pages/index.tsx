@@ -86,7 +86,7 @@ export default function HomePage() {
           padding: '0.75rem 0'
         }}>
           <div className="flag-scroll" style={{ display: 'flex', gap: '2rem', whiteSpace: 'nowrap' }}>
-            {['🇳🇬 Nigeria', '🇰🇪 Kenya', '🇪🇹 Ethiopia', '🇬🇭 Ghana', '🇿🇦 South Africa', '🇹🇿 Tanzania', '🇺🇬 Uganda', '🇷🇼 Rwanda', '🇳🇬 Nigeria', '🇰🇪 Kenya', '🇪🇹 Ethiopia', '🇬🇭 Ghana'].map((flag, i) => (
+            {['🇳🇬 Nigeria', '🇰🇪 Kenya', '🇪🇹 Ethiopia', '🇬🇭 Ghana', '🇿🇦 South Africa', '🇹🇿 Tanzania', '🇺🇬 Uganda', '🇷🇼 Rwanda', '🇦🇪 UAE', '🇪🇬 Egypt', '🇲🇦 Morocco', '🇸🇳 Senegal', '🇨🇮 Ivory Coast', '🇨🇲 Cameroon', '🇳🇬 Nigeria', '🇰🇪 Kenya', '🇪🇹 Ethiopia', '🇬🇭 Ghana', '🇦🇪 UAE'].map((flag, i) => (
               <span key={i} style={{ fontSize: '1.25rem', fontWeight: '600', color: '#FFD700' }}>{flag}</span>
             ))}
           </div>
