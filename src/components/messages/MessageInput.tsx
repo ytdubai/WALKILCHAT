@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '../../lib/components/Button';
+import { Button } from '../ui/Button';
 
 interface MessageInputProps {
   onSend: (text: string) => void;

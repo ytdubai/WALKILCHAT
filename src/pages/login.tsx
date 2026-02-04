@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Button } from '../lib/components/Button';
+import { Button } from '../components/ui/Button';
 import { Input } from '../lib/components/Input';
 import { signIn } from '../lib/auth';
 
@@ -90,7 +90,7 @@ export default function LoginPage() {
                 variant="primary"
                 fullWidth
                 size="lg"
-                isLoading={loading}
+                loading={loading}
               >
                 Log In
               </Button>

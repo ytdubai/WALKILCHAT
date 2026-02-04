@@ -1,5 +1,5 @@
-import { Card } from '../../lib/components/Card';
-import { Button } from '../../lib/components/Button';
+import { Card } from '../ui/Card';
+import { Button } from '../ui/Button';
 
 interface BalanceCardProps {
   balance: number;

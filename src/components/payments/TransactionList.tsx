@@ -1,98 +1,64 @@
-import { formatDistanceToNow } from 'date-fns';
-import { Card } from '../../lib/components/Card';
-import { Badge } from '../../lib/components/Badge';
+import { Card } from '../ui/Card';
+import { StatusIndicator } from '../ui/StatusIndicator';
 
 interface Transaction {
   id: string;
-  type: 'sent' | 'received';
+  type: 'credit' | 'debit';
   amount: number;
   currency: string;
   description: string;
-  date: Date;
-  status: 'completed' | 'pending' | 'failed';
-  paymentMethod: string;
+  date: string;
+  status: 'success' | 'pending' | 'error';
+  reference: string;
 }
 
 interface TransactionListProps {
   transactions: Transaction[];
-  loading?: boolean;
 }
 
-export function TransactionList({ transactions, loading }: TransactionListProps) {
-  if (loading) {
-    return (
-      <div className="space-y-4">
-        {[...Array(3)].map((_, i) => (
-          <Card key={i} className="animate-pulse p-4">
-            <div className="h-16 bg-gray-800 rounded-lg" />
-          </Card>
-        ))}
-      </div>
-    );
-  }
-
-  if (transactions.length === 0) {
-    return (
-      <Card className="p-8 text-center">
-        <div className="text-6xl mb-4">💸</div>
-        <h2 className="text-xl font-bold text-white mb-2">No Transactions Yet</h2>
-        <p className="text-gray-400">Your transaction history will appear here</p>
-      </Card>
-    );
-  }
-
+export function TransactionList({ transactions }: TransactionListProps) {
   return (
-    <div className="space-y-4">
-      {transactions.map((transaction) => (
-        <Card key={transaction.id} hover>
-          <div className="p-4 flex items-center gap-4">
-            {/* Icon */}
-            <div
-              className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                transaction.type === 'sent'
-                  ? 'bg-red-900/30 text-red-400'
-                  : 'bg-green-900/30 text-green-400'
-              }`}
-            >
-              {transaction.type === 'sent' ? '↑' : '↓'}
-            </div>
-
-            {/* Details */}
-            <div className="flex-1">
-              <div className="flex items-center justify-between">
-                <div className="text-white font-medium">
-                  {transaction.description}
+    <div className="space-y-3">
+      {transactions.map((tx) => (
+        <Card key={tx.id} hover>
+          <div className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                  tx.type === 'credit' 
+                    ? 'bg-green-500/20 text-green-400' 
+                    : 'bg-red-500/20 text-red-400'
+                }`}>
+                  {tx.type === 'credit' ? '↓' : '↑'}
                 </div>
-                <div className="text-white font-medium">
-                  {transaction.type === 'sent' ? '-' : '+'}
-                  {transaction.currency} {transaction.amount.toLocaleString()}
+                <div>
+                  <p className="text-white font-medium">{tx.description}</p>
+                  <p className="text-sm text-gray-400">Ref: {tx.reference}</p>
                 </div>
               </div>
-              <div className="flex items-center justify-between mt-1">
-                <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <span>{transaction.paymentMethod}</span>
-                  <span>•</span>
-                  <span>
-                    {formatDistanceToNow(transaction.date, { addSuffix: true })}
-                  </span>
+              <div className="text-right">
+                <p className={`text-lg font-bold ${
+                  tx.type === 'credit' ? 'text-green-400' : 'text-red-400'
+                }`}>
+                  {tx.type === 'credit' ? '+' : '-'}{tx.currency} {tx.amount.toLocaleString()}
+                </p>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-xs text-gray-400">{tx.date}</span>
+                  <StatusIndicator status={tx.status} />
                 </div>
-                <Badge
-                  variant={
-                    transaction.status === 'completed'
-                      ? 'success'
-                      : transaction.status === 'pending'
-                      ? 'warning'
-                      : 'error'
-                  }
-                  size="sm"
-                >
-                  {transaction.status}
-                </Badge>
               </div>
             </div>
           </div>
         </Card>
       ))}
+      
+      {transactions.length === 0 && (
+        <Card>
+          <div className="p-12 text-center">
+            <p className="text-gray-400">No transactions yet</p>
+          </div>
+        </Card>
+      )}
     </div>
   );
 }

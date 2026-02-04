@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { Card } from '../../lib/components/Card';
-import { Badge } from '../../lib/components/Badge';
+import { Card } from '../ui/Card';
+import { StatusIndicator } from '../ui/StatusIndicator';
 
 interface ProductCardProps {
   id: string;
@@ -72,17 +72,12 @@ export function ProductCard({
               {currency} {price.toLocaleString()}
             </span>
             {isNegotiable && (
-              <Badge variant="purple" size="sm">
+              <span className="status-tag text-purple-400 bg-purple-500/20 border-purple-500/30">
                 Negotiable
-              </Badge>
+              </span>
             )}
           </div>
-          <Badge
-            variant={stock > 0 ? 'success' : 'error'}
-            size="sm"
-          >
-            {stock} in stock
-          </Badge>
+          <StatusIndicator status={stock > 0 ? 'success' : 'error'} />
         </div>
       </div>
     </Card>

@@ -1,4 +1,4 @@
-import { Button } from '../../lib/components/Button';
+import { Button } from '../ui/Button';
 
 interface CallControlsProps {
   isMuted: boolean;

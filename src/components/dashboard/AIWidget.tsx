@@ -1,15 +1,15 @@
-import { Card } from '../../lib/components/Card';
-import { Button } from '../../lib/components/Button';
+import { Card } from '../ui/Card';
+import { Button } from '../ui/Button';
 
-interface AIStats {
-  messagesHandled: number;
-  paymentReminders: number;
-  customersHelped: number;
-}
+export function AIWidget() {
+  const stats = {
+    messagesHandled: 12,
+    paymentReminders: 5,
+    customersHelped: 23,
+  };
 
-export function AIWidget({ stats }: { stats: AIStats }) {
   return (
-    <Card className="p-6 border border-purple-500/20">
+    <Card className="p-6 border-2 border-purple-500/30" neon>
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-2">
           <span className="text-2xl">🤖</span>
@@ -26,21 +26,21 @@ export function AIWidget({ stats }: { stats: AIStats }) {
       <div className="space-y-3">
         <div className="flex items-center justify-between text-sm">
           <span className="text-gray-400">Messages Handled</span>
-          <span className="text-white">{stats.messagesHandled} today</span>
+          <span className="text-white font-medium">{stats.messagesHandled} today</span>
         </div>
         <div className="flex items-center justify-between text-sm">
           <span className="text-gray-400">Payment Reminders</span>
-          <span className="text-white">{stats.paymentReminders} sent</span>
+          <span className="text-white font-medium">{stats.paymentReminders} sent</span>
         </div>
         <div className="flex items-center justify-between text-sm">
           <span className="text-gray-400">Customers Helped</span>
-          <span className="text-white">{stats.customersHelped}</span>
+          <span className="text-white font-medium">{stats.customersHelped}</span>
         </div>
       </div>
 
-      <div className="h-2 bg-gray-700 rounded-full mt-4 overflow-hidden">
+      <div className="h-2 bg-white/10 rounded-full mt-4 overflow-hidden">
         <div
-          className="h-full bg-purple-500 rounded-full"
+          className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
           style={{ width: '85%' }}
         />
       </div>

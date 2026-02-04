@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { formatDistanceToNow } from 'date-fns';
-import { Card } from '../../lib/components/Card';
-import { Badge } from '../../lib/components/Badge';
-import { Button } from '../../lib/components/Button';
+import { Card } from '../ui/Card';
+import { StatusIndicator } from '../ui/StatusIndicator';
+import { Button } from '../ui/Button';
 
 interface OrderCardProps {
   order: {
@@ -32,32 +32,30 @@ interface OrderCardProps {
 export function OrderCard({ order }: OrderCardProps) {
   const [expanded, setExpanded] = useState(false);
 
-  const statusColors = {
-    pending: 'warning',
-    completed: 'success',
-    cancelled: 'error',
-  } as const;
+  const statusMap = {
+    pending: 'pending' as const,
+    completed: 'success' as const,
+    cancelled: 'error' as const,
+  };
 
   return (
     <Card className={`transition-all ${expanded ? 'ring-2 ring-purple-500' : ''}`}>
       {/* Order Header */}
-      <div className="p-4 flex items-center justify-between border-b border-gray-700">
+      <div className="p-4 flex items-center justify-between border-b border-white/10">
         <div>
           <div className="text-sm text-gray-400">Order #{order.orderNumber}</div>
           <div className="text-white font-medium">
             {formatDistanceToNow(order.createdAt, { addSuffix: true })}
           </div>
         </div>
-        <Badge variant={statusColors[order.status]} size="sm">
-          {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-        </Badge>
+        <StatusIndicator status={statusMap[order.status]} />
       </div>
 
       {/* Order Summary */}
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gray-700 overflow-hidden">
+            <div className="w-10 h-10 rounded-full bg-white/5 overflow-hidden">
               {order.buyer.image ? (
                 <Image
                   src={order.buyer.image}
@@ -91,14 +89,14 @@ export function OrderCard({ order }: OrderCardProps) {
 
         {/* Expanded Details */}
         {expanded && (
-          <div className="space-y-4 border-t border-gray-700 pt-4">
+          <div className="space-y-4 border-t border-white/10 pt-4">
             {/* Items */}
             <div>
               <h4 className="text-sm font-medium text-gray-400 mb-2">Items</h4>
               <div className="space-y-3">
                 {order.items.map((item) => (
                   <div key={item.id} className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gray-700 rounded-lg overflow-hidden">
+                    <div className="w-12 h-12 bg-white/5 rounded-lg overflow-hidden">
                       <Image
                         src={item.image}
                         alt={item.title}
@@ -128,7 +126,7 @@ export function OrderCard({ order }: OrderCardProps) {
               <h4 className="text-sm font-medium text-gray-400 mb-2">
                 Payment Details
               </h4>
-              <div className="bg-gray-800 rounded-lg p-3 space-y-2">
+              <div className="glass rounded-lg p-3 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Payment Method</span>
                   <span className="text-white">{order.paymentMethod}</span>
@@ -153,10 +151,12 @@ export function OrderCard({ order }: OrderCardProps) {
             {/* Actions */}
             {order.status === 'pending' && (
               <div className="flex gap-3">
-                <Button variant="secondary" fullWidth>
+                <Button variant="outline" fullWidth>
                   Cancel Order
                 </Button>
-                <Button fullWidth>Mark as Completed</Button>
+                <Button variant="primary" fullWidth>
+                  Mark as Completed
+                </Button>
               </div>
             )}
           </div>

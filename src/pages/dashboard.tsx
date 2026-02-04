@@ -1,194 +1,221 @@
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useAuth } from '../lib/providers/AuthProvider';
+import { MainLayout } from '../components/layouts/MainLayout';
 import { StatsCard } from '../components/dashboard/StatsCard';
-import { QuickAction } from '../components/dashboard/QuickAction';
+import { QuickActions } from '../components/dashboard/QuickActions';
 import { ActivityItem } from '../components/dashboard/ActivityItem';
 import { AIWidget } from '../components/dashboard/AIWidget';
-import { supabase } from '../lib/supabase';
+import { FloatingCallButton } from '../components/dashboard/FloatingCallButton';
+import { TransactionItem } from '../components/transactions/TransactionItem';
 
-interface StatsData {
-  totalSales: number;
-  pendingOrders: number;
-  totalCustomers: number;
-  monthlyRevenue: number;
-}
+// Mock data (replace with real data later)
+const revenueData = [
+  { month: 'Jan', amount: 45000 },
+  { month: 'Feb', amount: 52000 },
+  { month: 'Mar', amount: 48000 },
+  { month: 'Apr', amount: 61000 },
+  { month: 'May', amount: 55000 },
+  { month: 'Jun', amount: 67000 },
+];
 
-export default function DashboardPage() {
+export default function Dashboard() {
   const { user } = useAuth();
-  const [stats, setStats] = useState<StatsData>({
-    totalSales: 0,
-    pendingOrders: 0,
-    totalCustomers: 0,
-    monthlyRevenue: 0
+  const [stats, setStats] = useState({
+    revenue: 67000,
+    orders: 45,
+    customers: 128,
+    growth: 23.5,
   });
-  const [recentActivity, setRecentActivity] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user) {
-      loadDashboardData();
-      subscribeToUpdates();
-    }
-  }, [user]);
+  const recentActivities = [
+    {
+      type: 'order' as const,
+      title: 'New order from Amina K.',
+      subtitle: '2x Ankara fabric - ₦5,000',
+      time: '2 min ago',
+      status: 'success' as const,
+    },
+    {
+      type: 'payment' as const,
+      title: 'Payment received',
+      subtitle: 'M-Pesa transfer - ₦12,000',
+      time: '15 min ago',
+      status: 'success' as const,
+    },
+    {
+      type: 'message' as const,
+      title: 'New message from John D.',
+      subtitle: 'Asking about iPhone case availability',
+      time: '1 hour ago',
+    },
+  ];
 
-  const loadDashboardData = async () => {
-    // TODO: Replace with real API calls
-    setStats({
-      totalSales: 45000,
-      pendingOrders: 3,
-      totalCustomers: 156,
-      monthlyRevenue: 1234000
-    });
-
-    setRecentActivity([
-      {
-        type: 'payment',
-        title: 'paid for 2x Ankara fabric',
-        amount: '₦5,000',
-        time: new Date(Date.now() - 1000 * 60 * 2),
-        status: 'completed',
-        userName: 'Amina K.'
-      },
-      {
-        type: 'order',
-        title: 'ordered iPhone case',
-        amount: '₦3,500',
-        time: new Date(Date.now() - 1000 * 60 * 15),
-        status: 'pending',
-        userName: 'John D.'
-      }
-    ]);
-
-    setLoading(false);
-  };
-
-  const subscribeToUpdates = () => {
-    const subscription = supabase
-      .channel('dashboard')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'orders',
-        },
-        () => {
-          loadDashboardData();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(subscription);
-    };
-  };
-
-  if (loading) {
-    return <div className="min-h-screen bg-gray-900">Loading...</div>;
-  }
+  const transactions: Array<{
+    type: 'received' | 'sent';
+    name: string;
+    amount: number;
+    item: string;
+    time: string;
+    status: 'completed' | 'pending' | 'failed';
+  }> = [
+    {
+      type: 'received',
+      name: 'Amina K.',
+      amount: 5000,
+      item: '2x Ankara fabric',
+      time: '2 min ago',
+      status: 'completed',
+    },
+    {
+      type: 'sent',
+      name: 'MTN Airtime',
+      amount: 1000,
+      item: 'Airtime purchase',
+      time: '1 hour ago',
+      status: 'completed',
+    },
+    {
+      type: 'received',
+      name: 'John D.',
+      amount: 3500,
+      item: 'iPhone case',
+      time: '15 min ago',
+      status: 'pending',
+    },
+  ];
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Dashboard - WakilChat</title>
       </Head>
 
-      <div className="min-h-screen bg-gray-900">
+      <div className="space-y-6">
         {/* Header */}
-        <div className="bg-gray-800 border-b border-gray-700">
-          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <span className="text-2xl">👋</span>
-              <div>
-                <h1 className="text-white font-medium">Welcome back!</h1>
-                <p className="text-sm text-gray-400">
-                  {new Date().toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </p>
-              </div>
-            </div>
-          </div>
+        <div>
+          <h1 className="text-3xl font-bold neon-text mb-2">
+            Welcome back, {user?.user_metadata?.full_name || 'Entrepreneur'}! 🦁
+          </h1>
+          <p className="text-gray-400">Here's what's happening with your business today.</p>
         </div>
 
-        <main className="max-w-7xl mx-auto px-4 py-8">
-          {/* Stats Grid */}
-          <div className="grid md:grid-cols-4 gap-6 mb-8">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
             <StatsCard
+              title="Revenue"
+              value={`₦${stats.revenue.toLocaleString()}`}
+              change={stats.growth}
+              trend="up"
               icon="💰"
-              label="Today's Sales"
-              value={`₦${stats.totalSales.toLocaleString()}`}
-              trend={{ value: 12, isPositive: true }}
             />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
             <StatsCard
+              title="Orders"
+              value={stats.orders.toString()}
+              change={12}
+              trend="up"
               icon="📦"
-              label="Pending Orders"
-              value={stats.pendingOrders}
             />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
             <StatsCard
+              title="Customers"
+              value={stats.customers.toString()}
+              change={8}
+              trend="up"
               icon="👥"
-              label="Total Customers"
-              value={stats.totalCustomers}
-              trend={{ value: 5, isPositive: true }}
             />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
             <StatsCard
+              title="Conversion"
+              value="34%"
+              change={5}
+              trend="up"
               icon="📈"
-              label="This Month"
-              value={`₦${stats.monthlyRevenue.toLocaleString()}`}
             />
+          </motion.div>
+        </div>
+
+        {/* Quick Actions */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <QuickActions />
+        </motion.div>
+
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Recent Activity */}
+          <div className="lg:col-span-2 space-y-4">
+            <h2 className="text-xl font-bold neon-text mb-4">Recent Activity</h2>
+            {recentActivities.map((activity, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 + i * 0.1 }}
+              >
+                <ActivityItem {...activity} />
+              </motion.div>
+            ))}
           </div>
 
-          {/* Quick Actions */}
-          <div className="mb-8">
-            <h2 className="text-white font-medium mb-4">Quick Actions</h2>
-            <div className="flex gap-4 overflow-x-auto pb-4">
-              <QuickAction
-                icon="➕"
-                label="New Sale"
-                href="/shop/new-sale"
-              />
-              <QuickAction
-                icon="📤"
-                label="Send Invoice"
-                href="/shop/invoice"
-              />
-              <QuickAction
-                icon="📢"
-                label="Message Customers"
-                href="/messages"
-              />
-              <QuickAction
-                icon="➕"
-                label="Add Product"
-                href="/shop/add"
-              />
-            </div>
-          </div>
+          {/* AI Widget */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9 }}
+          >
+            <AIWidget />
+          </motion.div>
+        </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Recent Activity */}
-            <div className="md:col-span-2 space-y-4">
-              {recentActivity.map((activity, index) => (
-                <ActivityItem key={index} {...activity} />
-              ))}
-            </div>
-
-            {/* AI Widget */}
-            <div>
-              <AIWidget
-                stats={{
-                  messagesHandled: 12,
-                  paymentReminders: 3,
-                  customersHelped: 8,
-                }}
-              />
-            </div>
-          </div>
-        </main>
+        {/* Recent Transactions */}
+        <div className="space-y-4">
+          <h2 className="text-xl font-bold neon-text mb-4">
+            Recent Transactions
+          </h2>
+          {transactions.map((tx, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + i * 0.1 }}
+            >
+              <TransactionItem {...tx} />
+            </motion.div>
+          ))}
+        </div>
       </div>
-    </>
+
+      <FloatingCallButton />
+    </MainLayout>
   );
 }

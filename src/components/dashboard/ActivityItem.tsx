@@ -1,60 +1,46 @@
-import { formatDistanceToNow } from 'date-fns';
-import { Avatar } from '../../lib/components/Avatar';
-import { Badge } from '../../lib/components/Badge';
+import { StatusIndicator } from '../ui/StatusIndicator';
 
 interface ActivityItemProps {
-  type: 'payment' | 'order' | 'message';
+  type: 'message' | 'payment' | 'order';
   title: string;
-  amount?: string;
-  time: Date;
-  status?: string;
-  userImage?: string;
-  userName: string;
+  subtitle: string;
+  time: string;
+  status?: 'success' | 'pending' | 'error';
+  icon?: React.ReactNode;
 }
 
 export function ActivityItem({
   type,
   title,
-  amount,
+  subtitle,
   time,
   status,
-  userImage,
-  userName,
+  icon,
 }: ActivityItemProps) {
+  const typeColors = {
+    message: 'from-blue-500/20 to-cyan-500/20 text-blue-400',
+    payment: 'from-green-500/20 to-emerald-500/20 text-green-400',
+    order: 'from-purple-500/20 to-pink-500/20 text-purple-400',
+  };
+
   return (
-    <div className="flex items-center gap-4 p-4 hover:bg-gray-700/50 rounded-lg transition-colors">
-      <Avatar src={userImage} fallback={userName} size="md" />
-      <div className="flex-1 min-w-0">
-        <div className="flex items-start justify-between gap-2">
-          <div className="truncate">
-            <span className="text-white">{userName}</span>
-            <span className="text-gray-400 mx-2">•</span>
-            <span className="text-gray-400">{title}</span>
-          </div>
-          {amount && <span className="text-white font-medium">{amount}</span>}
-        </div>
-        <div className="flex items-center gap-2 mt-1">
-          <span className="text-sm text-gray-400">
-            {formatDistanceToNow(time, { addSuffix: true })}
-          </span>
-          {status && (
-            <>
-              <span className="text-gray-400">•</span>
-              <Badge
-                variant={
-                  status === 'completed'
-                    ? 'success'
-                    : status === 'pending'
-                    ? 'warning'
-                    : 'error'
-                }
-                size="sm"
-              >
-                {status}
-              </Badge>
-            </>
+    <div className="glass-card p-4 hover-float">
+      <div className="flex items-center gap-4">
+        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${typeColors[type]} flex items-center justify-center`}>
+          {icon || (
+            <span className="text-xl">
+              {type === 'message' ? '💬' : type === 'payment' ? '💰' : '📦'}
+            </span>
           )}
         </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2">
+            <p className="text-white font-medium truncate">{title}</p>
+            {status && <StatusIndicator status={status} />}
+          </div>
+          <p className="text-gray-400 text-sm truncate">{subtitle}</p>
+        </div>
+        <div className="text-gray-500 text-xs whitespace-nowrap">{time}</div>
       </div>
     </div>
   );
