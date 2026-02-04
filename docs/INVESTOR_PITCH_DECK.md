@@ -322,11 +322,11 @@ Contact: investors@wakilchat.com
 
 | Year | Users | Monthly GMV | Annual Revenue | EBITDA Margin |
 |------|-------|-------------|----------------|---------------|
-| 2026 | 50k | ₦100M | ₦180M ($400k) | -15% |
-| 2027 | 150k | ₦400M | ₦720M ($1.6M) | 5% |
-| 2028 | 400k | ₦1.2B | ₦2.2B ($4.8M) | 18% |
-| 2029 | 900k | ₦3B | ₦5.4B ($12M) | 28% |
-| 2030 | 2M | ₦7B | ₦12.6B ($27.5M) | 35% |
+| 2026 | 50k | ₦100M | $400k | -15% |
+| 2027 | 150k | ₦400M | $1.6M | 5% |
+| 2028 | 400k | ₦1.2B | $4.8M | 18% |
+| 2029 | 900k | ₦3B | $12M | 28% |
+| 2030 | 2M | ₦7B | $27.5M | 35% |
 
 ### Revenue Breakdown (Year 3):
 
@@ -1075,7 +1075,7 @@ Net Income:            ₦3.5B    ($7.6M)
 ### WakilChat Valuation:
 
 **Current:**
-- ARR: ₦180M ($400k)
+- ARR: $400k
 - Valuation: $15M (pre-money)
 - **Multiple: 37.5x** (below market)
 
@@ -1085,7 +1085,7 @@ Net Income:            ₦3.5B    ($7.6M)
 - Multiple: 15-24x
 
 **At Scale (36 months):**
-- ARR: ₦5.4B ($12M)
+- ARR: $12M
 - Valuation target: $150M-300M
 - Multiple: 12-25x
 
