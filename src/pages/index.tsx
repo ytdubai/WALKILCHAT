@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import { FAQ } from '../components/FAQ';
 
 export default function HomePage() {
   return (
@@ -523,6 +524,9 @@ export default function HomePage() {
             ))}
           </div>
         </section>
+        {/* FAQ Section */}
+        <FAQ />
+
 
         {/* Final CTA */}
         <section style={{ padding: '4rem 2rem 6rem', background: 'linear-gradient(to top, rgba(255,215,0,0.1), transparent)' }}>
