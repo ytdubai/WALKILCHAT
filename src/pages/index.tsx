@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function HomePage() {
   return (
@@ -30,8 +31,11 @@ export default function HomePage() {
           borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Link href="/" style={{ fontSize: '1.5rem', fontWeight: 'bold', textDecoration: 'none', color: 'white' }}>
-              <span style={{ color: '#FFD700' }}>Wakil</span>Chat
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
+              <Image src="/branding/logo-icon.jpg" alt="WakilChat Lion" width={40} height={40} style={{ borderRadius: '50%' }} />
+              <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>
+                <span style={{ color: '#FFD700' }}>Wakil</span>Chat
+              </span>
             </Link>
             <div style={{ display: 'flex', gap: '1rem' }}>
               <Link href="/login" style={{ color: '#999', textDecoration: 'none' }}>Login</Link>
@@ -51,6 +55,17 @@ export default function HomePage() {
 
         {/* Hero Section */}
         <section style={{ paddingTop: '8rem', paddingBottom: '4rem', textAlign: 'center', maxWidth: '1000px', margin: '0 auto', padding: '8rem 2rem 4rem' }}>
+          {/* Golden Lion Hero Image */}
+          <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center' }}>
+            <Image 
+              src="/branding/logo-icon.jpg" 
+              alt="WakilChat Lion" 
+              width={150} 
+              height={150} 
+              style={{ borderRadius: '50%', boxShadow: '0 0 40px rgba(255, 215, 0, 0.3)' }}
+            />
+          </div>
+          
           <p style={{ color: '#FFD700', fontSize: '0.875rem', fontWeight: '500', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem' }}>
             For African Entrepreneurs Who Want Freedom
           </p>
@@ -137,7 +152,7 @@ export default function HomePage() {
         </section>
 
         {/* CTA */}
-        <section style={{ padding: '4rem 2rem', background: 'linear-gradient(to top, rgba(255,215,0,0.1), transparent)' }}>
+        <section style={{ padding: '4rem 2rem 6rem', background: 'linear-gradient(to top, rgba(255,215,0,0.1), transparent)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
             <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 'bold', marginBottom: '1.5rem' }}>
               Ready to Grow Your Business?
@@ -167,10 +182,13 @@ export default function HomePage() {
         </section>
 
         {/* Footer */}
-        <footer style={{ borderTop: '1px solid rgba(255,255,255,0.1)', padding: '3rem 2rem' }}>
+        <footer style={{ borderTop: '1px solid rgba(255,255,255,0.1)', padding: '3rem 2rem', marginBottom: '3rem' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1.5rem' }}>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-              <span style={{ color: '#FFD700' }}>Wakil</span>Chat
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <Image src="/branding/logo-icon.jpg" alt="WakilChat" width={32} height={32} style={{ borderRadius: '50%' }} />
+              <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
+                <span style={{ color: '#FFD700' }}>Wakil</span>Chat
+              </span>
             </div>
             <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
               <Link href="/about" style={{ color: '#999', textDecoration: 'none' }}>About</Link>
