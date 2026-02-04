@@ -2,6 +2,7 @@ import { AuthProvider } from '../lib/providers/AuthProvider';
 import { ProtectionLayer } from '../components/ProtectionLayer';
 import { TrackingBeacon } from '../components/TrackingBeacon';
 import { SecurityWarning, CopyrightWatermark } from '../components/SecurityWarning';
+import { InstallPrompt } from '../components/InstallPrompt';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
@@ -47,6 +48,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <TrackingBeacon />
         <SecurityWarning />
         <CopyrightWatermark />
+        <InstallPrompt />
         <Component {...pageProps} />
       </AuthProvider>
     </>
