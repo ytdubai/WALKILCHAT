@@ -1238,5 +1238,5 @@ Founder & CEO, WakilChat
 Email: investors@wakilchat.com
 Phone: [Your number]
 
-**Website:** wakilchat.netlify.app
+**Website:** wakilchat.com
 **Deck:** docs.wakilchat.com/investor-deck
