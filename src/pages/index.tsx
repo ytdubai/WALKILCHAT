@@ -146,17 +146,55 @@ export default function HomePage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
             {[
-              { icon: '📞', title: 'FREE Calls', desc: 'Voice & video calls with zero charges' },
-              { icon: '💬', title: 'Instant Chat', desc: 'Message customers in real-time' },
-              { icon: '💳', title: 'Get Paid Fast', desc: 'Accept M-Pesa, Telebirr, cards' },
-              { icon: '🏪', title: 'Online Shop', desc: 'Sell products to anyone, anywhere' },
-              { icon: '🛡️', title: 'Bank Security', desc: 'Your money is always protected' },
-              { icon: '⚡', title: 'Works Offline', desc: 'Full access without internet' }
+              { icon: '📞', gradient: 'linear-gradient(135deg, #10b981, #059669)', title: 'FREE Calls', desc: 'Voice & video calls with zero charges' },
+              { icon: '💬', gradient: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', title: 'Instant Chat', desc: 'Message customers in real-time' },
+              { icon: '💳', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)', title: 'Get Paid Fast', desc: 'Accept M-Pesa, Telebirr, cards' },
+              { icon: '🏪', gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)', title: 'Online Shop', desc: 'Sell products to anyone, anywhere' },
+              { icon: '🛡️', gradient: 'linear-gradient(135deg, #06b6d4, #0284c7)', title: 'Bank Security', desc: 'Your money is always protected' },
+              { icon: '⚡', gradient: 'linear-gradient(135deg, #eab308, #ca8a04)', title: 'Works Offline', desc: 'Full access without internet' }
             ].map((feature, i) => (
-              <div key={i} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '1rem', padding: '1.5rem', cursor: 'pointer', transition: 'all 0.3s' }}>
-                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{feature.icon}</div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '0.5rem' }}>{feature.title}</h3>
-                <p style={{ color: '#999' }}>{feature.desc}</p>
+              <div key={i} style={{ 
+                background: 'rgba(255,255,255,0.03)', 
+                border: '1px solid rgba(255,255,255,0.1)', 
+                borderRadius: '1rem', 
+                padding: '1.5rem', 
+                cursor: 'pointer', 
+                transition: 'all 0.3s',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                {/* Gradient glow effect */}
+                <div style={{
+                  position: 'absolute',
+                  top: '-50%',
+                  left: '-50%',
+                  width: '200%',
+                  height: '200%',
+                  background: feature.gradient,
+                  opacity: 0.1,
+                  filter: 'blur(40px)',
+                  pointerEvents: 'none'
+                }} />
+                
+                {/* Icon with gradient background */}
+                <div style={{ 
+                  position: 'relative',
+                  width: '64px',
+                  height: '64px',
+                  background: feature.gradient,
+                  borderRadius: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '2rem',
+                  marginBottom: '1rem',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.3)'
+                }}>
+                  {feature.icon}
+                </div>
+                
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '0.5rem', position: 'relative' }}>{feature.title}</h3>
+                <p style={{ color: '#999', position: 'relative' }}>{feature.desc}</p>
               </div>
             ))}
           </div>
