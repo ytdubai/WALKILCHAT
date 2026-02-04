@@ -37,15 +37,26 @@ export default function HomePage() {
                 <span style={{ color: '#FFD700' }}>Wakil</span>Chat
               </span>
             </Link>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <Link href="/login" style={{ color: '#999', textDecoration: 'none' }}>Login</Link>
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+              <Link href="/login" style={{ 
+                color: 'white',
+                textDecoration: 'none',
+                padding: '0.5rem 1.5rem',
+                borderRadius: '50px',
+                border: '1px solid rgba(255,215,0,0.3)',
+                fontWeight: '500',
+                transition: 'all 0.3s'
+              }}>
+                Login
+              </Link>
               <Link href="/signup" style={{ 
                 background: '#FFD700', 
                 color: '#000', 
                 padding: '0.5rem 1.5rem', 
                 borderRadius: '50px', 
                 fontWeight: '600', 
-                textDecoration: 'none'
+                textDecoration: 'none',
+                boxShadow: '0 0 20px rgba(255,215,0,0.3)'
               }}>
                 Start Free
               </Link>
