@@ -97,7 +97,7 @@ export function InstallPrompt() {
             🦁
           </div>
           
-          <div style flex: 1 }}>
+          <div style={{ flex: 1 }}>
             <h3 style={{ 
               fontSize: '1.125rem', 
               fontWeight: 'bold', 
