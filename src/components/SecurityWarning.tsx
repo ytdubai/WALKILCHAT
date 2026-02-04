@@ -33,7 +33,7 @@ export function SecurityWarning() {
           <div>
             <p style={{ fontWeight: 'bold', fontSize: '0.875rem', margin: 0 }}>SECURITY WARNING - PROTECTED CODE</p>
             <p style={{ fontSize: '0.75rem', margin: 0 }}>
-              This code is copyrighted © 2026 WakilChat. Unauthorized copying is illegal and monitored.
+              This code is copyrighted © 2026 WakilChat™. Unauthorized copying is illegal and monitored.
             </p>
           </div>
         </div>
@@ -68,7 +68,7 @@ export function CopyrightWatermark() {
         zIndex: 50
       }}>
         <p style={{ margin: 0 }}>
-          © 2026 WakilChat • All Rights Reserved • Patent Pending • 
+          © 2026 WakilChat™ • All Rights Reserved • Patent Pending • Trademark Pending • 
           <span style={{ color: '#fca5a5', fontWeight: '600' }}> Protected by Law</span> • 
           Unauthorized use is monitored and prosecuted
         </p>

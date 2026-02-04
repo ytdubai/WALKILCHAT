@@ -57,7 +57,7 @@ export function ProtectionLayer() {
       'color: yellow; font-size: 16px;'
     );
     console.log(
-      '%c© 2026 WakilChat. All Rights Reserved.',
+      '%c© 2026 WakilChat™. All Rights Reserved.',
       'color: white; font-size: 14px;'
     );
 

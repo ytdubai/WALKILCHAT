@@ -99,7 +99,7 @@ export default function SignupPage() {
             <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', marginBottom: '1rem' }}>
               <Image 
                 src="/branding/logo-icon.jpg" 
-                alt="WakilChat" 
+                alt="WakilChat™" 
                 width={70} 
                 height={70} 
                 style={{ borderRadius: '50%', boxShadow: '0 0 40px rgba(255,215,0,0.5)' }}

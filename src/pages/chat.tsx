@@ -41,7 +41,7 @@ export default function Chat() {
       <Head><title>Chat - WakilChat</title></Head>
       <div className="h-screen bg-gray-900 flex flex-col">
         <header className="bg-gray-800 p-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold text-white">WakilChat</h1>
+          <h1 className="text-xl font-bold text-white">WakilChat™</h1>
           <button onClick={() => { supabase.auth.signOut(); window.location.href = '/login' }} className="text-gray-400 hover:text-white">Logout</button>
         </header>
         <div className="flex-1 overflow-y-auto p-4 space-y-3">

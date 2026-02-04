@@ -6,7 +6,7 @@ export default function Business() {
     <>
       <Head><title>WakilChat for Business</title></Head>
       <div className="min-h-screen bg-gray-900">
-        <nav className="p-6"><Link href="/" className="text-2xl font-bold text-white">WakilChat</Link></nav>
+        <nav className="p-6"><Link href="/" className="text-2xl font-bold text-white">WakilChat™</Link></nav>
         <main className="max-w-4xl mx-auto px-4 py-20 text-center">
           <h1 className="text-5xl font-bold text-white mb-6">AI Employee for Your Business</h1>
           <p className="text-xl text-gray-300 mb-12">$15/month - Handles customers 24/7 while you sleep</p>

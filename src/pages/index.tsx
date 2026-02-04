@@ -15,7 +15,7 @@ export default function HomePage() {
         <link rel="icon" href="/branding/logo-icon.jpg" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="WakilChat" />
+        <meta name="apple-mobile-web-app-title" content="WakilChat™" />
         <link rel="apple-touch-icon" href="/branding/logo-icon.jpg" />
         <style>{`
           body { 
@@ -193,7 +193,7 @@ export default function HomePage() {
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
               <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
-                What Is <span style={{ color: '#FFD700' }}>WakilChat</span>?
+                What Is <span style={{ color: '#FFD700' }}>WakilChat™</span>?
               </h2>
               <p style={{ fontSize: '1.25rem', color: '#ccc', maxWidth: '800px', margin: '0 auto' }}>
                 WakilChat is the FIRST and ONLY all-in-one business super app built specifically for African entrepreneurs.
@@ -533,7 +533,7 @@ export default function HomePage() {
           <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
             <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
               Stop Losing Money. <br />
-              <span style={{ color: '#FFD700' }}>Start With WakilChat.</span>
+              <span style={{ color: '#FFD700' }}>Start With WakilChat™.</span>
             </h2>
             <p style={{ fontSize: '1.25rem', color: '#ccc', marginBottom: '2rem' }}>
               50,000+ businesses already made the switch. Will you be next?
@@ -563,7 +563,7 @@ export default function HomePage() {
         <footer style={{ borderTop: '1px solid rgba(255,255,255,0.1)', padding: '3rem 2rem', marginBottom: '3.5rem' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1.5rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <Image src="/branding/logo-icon.jpg" alt="WakilChat" width={32} height={32} style={{ borderRadius: '50%' }} />
+              <Image src="/branding/logo-icon.jpg" alt="WakilChat™" width={32} height={32} style={{ borderRadius: '50%' }} />
               <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
                 <span style={{ color: '#FFD700' }}>Wakil</span>Chat
               </span>
