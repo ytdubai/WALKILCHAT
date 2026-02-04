@@ -16,20 +16,30 @@ export function SecurityWarning() {
   if (!show) return null;
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[9999] bg-gradient-to-r from-red-600 to-orange-600 text-white py-3 px-4 shadow-lg">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">⚠️</span>
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      zIndex: 9999,
+      background: 'linear-gradient(to right, #dc2626, #ea580c)',
+      color: 'white',
+      padding: '0.75rem 1rem',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
+    }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <span style={{ fontSize: '1.5rem' }}>⚠️</span>
           <div>
-            <p className="font-bold text-sm">SECURITY WARNING - PROTECTED CODE</p>
-            <p className="text-xs">
+            <p style={{ fontWeight: 'bold', fontSize: '0.875rem', margin: 0 }}>SECURITY WARNING - PROTECTED CODE</p>
+            <p style={{ fontSize: '0.75rem', margin: 0 }}>
               This code is copyrighted © 2026 WakilChat. Unauthorized copying is illegal and monitored.
             </p>
           </div>
         </div>
         <button
           onClick={() => setShow(false)}
-          className="text-white/80 hover:text-white text-xl"
+          style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.8)', fontSize: '1.25rem', cursor: 'pointer' }}
         >
           ✕
         </button>
@@ -38,15 +48,28 @@ export function SecurityWarning() {
   );
 }
 
-// Watermark for every page
+// Permanent copyright footer - ALWAYS VISIBLE
 export function CopyrightWatermark() {
   return (
     <>
-      {/* Visible footer warning */}
-      <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm text-white py-2 px-4 text-center text-xs border-t border-red-500/30 z-50">
-        <p>
+      {/* ALWAYS VISIBLE copyright footer */}
+      <div style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        background: 'rgba(0,0,0,0.9)',
+        backdropFilter: 'blur(10px)',
+        color: 'white',
+        padding: '0.5rem 1rem',
+        textAlign: 'center',
+        fontSize: '0.75rem',
+        borderTop: '1px solid rgba(239,68,68,0.3)',
+        zIndex: 50
+      }}>
+        <p style={{ margin: 0 }}>
           © 2026 WakilChat • All Rights Reserved • Patent Pending • 
-          <span className="text-red-400 font-semibold"> Protected by Law</span> • 
+          <span style={{ color: '#fca5a5', fontWeight: '600' }}> Protected by Law</span> • 
           Unauthorized use is monitored and prosecuted
         </p>
       </div>
@@ -66,7 +89,7 @@ export function CopyrightWatermark() {
         data-warning="Unauthorized-copying-is-illegal-and-monitored"
       />
 
-      {/* CSS watermark */}
+      {/* CSS watermark - giant background text */}
       <style jsx global>{`
         body::before {
           content: 'WakilChat © 2026';
