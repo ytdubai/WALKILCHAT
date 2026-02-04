@@ -1,46 +1,48 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Phone, MessageSquare, CreditCard, Store, Shield, Zap, ArrowRight } from 'lucide-react';
-
-const features = [
-  { icon: Phone, title: 'FREE Calls', desc: 'Voice & video calls with zero charges' },
-  { icon: MessageSquare, title: 'Instant Chat', desc: 'Message customers in real-time' },
-  { icon: CreditCard, title: 'Get Paid Fast', desc: 'Accept M-Pesa, Telebirr, cards' },
-  { icon: Store, title: 'Online Shop', desc: 'Sell products to anyone, anywhere' },
-  { icon: Shield, title: 'Bank Security', desc: 'Your money is always protected' },
-  { icon: Zap, title: 'Works Offline', desc: 'Full access without internet' },
-];
 
 export default function HomePage() {
   return (
     <>
       <Head>
         <title>WakilChat - Run Your Entire Business From One App</title>
-        <meta
-          name="description"
-          content="The all-in-one super app for African entrepreneurs. Free calls, instant payments, and AI-powered business tools."
-        />
+        <meta name="description" content="The all-in-one super app for African entrepreneurs. Free calls, instant payments, and AI-powered business tools." />
+        <style>{`
+          body { 
+            margin: 0; 
+            background: linear-gradient(to bottom, #0a0a0a 0%, #1a1a2e 100%);
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          }
+        `}</style>
       </Head>
 
-      <div className="min-h-screen bg-[#0a0a0a] text-white">
+      <div style={{ minHeight: '100vh', background: '#0a0a0a', color: 'white' }}>
         {/* Navigation */}
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5">
-          <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <Link href="/" className="text-2xl font-bold">
-              <span className="text-gold">Wakil</span>Chat
+        <nav style={{ 
+          position: 'fixed', 
+          top: 0, 
+          left: 0, 
+          right: 0, 
+          zIndex: 50, 
+          background: 'rgba(10, 10, 10, 0.8)', 
+          backdropFilter: 'blur(10px)', 
+          borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
+        }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Link href="/" style={{ fontSize: '1.5rem', fontWeight: 'bold', textDecoration: 'none', color: 'white' }}>
+              <span style={{ color: '#FFD700' }}>Wakil</span>Chat
             </Link>
-            <div className="flex items-center gap-4">
-              <Link
-                href="/login"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                className="bg-gold text-black px-6 py-2 rounded-full font-semibold hover:bg-yellow-400 transition-all hover:scale-105"
-              >
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <Link href="/login" style={{ color: '#999', textDecoration: 'none' }}>Login</Link>
+              <Link href="/signup" style={{ 
+                background: '#FFD700', 
+                color: '#000', 
+                padding: '0.5rem 1.5rem', 
+                borderRadius: '50px', 
+                fontWeight: '600', 
+                textDecoration: 'none'
+              }}>
                 Start Free
               </Link>
             </div>
@@ -48,114 +50,135 @@ export default function HomePage() {
         </nav>
 
         {/* Hero Section */}
-        <section className="relative pt-32 pb-20 px-4">
-          <div className="absolute inset-0 bg-gradient-to-b from-gold/5 via-transparent to-transparent" />
-          <div className="relative max-w-5xl mx-auto text-center">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
-            >
-              Run Your Entire Business <br />
-              <span className="text-gold">From One App</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-xl text-gray-400 max-w-2xl mx-auto mb-8"
-            >
-              Free calls. Instant payments. AI assistant. Join 50,000+ businesses
-              who ditched 5 different apps for WakilChat.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
-              <Link
-                href="/signup"
-                className="group bg-gold text-black px-8 py-4 rounded-full text-lg font-bold hover:bg-yellow-400 transition-all hover:scale-105 flex items-center justify-center gap-2"
-              >
-                Start Free — No Card Required
-                <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </motion.div>
+        <section style={{ paddingTop: '8rem', paddingBottom: '4rem', textAlign: 'center', maxWidth: '1000px', margin: '0 auto', padding: '8rem 2rem 4rem' }}>
+          <p style={{ color: '#FFD700', fontSize: '0.875rem', fontWeight: '500', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+            For African Entrepreneurs Who Want Freedom
+          </p>
+          
+          <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', fontWeight: 'bold', lineHeight: '1.1', marginBottom: '1.5rem' }}>
+            Run Your Entire Business <br />
+            <span style={{ color: '#FFD700' }}>From One App</span>
+          </h1>
+          
+          <p style={{ fontSize: '1.25rem', color: '#999', maxWidth: '700px', margin: '0 auto 2rem' }}>
+            Free calls. Instant payments. AI assistant. Join 50,000+ businesses who ditched 5 different apps for WakilChat.
+          </p>
+          
+          <Link href="/signup" style={{ 
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            background: '#FFD700', 
+            color: '#000', 
+            padding: '1rem 2rem', 
+            borderRadius: '50px', 
+            fontSize: '1.125rem',
+            fontWeight: 'bold', 
+            textDecoration: 'none',
+            boxShadow: '0 0 30px rgba(255, 215, 0, 0.3)'
+          }}>
+            Start Free — No Card Required →
+          </Link>
+          
+          <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '1rem' }}>
+            ✓ Free forever plan &nbsp; ✓ Works offline &nbsp; ✓ Cancel anytime
+          </p>
+        </section>
+
+        {/* Stats */}
+        <section style={{ borderTop: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.02)', padding: '2rem 0' }}>
+          <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 2rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem', textAlign: 'center' }}>
+            {['50,000+|Businesses', '₦2.3B+|Processed', '4.9/5|Rating', '99.9%|Uptime'].map((stat, i) => {
+              const [value, label] = stat.split('|');
+              return (
+                <div key={i}>
+                  <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#FFD700' }}>{value}</div>
+                  <div style={{ color: '#666', fontSize: '0.875rem' }}>{label}</div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
-        {/* Features Grid */}
-        <section className="py-20 px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {features.map((feature, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  viewport={{ once: true }}
-                  className="group p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-gold/50 hover:bg-white/[0.05] transition-all"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mb-4 group-hover:bg-gold/20 transition-colors">
-                    <feature.icon className="text-gold" size={24} />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-gray-400">{feature.desc}</p>
-                </motion.div>
-              ))}
-            </div>
+        {/* Problem */}
+        <section style={{ padding: '4rem 2rem', maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: '1rem', padding: '2rem', textAlign: 'center' }}>
+            <p style={{ color: '#FCA5A5', fontSize: '1.125rem' }}>
+              African SMEs lose <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#FEE2E2' }}>₦2.1 TRILLION</span> annually to payment delays, manual bookkeeping, and juggling multiple apps.
+            </p>
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="py-20 px-4 bg-gradient-to-t from-gold/10 to-transparent">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl md:text-5xl font-bold mb-6">
-                Ready to Grow Your Business?
-              </h2>
-              <Link
-                href="/signup"
-                className="inline-flex items-center gap-2 bg-gold text-black px-10 py-5 rounded-full text-xl font-bold hover:bg-yellow-400 transition-all hover:scale-105"
-              >
-                Get WakilChat Free <ArrowRight size={24} />
-              </Link>
-              <p className="mt-4 text-sm text-gray-500">
-                Free forever • No credit card • Setup in 60 seconds
-              </p>
-            </motion.div>
+        {/* Features */}
+        <section style={{ padding: '4rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
+              Everything You Need. <span style={{ color: '#FFD700' }}>One App.</span>
+            </h2>
+            <p style={{ color: '#999', fontSize: '1.125rem' }}>Stop switching between apps. Start growing your business.</p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+            {[
+              { icon: '📞', title: 'FREE Calls', desc: 'Voice & video calls with zero charges' },
+              { icon: '💬', title: 'Instant Chat', desc: 'Message customers in real-time' },
+              { icon: '💳', title: 'Get Paid Fast', desc: 'Accept M-Pesa, Telebirr, cards' },
+              { icon: '🏪', title: 'Online Shop', desc: 'Sell products to anyone, anywhere' },
+              { icon: '🛡️', title: 'Bank Security', desc: 'Your money is always protected' },
+              { icon: '⚡', title: 'Works Offline', desc: 'Full access without internet' }
+            ].map((feature, i) => (
+              <div key={i} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '1rem', padding: '1.5rem', cursor: 'pointer', transition: 'all 0.3s' }}>
+                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{feature.icon}</div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '0.5rem' }}>{feature.title}</h3>
+                <p style={{ color: '#999' }}>{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section style={{ padding: '4rem 2rem', background: 'linear-gradient(to top, rgba(255,215,0,0.1), transparent)' }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+            <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 'bold', marginBottom: '1.5rem' }}>
+              Ready to Grow Your Business?
+            </h2>
+            <p style={{ fontSize: '1.25rem', color: '#999', marginBottom: '2rem' }}>
+              Join 50,000+ entrepreneurs who run their business from one app.
+            </p>
+            <Link href="/signup" style={{ 
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              background: '#FFD700', 
+              color: '#000', 
+              padding: '1.25rem 2.5rem', 
+              borderRadius: '50px', 
+              fontSize: '1.25rem',
+              fontWeight: 'bold', 
+              textDecoration: 'none',
+              boxShadow: '0 0 40px rgba(255, 215, 0, 0.4)'
+            }}>
+              Get WakilChat Free →
+            </Link>
+            <p style={{ marginTop: '1rem', fontSize: '0.875rem', color: '#666' }}>
+              Free forever • No credit card • Setup in 60 seconds
+            </p>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-white/10 py-12 px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-              <div className="text-2xl font-bold">
-                <span className="text-gold">Wakil</span>Chat
-              </div>
-              <div className="flex gap-8 text-gray-400">
-                <Link href="/about" className="hover:text-white transition-colors">
-                  About
-                </Link>
-                <Link href="/pricing" className="hover:text-white transition-colors">
-                  Pricing
-                </Link>
-                <Link href="/help" className="hover:text-white transition-colors">
-                  Help
-                </Link>
-                <Link href="/privacy" className="hover:text-white transition-colors">
-                  Privacy
-                </Link>
-              </div>
-              <p className="text-gray-500">Made with 🦁 in Africa</p>
+        <footer style={{ borderTop: '1px solid rgba(255,255,255,0.1)', padding: '3rem 2rem' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1.5rem' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
+              <span style={{ color: '#FFD700' }}>Wakil</span>Chat
             </div>
+            <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+              <Link href="/about" style={{ color: '#999', textDecoration: 'none' }}>About</Link>
+              <Link href="/pricing" style={{ color: '#999', textDecoration: 'none' }}>Pricing</Link>
+              <Link href="/help" style={{ color: '#999', textDecoration: 'none' }}>Help</Link>
+              <Link href="/privacy" style={{ color: '#999', textDecoration: 'none' }}>Privacy</Link>
+            </div>
+            <p style={{ color: '#666' }}>Made with 🦁 in Africa</p>
           </div>
         </footer>
       </div>
