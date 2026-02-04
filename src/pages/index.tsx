@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FAQ } from '../components/FAQ';
+import { CloseTheGap } from '../components/CloseTheGap';
 
 export default function HomePage() {
   return (
@@ -524,6 +525,9 @@ export default function HomePage() {
             ))}
           </div>
         </section>
+        {/* Close The Gap Section */}
+        <CloseTheGap />
+
         {/* FAQ Section */}
         <FAQ />
 
