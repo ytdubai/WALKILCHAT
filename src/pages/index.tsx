@@ -1,584 +1,488 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useEffect, useState, useRef, CSSProperties, ReactNode } from 'react';
-/* ═══════════════════════════════════════════════════════════════
-WAKILCHAT — The Billion-Dollar Homepage
-Plaid × Stripe × Cash App level fintech aesthetic
-═══════════════════════════════════════════════════════════════ */
-/* ─── HOOKS ─── */
-function useInView(opts = { threshold: 0.15, once: true }) {
-const ref = useRef<HTMLDivElement>(null);
-const [inView, setInView] = useState(false);
-useEffect(() => {
-const el = ref.current;
-if (!el) return;
-const obs = new IntersectionObserver(([e]) => {
-if (e.isIntersecting) { setInView(true); if (opts.once) obs.disconnect(); }
-}, { threshold: opts.threshold });
-obs.observe(el);
-return () => obs.disconnect();
-}, []);
-return { ref, inView };
-}
-function useAnimatedCounter(end: number, duration = 2200) {
-const [count, setCount] = useState(0);
-const { ref, inView } = useInView({ threshold: 0.3, once: true });
-useEffect(() => {
-if (!inView) return;
-let raf: number;
-const t0 = performance.now();
-const step = (now: number) => {
-const p = Math.min((now - t0) / duration, 1);
-const ease = 1 - Math.pow(1 - p, 4);
-setCount(Math.floor(ease * end));
-if (p < 1) raf = requestAnimationFrame(step);
-};
-raf = requestAnimationFrame(step);
-return () => cancelAnimationFrame(raf);
-}, [inView, end, duration]);
-return { count, ref };
-}
-function useMouseGlow() {
-const ref = useRef<HTMLDivElement>(null);
-useEffect(() => {
-const el = ref.current;
-if (!el) return;
-const move = (e: MouseEvent) => {
-const rect = el.getBoundingClientRect();
-el.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-el.style.setProperty('--my', `${e.clientY - rect.top}px`);
-};
-el.addEventListener('mousemove', move);
-return () => el.removeEventListener('mousemove', move);
-}, []);
-return ref;
+import { useEffect, useState, useRef } from 'react';
+
+function useInView(threshold) {
+  if (!threshold) threshold = 0.15;
+  var ref = useRef(null);
+  var s = useState(false);
+  var inView = s[0];
+  var setInView = s[1];
+  useEffect(function () {
+    var el = ref.current;
+    if (!el) return;
+    var obs = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        setInView(true);
+        obs.disconnect();
+      }
+    }, { threshold: threshold });
+    obs.observe(el);
+    return function () { obs.disconnect(); };
+  }, []);
+  return { ref: ref, inView: inView };
 }
 
-function R({ children, d = 0, y = 36, s }: { children: ReactNode; d?: number; y?: number; s?: CSSProperties }) {
-  const { ref, inView } = useInView();
-  return (const heroGlow = useMouseGlow();
-useEffect(() => {
-setMounted(true);
-const fn = () => setScrolled(window.scrollY > 40);
-window.addEventListener('scroll', fn, { passive: true });
-return () => window.removeEventListener('scroll', fn);
-}, []);
-return (
-<>
-<Head>
-<title>WakilChat — The Financial Infrastructure for African Businesses</title>
-<meta name="description" content="Accept payments, manage invoices, and grow your bus
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;8
-</Head>
-<style jsx global>{`
-:root {
---gold: #EAB308;
---gold-light: #FACC15;
---gold-dim: rgba(234,179,8,0.12);
---gold-border: rgba(234,179,8,0.22);
---emerald: #34D399;
---violet: #8B5CF6;
---cyan: #22D3EE;
---bg: #050505;
---surface: #0A0A0A;
---elevated: #111111;
---card: #161616;
---t1: rgba(255,255,255,0.95);
---t2: rgba(255,255,255,0.65);
---t3: rgba(255,255,255,0.40);
---b1: rgba(255,255,255,0.06);
---b2: rgba(255,255,255,0.10);
---b3: rgba(255,255,255,0.16);
+function useCounter(end, duration) {
+  if (!duration) duration = 2200;
+  var s = useState(0);
+  var count = s[0];
+  var setCount = s[1];
+  var view = useInView(0.3);
+  useEffect(function () {
+    if (!view.inView) return;
+    var raf;
+    var t0 = performance.now();
+    function step(now) {
+      var p = Math.min((now - t0) / duration, 1);
+      var ease = 1 - Math.pow(1 - p, 4);
+      setCount(Math.floor(ease * end));
+      if (p < 1) raf = requestAnimationFrame(step);
+    }
+    raf = requestAnimationFrame(step);
+    return function () { cancelAnimationFrame(raf); };
+  }, [view.inView, end, duration]);
+  return { count: count, ref: view.ref };
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothin
-body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);colo
-a{text-decoration:none;color:inherit}
-::selection{background:rgba(234,179,8,.3);color:#fff}
-.tabular{font-variant-numeric:tabular-nums}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
-@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
-@keyframes spin-slow{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-@keyframes gradient-shift{0%{background-position:0% 50%}50%{background-position:100%
-@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-@keyframes glow-pulse{0%,100%{opacity:.5}50%{opacity:1}}
-.btn-primary{
-display:inline-flex;align-items:center;gap:10px;
-padding:14px 32px;border-radius:14px;border:none;cursor:pointer;
-font-family:inherit;font-weight:600;font-size:15px;
-background:var(--gold);color:#050505;
-box-shadow:0 1px 2px rgba(0,0,0,.3),0 0 0 1px rgba(234,179,8,.3),inset 0 1px transition:all .2s cubic-bezier(.16,1,.3,1);
-0 rgba
-position:relative;overflow:hidden;
+
+function Reveal(props) {
+  var d = props.d || 0;
+  var y = props.y || 36;
+  var view = useInView(0.12);
+  return (
+    <div ref={view.ref} style={{
+      opacity: view.inView ? 1 : 0,
+      transform: view.inView ? 'translate3d(0,0,0)' : 'translate3d(0,' + y + 'px,0)',
+      transition: 'all .8s cubic-bezier(.16,1,.3,1) ' + d + 's',
+    }}>
+      {props.children}
+    </div>
+  );
 }
-.btn-primary::after{
-content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
-transition:left .5s;
+
+function FeatureCard(props) {
+  var s = useState(false);
+  var hov = s[0];
+  var setHov = s[1];
+  return (
+    <div
+      onMouseEnter={function () { setHov(true); }}
+      onMouseLeave={function () { setHov(false); }}
+      style={{
+        padding: '32px 28px',
+        borderRadius: 18,
+        background: hov ? '#141414' : '#111111',
+        border: '1px solid ' + (hov ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.06)'),
+        transition: 'all .25s cubic-bezier(.16,1,.3,1)',
+        transform: hov ? 'translateY(-4px)' : 'translateY(0)',
+        boxShadow: hov ? '0 20px 40px -10px rgba(0,0,0,.4)' : 'none',
+      }}
+    >
+      <div style={{
+        fontSize: 28, marginBottom: 20, width: 52, height: 52, borderRadius: 14,
+        background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.06)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>{props.icon}</div>
+      <h3 style={{ fontSize: 17, fontWeight: 700, color: 'rgba(255,255,255,.95)', marginBottom: 8 }}>{props.title}</h3>
+      <p style={{ fontSize: 14.5, color: 'rgba(255,255,255,.6)', lineHeight: 1.6 }}>{props.desc}</p>
+    </div>
+  );
 }
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(234,179,8,.3
-.btn-primary:hover::after{left:100%}
-.btn-primary:active{transform:translateY(0)}
-.btn-secondary{
-display:inline-flex;align-items:center;gap:10px;
-padding:14px 32px;border-radius:14px;cursor:pointer;
-font-family:inherit;font-weight:500;font-size:15px;
-background:rgba(255,255,255,.04);color:var(--t1);
-border:1px solid var(--b2);
-transition:all .2s;
+
+function Stat(props) {
+  var c = useCounter(props.target, 2200);
+  return (
+    <div ref={c.ref} style={{ textAlign: 'center', minWidth: 100 }}>
+      <div style={{
+        fontSize: 48, fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1,
+        marginBottom: 8, color: '#EAB308',
+      }}>
+        {c.count.toLocaleString()}{props.suffix}
+      </div>
+      <div style={{ fontSize: 14, color: 'rgba(255,255,255,.4)', fontWeight: 500 }}>{props.label}</div>
+    </div>
+  );
 }
-.btn-secondary:hover{background:rgba(255,255,255,.08);border-color:var(--b3)}
-@media(max-width:768px){
-.resp-grid-3{grid-template-columns:1fr!important}
-.resp-grid-2{grid-template-columns:1fr!important}
-.resp-flex-col{flex-direction:column!important}
-.resp-text-center{text-align:center!important}
-.hero-title{font-size:38px!important}
-.resp-hide{display:none!important}
-.resp-full{width:100%!important}
-.resp-gap-sm{gap:12px!important}
-.section-pad{padding-top:64px!important;padding-bottom:64px!important}
-.resp-px{padding-left:20px!important;padding-right:20px!important}
-}
-@media(max-width:480px){
-.hero-title{font-size:30px!important}
-}
-`}</style>
-{/* ═══ GRAIN TEXTURE ═══ */}
-<div style={{position:'fixed',inset:0,pointerEvents:'none',zIndex:9999,opacity:.018,bac
-{/* ═══════════ NAVBAR ═══════════ */}
-<header style={{
-position:'fixed',top:0,left:0,right:0,zIndex:100,
-background:scrolled?'rgba(5,5,5,.85)':'transparent',
-backdropFilter:scrolled?'blur(20px) saturate(1.5)':'none',
-borderBottom:scrolled?'1px solid var(--b1)':'1px solid transparent',
-transition:'all .35s cubic-bezier(.16,1,.3,1)',
-}}>
-<nav style={{maxWidth:1200,margin:'0 auto',padding:'0 32px',display:'flex',alignItems
-<Link href="/" style={{display:'flex',alignItems:'center',gap:10}}>
-<div style={{width:34,height:34,borderRadius:10,background:'var(--gold)',display:
-<span style={{color:'#050505',fontWeight:800,fontSize:16,lineHeight:1}}>W</span
-</div>
-<span style={{fontSize:19,fontWeight:700,letterSpacing:'-.03em'}}>
-<span style={{color:'var(--gold)'}}>Wakil</span><span style={{color:'var(--t1)'
-</span>
-</Link>
-<div className="resp-hide" style={{display:'flex',alignItems:'center',gap:8}}>
-{['Products','Solutions','Pricing','Company'].map(item=>(
-<a key={item} href={`#${item.toLowerCase()}`} style={{padding:'8px 16px',fontSi
-onMouseEnter={e=>{(e.target as HTMLElement).style.color='var(--t1)';(e.target
-onMouseLeave={e=>{(e.target as HTMLElement).style.color='var(--t2)';(e.target
->{item}</a>
-))}
-</div>
-<div style={{display:'flex',alignItems:'center',gap:16}}>
-<Link href="/login" className="resp-hide" style={{fontSize:14,color:'var(--t2)',f
-onMouseEnter={e=>(e.target as HTMLElement).style.color='var(--t1)'}
-onMouseLeave={e=>(e.target as HTMLElement).style.color='var(--t2)'}
->Sign in</Link>
-<Link href="/signup"><button className="btn-primary" style={{padding:'10px </div>
-</nav>
-</header>
-22px',
-{/* ═══════════ HERO ═══════════ */}
-<section ref={heroGlow} style={{position:'relative',minHeight:'100vh',display:'flex',al
-{/* Animated mesh gradient background */}
-<div style={{
-position:'absolute',inset:0,
-background:`
-radial-gradient(ellipse 80% 60% at 50% 0%, rgba(234,179,8,.08) 0%, transparent 50
-radial-gradient(ellipse 60% 40% at 20% 60%, rgba(139,92,246,.04) 0%, transparent
-radial-gradient(ellipse 50% 50% at 80% 80%, rgba(34,211,238,.03) 0%, transparent
-`,
-}}/>
-{/* Interactive mouse glow */}
-<div style={{
-position:'absolute',
-width:600,height:600,borderRadius:'50%',
-background:'radial-gradient(circle,rgba(234,179,8,.06) 0%,transparent 70%)',
-left:'var(--mx,50%)',top:'var(--my,50%)',
-transform:'translate(-50%,-50%)',
-pointerEvents:'none',transition:'left .3s ease-out,top .3s ease-out',
-}}/>
-{/* Subtle grid */}
-<div style={{
-position:'absolute',inset:0,opacity:.03,
-backgroundImage:'linear-gradient(var(--b1) 1px,transparent 1px),linear-gradient(90d
-backgroundSize:'64px 64px',
-maskImage:'radial-gradient(ellipse 70% 50% at 50% 40%,black,transparent)',
-WebkitMaskImage:'radial-gradient(ellipse 70% 50% at 50% 40%,black,transparent)',
-}}/>
-{/* Floating orbs */}
-<div style={{position:'absolute',top:'15%',left:'10%',width:300,height:300,borderRadi
-<div style={{position:'absolute',bottom:'20%',right:'8%',width:250,height:250,borderR
-<div style={{position:'relative',maxWidth:860,margin:'0 auto',textAlign:'center'}}>
-{/* Live badge */}
-<R d={0}>
-<div style={{
-display:'inline-flex',alignItems:'center',gap:10,
-padding:'8px 18px',borderRadius:100,
-background:'rgba(234,179,8,.08)',border:'1px solid rgba(234,179,8,.18)',
-marginBottom:32,
-}}>
-<span style={{width:7,height:7,borderRadius:'50%',background:'var(--emerald)',b
-<span style={{fontSize:13,fontWeight:600,color:'var(--gold)',letterSpacing:'.04
-</div>
-</R>
-{/* Headline */}
-<R d={.08}>
-<h1 className="hero-title" style={{
-fontSize:64,fontWeight:800,lineHeight:1.06,letterSpacing:'-.045em',
-marginBottom:24,
-background:'linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,.85) 40%, var(
-backgroundSize:'200% 200%',
-animation:'gradient-shift 8s ease infinite',
-WebkitBackgroundClip:'text',
-WebkitTextFillColor:'transparent',
-backgroundClip:'text',
-}}>
-The financial infrastructure
-<br/>for African businesses
-</h1>
-</R>
-{/* Subheadline */}
-<R d={.16}>
-<p style={{fontSize:19,color:'var(--t2)',lineHeight:1.65,maxWidth:540,margin:'0 a
-Accept payments, send money, manage invoices, and grow your business with AI —
-</p>
-</R>
-{/* CTAs */}
-<R d={.24}>
-<div className="resp-flex-col resp-gap-sm" style={{display:'flex',alignItems:'cen
-<Link href="/signup"><button className="btn-primary resp-full" style={{fontSize
-Start for free
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentCo
-</button></Link>
-<Link href="#demo"><button className="btn-secondary resp-full">Contact sales</b
-</div>
-<p style={{fontSize:13,color:'var(--t3)'}}>Free forever &middot; No credit </R>
-card r
-{/* ─── HERO DASHBOARD VISUAL ─── */}
-<R d={.38} y={50}>
-<div style={{
-marginTop:64,borderRadius:20,
-background:'linear-gradient(180deg,var(--elevated) 0%,var(--surface) 100%)',
-border:'1px solid var(--b1)',
-padding:3,
-boxShadow:'0 60px 120px -20px rgba(0,0,0,.7), 0 0 0 1px var(--b1), 0 0 80px rgb
-position:'relative',overflow:'hidden',
-}}>
-{/* Shimmer effect on card */}
-<div style={{position:'absolute',top:0,left:0,right:0,height:1,background:'line
-<div style={{background:'var(--surface)',borderRadius:17,padding:'24px 28px',di
-{/* Window bar */}
-<div style={{display:'flex',alignItems:'center',justifyContent:'space-between
-<div style={{display:'flex',gap:7}}>
-<div style={{width:12,height:12,borderRadius:'50%',background:'#ff5f57'}}
-<div style={{width:12,height:12,borderRadius:'50%',background:'#febc2e'}}
-<div style={{width:12,height:12,borderRadius:'50%',background:'#28c840'}}
-</div>
-<div style={{color:'var(--t3)',fontSize:12,background:'var(--b1)',padding:'
-<div style={{width:48}}/>
-</div>
-{/* Metric cards */}
-<div className="resp-grid-3" style={{display:'grid',gridTemplateColumns:'repe
-{[
-{label:'Total Revenue',value:'$48,290',change:'+23.5%',color:'var(--emera
-{label:'Active Users',value:'12,841',change:'+18.2%',color:'var(--gold)',
-{label:'AI Resolved',value:'94.7%',change:'+5.1%',color:'var(--cyan)',ico
-].map((m,i)=>(
-<div key={i} style={{
-background:'var(--elevated)',borderRadius:14,padding:'20px 18px',
-border:'1px solid var(--b1)',
-transition:'border-color .2s',
-}}>
-<div style={{fontSize:11,color:'var(--t3)',textTransform:'uppercase',le
-<div className="tabular" style={{fontSize:26,fontWeight:700,color:'var(
-<div style={{fontSize:12,color:m.color,fontWeight:600,display:'flex',al
-<span>{m.icon}</span>{m.change}
-</div>
-</div>
-))}
-</div>
-{/* Chart area */}
-<div style={{background:'var(--elevated)',borderRadius:14,padding:'20px 18px
-<div style={{display:'flex',justifyContent:'space-between',alignItems:'cent
-<span style={{fontSize:13,fontWeight:600,color:'var(--t1)'}}>Revenue Over
-<div style={{display:'flex',gap:6}}>
-{['1W','1M','3M','1Y'].map((p,i)=>(
-<span key={p} style={{fontSize:11,padding:'4px 10px',borderRadius:6,b
-))}
-</div>
-</div>
-{/* SVG Chart */}
-<svg viewBox="0 0 500 100" style={{width:'100%',height:80}}>
-<defs>
-<linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0%" stopColor="var(--gold)" stopOpacity=".25"/>
-<stop offset="100%" stopColor="var(--gold)" stopOpacity="0"/>
-</linearGradient>
-</defs>
-<path d="M0,70 C30,65 60,55 90,50 C120,45 150,60 180,42 C210,24 240,35 27
-<path d="M0,70 C30,65 60,55 90,50 C120,45 150,60 180,42 C210,24 240,35 27
-<circle cx="450" cy="10" r="4" fill="var(--gold)">
-<animate attributeName="opacity" values="1;.4;1" dur="2s" repeatCount="
-</circle>
-</svg>
-</div>
-</div>
-</div>
-</R>
-</div>
-</section>
-{/* ═══════════ LOGOS / TRUST BAR ═══════════ */}
-<section style={{borderTop:'1px solid var(--b1)',borderBottom:'1px solid var(--b1)',pad
-<div style={{maxWidth:900,margin:'0 auto',textAlign:'center'}}>
-<p style={{fontSize:13,color:'var(--t3)',marginBottom:24,fontWeight:500,letterSpaci
-<div className="resp-flex-col" style={{display:'flex',alignItems:'center',justifyCo
-{['M-Pesa','Telebirr','Paystack','Flutterwave','MTN MoMo'].map(name=>(
-<span key={name} style={{fontSize:16,fontWeight:600,color:'var(--t1)',letterSpa
-))}
-</div>
-</div>
-</section>
-{/* ═══════════ STATS ═══════════ */}
-<section className="section-pad" style={{padding:'96px 32px'}}>
-<div className="resp-grid-2 resp-flex-col" style={{maxWidth:1000,margin:'0 auto',disp
-{[
-{n:50000,s:'+',l:'Businesses'},
-{n:35,s:'+',l:'Countries'},
-{n:99,s:'.9%',l:'Uptime'},
-{n:2,s:'M+',l:'Transactions'},
-].map((stat,i)=>{
-const {count,ref} = useAnimatedCounter(stat.n);
-return (
-<R key={i} d={i*.06}>
-<div ref={ref}>
-<div className="tabular" style={{fontSize:48,fontWeight:800,letterSpacing:'
-background:'linear-gradient(135deg,var(--gold-light),var(--gold))',Webkit
-}}>{count.toLocaleString()}{stat.s}</div>
-<div style={{fontSize:14,color:'var(--t3)',fontWeight:500}}>{stat.l}</div>
-</div>
-</R>
-);
-})}
-</div>
-</section>
-{/* ═══════════ FEATURES ═══════════ */}
-<section id="products" className="section-pad" style={{padding:'96px 32px'}}>
-<div style={{maxWidth:1100,margin:'0 auto'}}>
-<R>
-<div className="resp-text-center" style={{maxWidth:560,marginBottom:64}}>
-<p style={{fontSize:13,fontWeight:600,color:'var(--gold)',textTransform:'upperc
-<h2 style={{fontSize:40,fontWeight:800,letterSpacing:'-.035em',lineHeight:1.1,m
-<p style={{fontSize:17,color:'var(--t2)',lineHeight:1.65}}>One platform for pay
-</div>
-</R>
-<div className="resp-grid-3" style={{display:'grid',gridTemplateColumns:'repeat(3,1
-{[
-{icon:' ',title:'Unified Messaging',desc:'WhatsApp, Telegram, and SMS in one i
-{icon:' ',title:'Free Voice & Video',desc:'Crystal-clear calls over data. Zero
-{icon:' ',title:'AI Assistant',desc:'Qualifies leads, answers FAQs, and drafts
-{icon:' ',title:'Revenue Dashboard',desc:'Real-time financials. Every payment,
-{icon:' ',title:'Marketplace',desc:'List products, take orders, manage invento
-{icon:' ',title:'Bank-Grade Security',desc:'End-to-end encryption, scam detect
-].map((f,i)=>(
-<R key={i} d={i*.05}>
-<div style={{
-padding:'32px 28px',borderRadius:18,
-background:'var(--elevated)',border:'1px solid var(--b1)',
-transition:'all .25s cubic-bezier(.16,1,.3,1)',
-cursor:'default',position:'relative',overflow:'hidden',
-}}
-onMouseEnter={e=>{
-const el = e.currentTarget;
-el.style.borderColor='var(--b3)';
-el.style.transform='translateY(-4px)';
-el.style.boxShadow=`0 20px 40px -10px rgba(0,0,0,.4)`;
-}}
-onMouseLeave={e=>{
-const el = e.currentTarget;
-el.style.borderColor='var(--b1)';
-el.style.transform='translateY(0)';
-el.style.boxShadow='none';
-}}
->
-<div style={{fontSize:28,marginBottom:20,width:52,height:52,borderRadius:14
-<h3 style={{fontSize:17,fontWeight:700,color:'var(--t1)',marginBottom:8,let
-<p style={{fontSize:14.5,color:'var(--t2)',lineHeight:1.6}}>{f.desc}</p>
-</div>
-</R>
-))}
-</div>
-</div>
-</section>
-{/* ═══════════ VALUE STACK ═══════════ */}
-<section className="section-pad" style={{padding:'96px 32px',borderTop:'1px solid var(-
-<div style={{maxWidth:1100,margin:'0 auto'}}>
-<div className="resp-grid-2 resp-flex-col" style={{display:'grid',gridTemplateColum
-{/* Left — copy */}
-<R>
-<div>
-<p style={{fontSize:13,fontWeight:600,color:'var(--gold)',textTransform:'uppe
-<h2 style={{fontSize:38,fontWeight:800,letterSpacing:'-.035em',lineHeight:1.1
-<p style={{fontSize:16,color:'var(--t2)',lineHeight:1.65,marginBottom:32}}>Ev
-<Link href="/signup"><button className="btn-primary">Start for free <svg widt
-</div>
-</R>
-{/* Right — price stack */}
-<R d={.1}>
-<div style={{background:'var(--elevated)',borderRadius:20,border:'1px solid var
-<div style={{position:'absolute',top:0,left:0,right:0,height:1,background:'li
-{[
-{item:'Business Phone Line',price:'$30/mo'},
-{item:'CRM Software',price:'$50/mo'},
-{item:'AI Chatbot Service',price:'$99/mo'},
-{item:'Payment Processing',price:'$40/mo'},
-{item:'Analytics Dashboard',price:'$25/mo'},
-{item:'Marketing Automation',price:'$60/mo'},
-].map((row,i)=>(
-<div key={i} style={{display:'flex',justifyContent:'space-between',alignIte
-<span style={{fontSize:14.5,color:'var(--t2)',display:'flex',alignItems:'
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var
-{row.item}
-</span>
-<span className="tabular" style={{fontSize:14,color:'var(--t3)',fontWeigh
-</div>
-))}
-<div style={{display:'flex',justifyContent:'space-between',alignItems:'center
-<span style={{fontSize:15,color:'var(--t3)'}}>Total separately</span>
-<span className="tabular" style={{fontSize:18,color:'var(--t3)',fontWeight:
-</div>
-<div style={{
-marginTop:16,padding:'18px 22px',borderRadius:14,
-background:'linear-gradient(135deg,rgba(234,179,8,.1),rgba(234,179,8,.05))'
-border:'1px solid var(--gold-border)',
-display:'flex',justifyContent:'space-between',alignItems:'center',
-}}>
-<span style={{fontSize:16,fontWeight:700,color:'var(--gold)'}}>WakilChat</s
-<span className="tabular" style={{fontSize:28,fontWeight:800,color:'var(--g
-</div>
-<p style={{fontSize:12,color:'var(--t3)',textAlign:'center',marginTop:12}}>Pr
-</div>
-</R>
-</div>
-</div>
-</section>
-{/* ═══════════ TESTIMONIALS ═══════════ */}
-<section className="section-pad" style={{padding:'96px 32px'}}>
-<div style={{maxWidth:1100,margin:'0 auto'}}>
-<R>
-<div style={{textAlign:'center',marginBottom:56}}>
-<p style={{fontSize:13,fontWeight:600,color:'var(--gold)',textTransform:'upperc
-<h2 style={{fontSize:38,fontWeight:800,letterSpacing:'-.035em'}}>Built for Afri
-</div>
-</R>
-<div className="resp-grid-3" style={{display:'grid',gridTemplateColumns:'repeat(3,1
-{[
-{q:"I was juggling WhatsApp, Excel, and a notebook. WakilChat replaced all thre
-{q:"The AI handles 80% of customer questions overnight. I wake up to qualified
-{q:"Free calls saved $200 a month. I talk to suppliers in Lagos without worryin
-].map((t,i)=>(
-<R key={i} d={i*.06}>
-<div style={{
-background:'var(--elevated)',border:'1px solid var(--b1)',borderRadius:18,
-padding:'28px 24px',display:'flex',flexDirection:'column',height:'100%',
-transition:'border-color .25s',
-}}
-onMouseEnter={e=>(e.currentTarget.style.borderColor='var(--b2)')}
-onMouseLeave={e=>(e.currentTarget.style.borderColor='var(--b1)')}
->
-<div style={{display:'flex',gap:2,marginBottom:16}}>
-{[...Array(5)].map((_,j)=><span key={j} style={{fontSize:14,color:'var(--
-</div>
-<p style={{fontSize:15,color:'var(--t1)',lineHeight:1.65,flex:1,marginBotto
-<div style={{display:'flex',alignItems:'center',gap:12}}>
-<div style={{width:40,height:40,borderRadius:12,background:`linear-gradie
-<div>
-<div style={{fontSize:14,fontWeight:600,color:'var(--t1)'}}>{t.name}</d
-<div style={{fontSize:12,color:'var(--t3)'}}>{t.role} &middot; {t.loc}<
-</div>
-</div>
-</div>
-</R>
-))}
-</div>
-</div>
-</section>
-{/* ═══════════ FINAL CTA ═══════════ */}
-<section style={{position:'relative',overflow:'hidden',borderTop:'1px solid var(--b1)'}
-<div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse 70% 50%
-<div style={{position:'absolute',top:0,left:0,right:0,height:1,background:'linear-gra
-<div className="section-pad resp-text-center" style={{padding:'96px 32px',maxWidth:70
-<R>
-<h2 style={{fontSize:44,fontWeight:800,letterSpacing:'-.04em',lineHeight:1.1,marg
-Ready to grow your
-<br/><span style={{color:'var(--gold)'}}>business?</span>
-</h2>
-<p style={{fontSize:18,color:'var(--t2)',lineHeight:1.6,maxWidth:460,margin:'0 au
-Join 50,000+ African entrepreneurs who run their entire business from one app.
-</p>
-<div className="resp-flex-col resp-gap-sm" style={{display:'flex',justifyContent:
-<Link href="/signup"><button className="btn-primary resp-full" style={{fontSize
-Get started free
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentCo
-</button></Link>
-<Link href="#demo"><button className="btn-secondary resp-full">Talk to sales</b
-</div>
-<p style={{fontSize:13,color:'var(--t3)'}}>Free forever &middot; No credit </R>
-</div>
-</section>
-card &
-{/* ═══════════ FOOTER ═══════════ */}
-<footer style={{borderTop:'1px solid var(--b1)',background:'var(--surface)',padding:'64
-<div style={{maxWidth:1100,margin:'0 auto'}}>
-<div className="resp-grid-2 resp-flex-col" style={{display:'grid',gridTemplateColum
-{/* Brand */}
-<div>
-<div style={{display:'flex',alignItems:'center',gap:10,marginBottom:16}}>
-<div style={{width:30,height:30,borderRadius:8,background:'var(--gold)',displ
-<span style={{color:'#050505',fontWeight:800,fontSize:14}}>W</span>
-</div>
-<span style={{fontSize:17,fontWeight:700}}><span style={{color:'var(--gold)'}
-</div>
-<p style={{fontSize:14,color:'var(--t3)',lineHeight:1.6,maxWidth:260}}>The fina
-</div>
-{/* Links */}
-{[
-{title:'Products',links:['Payments','Messaging','AI Assistant','Marketplace']},
-{title:'Company',links:['About','Careers','Blog','Press']},
-{title:'Resources',links:['Documentation','API','Help Center','Status']},
-{title:'Legal',links:['Privacy','Terms','Cookies']},
-].map(col=>(
-<div key={col.title}>
-<h4 style={{fontSize:13,fontWeight:600,color:'var(--t1)',marginBottom:16}}>{c
-<div style={{display:'flex',flexDirection:'column',gap:10}}>
-{col.links.map(link=>(
-<a key={link} href="#" style={{fontSize:13.5,color:'var(--t3)',transition
-onMouseEnter={e=>(e.target as HTMLElement).style.color='var(--t1)'}
-onMouseLeave={e=>(e.target as HTMLElement).style.color='var(--t3)'}
->{link}</a>
-))}
-</div>
-</div>
-))}
-</div>
-{/* Bottom */}
-<div style={{borderTop:'1px solid var(--b1)',paddingTop:24,display:'flex',justifyCo
-<span style={{fontSize:13,color:'var(--t3)'}}>© 2026 WakilChat. All rights reserv
-<div style={{display:'flex',alignItems:'center',gap:16}}>
-<span style={{fontSize:12,color:'var(--t3)',display:'flex',alignItems:'center',
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentCo
-256-bit encryption
-</span>
-</div>
-</div>
-</div>
-</footer>
-<span style={{fontSize:12,color:'var(--t3)'}}>PCI DSS Compliant</span>
-</>
-);
+
+export default function HomePage() {
+  var scrollState = useState(false);
+  var scrolled = scrollState[0];
+  var setScrolled = scrollState[1];
+
+  useEffect(function () {
+    function onScroll() { setScrolled(window.scrollY > 40); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return function () { window.removeEventListener('scroll', onScroll); };
+  }, []);
+
+  return (
+    <>
+      <Head>
+        <title>WakilChat — The Financial Infrastructure for African Businesses</title>
+        <meta name="description" content="Accept payments, manage invoices, and grow your business with AI — all from one platform." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+      </Head>
+
+      <style jsx global>{`
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+        body{font-family:'Inter',system-ui,sans-serif;background:#050505;color:rgba(255,255,255,.95);overflow-x:hidden}
+        a{text-decoration:none;color:inherit}
+        ::selection{background:rgba(234,179,8,.3);color:#fff}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+        @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+        @keyframes gradient-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+        @keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+        .btn-primary{
+          display:inline-flex;align-items:center;gap:10px;
+          padding:14px 32px;border-radius:14px;border:none;cursor:pointer;
+          font-family:inherit;font-weight:600;font-size:15px;
+          background:#EAB308;color:#050505;
+          box-shadow:0 1px 2px rgba(0,0,0,.3),0 0 0 1px rgba(234,179,8,.3);
+          transition:all .2s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;
+        }
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(234,179,8,.3),0 0 0 1px rgba(234,179,8,.5)}
+        .btn-secondary{
+          display:inline-flex;align-items:center;gap:10px;
+          padding:14px 32px;border-radius:14px;cursor:pointer;
+          font-family:inherit;font-weight:500;font-size:15px;
+          background:rgba(255,255,255,.04);color:rgba(255,255,255,.95);
+          border:1px solid rgba(255,255,255,.1);transition:all .2s;
+        }
+        .btn-secondary:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16)}
+        @media(max-width:768px){
+          .rg3{grid-template-columns:1fr !important}
+          .rg2{grid-template-columns:1fr !important}
+          .rfc{flex-direction:column !important}
+          .htitle{font-size:34px !important}
+          .rhide{display:none !important}
+          .rfull{width:100% !important}
+          .spad{padding-top:64px !important;padding-bottom:64px !important}
+        }
+        @media(max-width:480px){.htitle{font-size:28px !important}}
+      `}</style>
+
+      <div style={{position:'fixed',inset:0,pointerEvents:'none',zIndex:9999,opacity:.018,backgroundImage:'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 512 512\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'.65\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")'}} />
+
+      <header style={{
+        position:'fixed',top:0,left:0,right:0,zIndex:100,
+        background:scrolled ? 'rgba(5,5,5,.85)' : 'transparent',
+        backdropFilter:scrolled ? 'blur(20px) saturate(1.5)' : 'none',
+        borderBottom:scrolled ? '1px solid rgba(255,255,255,.06)' : '1px solid transparent',
+        transition:'all .35s',
+      }}>
+        <nav style={{maxWidth:1200,margin:'0 auto',padding:'0 32px',display:'flex',alignItems:'center',justifyContent:'space-between',height:scrolled ? 64 : 72,transition:'height .35s'}}>
+          <Link href="/" style={{display:'flex',alignItems:'center',gap:10}}>
+            <div style={{width:34,height:34,borderRadius:10,background:'#EAB308',display:'flex',alignItems:'center',justifyContent:'center',boxShadow:'0 0 20px rgba(234,179,8,.2)'}}>
+              <span style={{color:'#050505',fontWeight:800,fontSize:16}}>W</span>
+            </div>
+            <span style={{fontSize:19,fontWeight:700,letterSpacing:'-.03em'}}>
+              <span style={{color:'#EAB308'}}>Wakil</span><span>Chat</span>
+            </span>
+          </Link>
+          <div className="rhide" style={{display:'flex',alignItems:'center',gap:8}}>
+            <a href="#products" style={{padding:'8px 16px',fontSize:14,color:'rgba(255,255,255,.6)',fontWeight:500,borderRadius:8}}>Products</a>
+            <a href="#pricing" style={{padding:'8px 16px',fontSize:14,color:'rgba(255,255,255,.6)',fontWeight:500,borderRadius:8}}>Pricing</a>
+            <a href="#about" style={{padding:'8px 16px',fontSize:14,color:'rgba(255,255,255,.6)',fontWeight:500,borderRadius:8}}>Company</a>
+          </div>
+          <div style={{display:'flex',alignItems:'center',gap:16}}>
+            <Link href="/login" className="rhide" style={{fontSize:14,color:'rgba(255,255,255,.6)',fontWeight:500}}>Sign in</Link>
+            <Link href="/signup"><button className="btn-primary" style={{padding:'10px 22px',fontSize:14}}>Get started</button></Link>
+          </div>
+        </nav>
+      </header>
+
+      <section style={{position:'relative',minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',overflow:'hidden',padding:'120px 32px 80px'}}>
+        <div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse 80% 60% at 50% 0%,rgba(234,179,8,.08) 0%,transparent 50%),radial-gradient(ellipse 60% 40% at 20% 60%,rgba(139,92,246,.04) 0%,transparent 50%),radial-gradient(ellipse 50% 50% at 80% 80%,rgba(34,211,238,.03) 0%,transparent 50%)'}} />
+        <div style={{position:'absolute',inset:0,opacity:.03,backgroundImage:'linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px)',backgroundSize:'64px 64px',maskImage:'radial-gradient(ellipse 70% 50% at 50% 40%,black,transparent)',WebkitMaskImage:'radial-gradient(ellipse 70% 50% at 50% 40%,black,transparent)'}} />
+        <div style={{position:'absolute',top:'15%',left:'10%',width:300,height:300,borderRadius:'50%',background:'radial-gradient(circle,rgba(139,92,246,.06),transparent 70%)',animation:'float 8s ease-in-out infinite',pointerEvents:'none'}} />
+        <div style={{position:'absolute',bottom:'20%',right:'8%',width:250,height:250,borderRadius:'50%',background:'radial-gradient(circle,rgba(34,211,238,.05),transparent 70%)',animation:'float 10s ease-in-out infinite 2s',pointerEvents:'none'}} />
+
+        <div style={{position:'relative',maxWidth:860,margin:'0 auto',textAlign:'center'}}>
+          <Reveal d={0}>
+            <div style={{display:'inline-flex',alignItems:'center',gap:10,padding:'8px 18px',borderRadius:100,background:'rgba(234,179,8,.08)',border:'1px solid rgba(234,179,8,.18)',marginBottom:32}}>
+              <span style={{width:7,height:7,borderRadius:'50%',background:'#34D399',boxShadow:'0 0 10px #34D399',animation:'pulse-dot 2s ease-in-out infinite'}} />
+              <span style={{fontSize:13,fontWeight:600,color:'#EAB308',letterSpacing:'.04em'}}>Trusted by 50,000+ African businesses</span>
+            </div>
+          </Reveal>
+
+          <Reveal d={0.08}>
+            <h1 className="htitle" style={{fontSize:64,fontWeight:800,lineHeight:1.06,letterSpacing:'-.045em',marginBottom:24,background:'linear-gradient(135deg,#ffffff 0%,rgba(255,255,255,.85) 40%,#FACC15 100%)',backgroundSize:'200% 200%',animation:'gradient-shift 8s ease infinite',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>
+              The financial infrastructure for African businesses
+            </h1>
+          </Reveal>
+
+          <Reveal d={0.16}>
+            <p style={{fontSize:19,color:'rgba(255,255,255,.6)',lineHeight:1.65,maxWidth:540,margin:'0 auto 40px'}}>
+              Accept payments, send money, manage invoices, and grow your business with AI — all from one platform.
+            </p>
+          </Reveal>
+
+          <Reveal d={0.24}>
+            <div className="rfc" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:16,marginBottom:16}}>
+              <Link href="/signup"><button className="btn-primary rfull" style={{fontSize:16,padding:'16px 36px'}}>Start for free →</button></Link>
+              <Link href="#demo"><button className="btn-secondary rfull">Contact sales</button></Link>
+            </div>
+            <p style={{fontSize:13,color:'rgba(255,255,255,.4)'}}>Free forever · No credit card · 60 second setup</p>
+          </Reveal>
+
+          <Reveal d={0.38} y={50}>
+            <div style={{marginTop:64,borderRadius:20,background:'linear-gradient(180deg,#111111,#0A0A0A)',border:'1px solid rgba(255,255,255,.06)',padding:3,boxShadow:'0 60px 120px -20px rgba(0,0,0,.7),0 0 80px rgba(234,179,8,.04)',position:'relative',overflow:'hidden'}}>
+              <div style={{position:'absolute',top:0,left:0,right:0,height:1,background:'linear-gradient(90deg,transparent,rgba(234,179,8,.3),transparent)',animation:'shimmer 3s ease-in-out infinite'}} />
+              <div style={{background:'#0A0A0A',borderRadius:17,padding:'24px 28px',display:'flex',flexDirection:'column',gap:18}}>
+                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                  <div style={{display:'flex',gap:7}}>
+                    <div style={{width:12,height:12,borderRadius:'50%',background:'#ff5f57'}} />
+                    <div style={{width:12,height:12,borderRadius:'50%',background:'#febc2e'}} />
+                    <div style={{width:12,height:12,borderRadius:'50%',background:'#28c840'}} />
+                  </div>
+                  <div style={{color:'rgba(255,255,255,.4)',fontSize:12,background:'rgba(255,255,255,.06)',padding:'5px 16px',borderRadius:8,fontWeight:500}}>dashboard.wakilchat.com</div>
+                  <div style={{width:48}} />
+                </div>
+
+                <div className="rg3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:12}}>
+                  <div style={{background:'#111111',borderRadius:14,padding:'20px 18px',border:'1px solid rgba(255,255,255,.06)'}}>
+                    <div style={{fontSize:11,color:'rgba(255,255,255,.4)',textTransform:'uppercase',letterSpacing:'.08em',marginBottom:10,fontWeight:600}}>Total Revenue</div>
+                    <div style={{fontSize:26,fontWeight:700,color:'rgba(255,255,255,.95)',letterSpacing:'-.02em',marginBottom:4}}>$48,290</div>
+                    <div style={{fontSize:12,color:'#34D399',fontWeight:600}}>↗ +23.5%</div>
+                  </div>
+                  <div style={{background:'#111111',borderRadius:14,padding:'20px 18px',border:'1px solid rgba(255,255,255,.06)'}}>
+                    <div style={{fontSize:11,color:'rgba(255,255,255,.4)',textTransform:'uppercase',letterSpacing:'.08em',marginBottom:10,fontWeight:600}}>Active Users</div>
+                    <div style={{fontSize:26,fontWeight:700,color:'rgba(255,255,255,.95)',letterSpacing:'-.02em',marginBottom:4}}>12,841</div>
+                    <div style={{fontSize:12,color:'#EAB308',fontWeight:600}}>↗ +18.2%</div>
+                  </div>
+                  <div style={{background:'#111111',borderRadius:14,padding:'20px 18px',border:'1px solid rgba(255,255,255,.06)'}}>
+                    <div style={{fontSize:11,color:'rgba(255,255,255,.4)',textTransform:'uppercase',letterSpacing:'.08em',marginBottom:10,fontWeight:600}}>AI Resolved</div>
+                    <div style={{fontSize:26,fontWeight:700,color:'rgba(255,255,255,.95)',letterSpacing:'-.02em',marginBottom:4}}>94.7%</div>
+                    <div style={{fontSize:12,color:'#22D3EE',fontWeight:600}}>↗ +5.1%</div>
+                  </div>
+                </div>
+
+                <div style={{background:'#111111',borderRadius:14,padding:'20px 18px 14px',border:'1px solid rgba(255,255,255,.06)'}}>
+                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:16}}>
+                    <span style={{fontSize:13,fontWeight:600,color:'rgba(255,255,255,.95)'}}>Revenue Overview</span>
+                    <div style={{display:'flex',gap:6}}>
+                      <span style={{fontSize:11,padding:'4px 10px',borderRadius:6,background:'transparent',color:'rgba(255,255,255,.4)',fontWeight:600}}>1W</span>
+                      <span style={{fontSize:11,padding:'4px 10px',borderRadius:6,background:'rgba(234,179,8,.12)',color:'#EAB308',fontWeight:600}}>1M</span>
+                      <span style={{fontSize:11,padding:'4px 10px',borderRadius:6,background:'transparent',color:'rgba(255,255,255,.4)',fontWeight:600}}>3M</span>
+                      <span style={{fontSize:11,padding:'4px 10px',borderRadius:6,background:'transparent',color:'rgba(255,255,255,.4)',fontWeight:600}}>1Y</span>
+                    </div>
+                  </div>
+                  <svg viewBox="0 0 500 100" style={{width:'100%',height:80}}>
+                    <defs>
+                      <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#EAB308" stopOpacity=".25" />
+                        <stop offset="100%" stopColor="#EAB308" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M0,70 C30,65 60,55 90,50 C120,45 150,60 180,42 C210,24 240,35 270,20 C300,15 330,25 360,18 C390,12 420,22 450,10 C470,6 490,8 500,5 L500,100 L0,100 Z" fill="url(#cg)" />
+                    <path d="M0,70 C30,65 60,55 90,50 C120,45 150,60 180,42 C210,24 240,35 270,20 C300,15 330,25 360,18 C390,12 420,22 450,10 C470,6 490,8 500,5" fill="none" stroke="#EAB308" strokeWidth="2" />
+                    <circle cx="450" cy="10" r="4" fill="#EAB308"><animate attributeName="opacity" values="1;.4;1" dur="2s" repeatCount="indefinite" /></circle>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section style={{borderTop:'1px solid rgba(255,255,255,.06)',borderBottom:'1px solid rgba(255,255,255,.06)',padding:'40px 32px',background:'#0A0A0A'}}>
+        <div style={{maxWidth:900,margin:'0 auto',textAlign:'center'}}>
+          <p style={{fontSize:13,color:'rgba(255,255,255,.4)',marginBottom:24,fontWeight:500,letterSpacing:'.04em',textTransform:'uppercase'}}>Integrated with leading African payment platforms</p>
+          <div className="rfc" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:40,opacity:.4}}>
+            <span style={{fontSize:16,fontWeight:600}}>M-Pesa</span>
+            <span style={{fontSize:16,fontWeight:600}}>Telebirr</span>
+            <span style={{fontSize:16,fontWeight:600}}>Paystack</span>
+            <span style={{fontSize:16,fontWeight:600}}>Flutterwave</span>
+            <span style={{fontSize:16,fontWeight:600}}>MTN MoMo</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="spad" style={{padding:'96px 32px'}}>
+        <div className="rg2" style={{maxWidth:1000,margin:'0 auto',display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:32,textAlign:'center'}}>
+          <Reveal d={0}><Stat target={50000} suffix="+" label="Businesses" /></Reveal>
+          <Reveal d={0.06}><Stat target={35} suffix="+" label="Countries" /></Reveal>
+          <Reveal d={0.12}><Stat target={99} suffix=".9%" label="Uptime" /></Reveal>
+          <Reveal d={0.18}><Stat target={2} suffix="M+" label="Transactions" /></Reveal>
+        </div>
+      </section>
+
+      <section id="products" className="spad" style={{padding:'96px 32px'}}>
+        <div style={{maxWidth:1100,margin:'0 auto'}}>
+          <Reveal>
+            <div style={{maxWidth:560,marginBottom:64}}>
+              <p style={{fontSize:13,fontWeight:600,color:'#EAB308',textTransform:'uppercase',letterSpacing:'.1em',marginBottom:14}}>Products</p>
+              <h2 style={{fontSize:40,fontWeight:800,letterSpacing:'-.035em',lineHeight:1.1,marginBottom:16}}>Everything your business needs</h2>
+              <p style={{fontSize:17,color:'rgba(255,255,255,.6)',lineHeight:1.65}}>One platform for payments, messaging, AI, and growth.</p>
+            </div>
+          </Reveal>
+          <div className="rg3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16}}>
+            <Reveal d={0}><FeatureCard icon="💬" title="Unified Messaging" desc="WhatsApp, Telegram, and SMS in one inbox. AI handles first response, you close the deal." /></Reveal>
+            <Reveal d={0.05}><FeatureCard icon="📞" title="Free Voice & Video" desc="Crystal-clear calls over data. Zero per-minute charges. Works across 2G and 3G networks." /></Reveal>
+            <Reveal d={0.1}><FeatureCard icon="⚡" title="AI Assistant" desc="Qualifies leads, answers FAQs, and drafts follow-ups 24/7 — trained on your business." /></Reveal>
+            <Reveal d={0.15}><FeatureCard icon="📊" title="Revenue Dashboard" desc="Real-time financials. Every payment, invoice, and expense tracked automatically." /></Reveal>
+            <Reveal d={0.2}><FeatureCard icon="🛍️" title="Marketplace" desc="List products, take orders, manage inventory. Your storefront inside the conversation." /></Reveal>
+            <Reveal d={0.25}><FeatureCard icon="🛡️" title="Bank-Grade Security" desc="End-to-end encryption, scam detection, and fraud monitoring built into every layer." /></Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="spad" style={{padding:'96px 32px',borderTop:'1px solid rgba(255,255,255,.06)',borderBottom:'1px solid rgba(255,255,255,.06)',background:'#0A0A0A'}}>
+        <div style={{maxWidth:1100,margin:'0 auto'}}>
+          <div className="rg2 rfc" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:64,alignItems:'center'}}>
+            <Reveal>
+              <div>
+                <p style={{fontSize:13,fontWeight:600,color:'#EAB308',textTransform:'uppercase',letterSpacing:'.1em',marginBottom:14}}>Why WakilChat</p>
+                <h2 style={{fontSize:38,fontWeight:800,letterSpacing:'-.035em',lineHeight:1.12,marginBottom:20}}>Replace $304/mo in tools with one free platform</h2>
+                <p style={{fontSize:16,color:'rgba(255,255,255,.6)',lineHeight:1.65,marginBottom:32}}>Every tool your competitors pay hundreds for — unified in WakilChat. Free to start, scales with you.</p>
+                <Link href="/signup"><button className="btn-primary">Start for free →</button></Link>
+              </div>
+            </Reveal>
+            <Reveal d={0.1}>
+              <div style={{background:'#111111',borderRadius:20,border:'1px solid rgba(255,255,255,.06)',padding:32,position:'relative',overflow:'hidden'}}>
+                <div style={{position:'absolute',top:0,left:0,right:0,height:1,background:'linear-gradient(90deg,transparent,rgba(234,179,8,.22),transparent)'}} />
+                <div style={{display:'flex',justifyContent:'space-between',padding:'13px 0',borderBottom:'1px solid rgba(255,255,255,.06)'}}><span style={{fontSize:14.5,color:'rgba(255,255,255,.6)'}}>✓ Business Phone Line</span><span style={{fontSize:14,color:'rgba(255,255,255,.4)',fontWeight:600}}>$30/mo</span></div>
+                <div style={{display:'flex',justifyContent:'space-between',padding:'13px 0',borderBottom:'1px solid rgba(255,255,255,.06)'}}><span style={{fontSize:14.5,color:'rgba(255,255,255,.6)'}}>✓ CRM Software</span><span style={{fontSize:14,color:'rgba(255,255,255,.4)',fontWeight:600}}>$50/mo</span></div>
+                <div style={{display:'flex',justifyContent:'space-between',padding:'13px 0',borderBottom:'1px solid rgba(255,255,255,.06)'}}><span style={{fontSize:14.5,color:'rgba(255,255,255,.6)'}}>✓ AI Chatbot Service</span><span style={{fontSize:14,color:'rgba(255,255,255,.4)',fontWeight:600}}>$99/mo</span></div>
+                <div style={{display:'flex',justifyContent:'space-between',padding:'13px 0',borderBottom:'1px solid rgba(255,255,255,.06)'}}><span style={{fontSize:14.5,color:'rgba(255,255,255,.6)'}}>✓ Payment Processing</span><span style={{fontSize:14,color:'rgba(255,255,255,.4)',fontWeight:600}}>$40/mo</span></div>
+                <div style={{display:'flex',justifyContent:'space-between',padding:'13px 0',borderBottom:'1px solid rgba(255,255,255,.06)'}}><span style={{fontSize:14.5,color:'rgba(255,255,255,.6)'}}>✓ Analytics Dashboard</span><span style={{fontSize:14,color:'rgba(255,255,255,.4)',fontWeight:600}}>$25/mo</span></div>
+                <div style={{display:'flex',justifyContent:'space-between',padding:'13px 0'}}><span style={{fontSize:14.5,color:'rgba(255,255,255,.6)'}}>✓ Marketing Automation</span><span style={{fontSize:14,color:'rgba(255,255,255,.4)',fontWeight:600}}>$60/mo</span></div>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',paddingTop:16,marginTop:8}}>
+                  <span style={{fontSize:15,color:'rgba(255,255,255,.4)'}}>Total separately</span>
+                  <span style={{fontSize:18,color:'rgba(255,255,255,.4)',fontWeight:700,textDecoration:'line-through'}}>$304/mo</span>
+                </div>
+                <div style={{marginTop:16,padding:'18px 22px',borderRadius:14,background:'rgba(234,179,8,.08)',border:'1px solid rgba(234,179,8,.22)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                  <span style={{fontSize:16,fontWeight:700,color:'#EAB308'}}>WakilChat</span>
+                  <span style={{fontSize:28,fontWeight:800,color:'#EAB308'}}>FREE</span>
+                </div>
+                <p style={{fontSize:12,color:'rgba(255,255,255,.4)',textAlign:'center',marginTop:12}}>Premium from $2/mo · Cancel anytime</p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="spad" style={{padding:'96px 32px'}}>
+        <div style={{maxWidth:1100,margin:'0 auto'}}>
+          <Reveal>
+            <div style={{textAlign:'center',marginBottom:56}}>
+              <p style={{fontSize:13,fontWeight:600,color:'#EAB308',textTransform:'uppercase',letterSpacing:'.1em',marginBottom:14}}>Loved by entrepreneurs</p>
+              <h2 style={{fontSize:38,fontWeight:800,letterSpacing:'-.035em'}}>Built for Africa. Proven by thousands.</h2>
+            </div>
+          </Reveal>
+          <div className="rg3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16}}>
+            <Reveal d={0}>
+              <div style={{background:'#111111',border:'1px solid rgba(255,255,255,.06)',borderRadius:18,padding:'28px 24px',display:'flex',flexDirection:'column',height:'100%'}}>
+                <div style={{marginBottom:16,color:'#EAB308'}}>★★★★★</div>
+                <p style={{fontSize:15,color:'rgba(255,255,255,.95)',lineHeight:1.65,flex:1,marginBottom:20}}>&quot;I was juggling WhatsApp, Excel, and a notebook. WakilChat replaced all three. Customers think I hired a team.&quot;</p>
+                <div style={{display:'flex',alignItems:'center',gap:12}}>
+                  <div style={{width:40,height:40,borderRadius:12,background:'#34D399',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:15,color:'#050505'}}>A</div>
+                  <div><div style={{fontSize:14,fontWeight:600}}>Amina K.</div><div style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>Fashion Designer · Nairobi</div></div>
+                </div>
+              </div>
+            </Reveal>
+            <Reveal d={0.06}>
+              <div style={{background:'#111111',border:'1px solid rgba(255,255,255,.06)',borderRadius:18,padding:'28px 24px',display:'flex',flexDirection:'column',height:'100%'}}>
+                <div style={{marginBottom:16,color:'#EAB308'}}>★★★★★</div>
+                <p style={{fontSize:15,color:'rgba(255,255,255,.95)',lineHeight:1.65,flex:1,marginBottom:20}}>&quot;The AI handles 80% of customer questions overnight. I wake up to qualified leads ready to buy.&quot;</p>
+                <div style={{display:'flex',alignItems:'center',gap:12}}>
+                  <div style={{width:40,height:40,borderRadius:12,background:'#EAB308',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:15,color:'#050505'}}>D</div>
+                  <div><div style={{fontSize:14,fontWeight:600}}>Dawit T.</div><div style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>Real Estate Broker · Addis Ababa</div></div>
+                </div>
+              </div>
+            </Reveal>
+            <Reveal d={0.12}>
+              <div style={{background:'#111111',border:'1px solid rgba(255,255,255,.06)',borderRadius:18,padding:'28px 24px',display:'flex',flexDirection:'column',height:'100%'}}>
+                <div style={{marginBottom:16,color:'#EAB308'}}>★★★★★</div>
+                <p style={{fontSize:15,color:'rgba(255,255,255,.95)',lineHeight:1.65,flex:1,marginBottom:20}}>&quot;Free calls saved $200 a month. I talk to suppliers in Lagos without worrying about airtime ever again.&quot;</p>
+                <div style={{display:'flex',alignItems:'center',gap:12}}>
+                  <div style={{width:40,height:40,borderRadius:12,background:'#22D3EE',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:15,color:'#050505'}}>C</div>
+                  <div><div style={{fontSize:14,fontWeight:600}}>Chidi O.</div><div style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>Electronics Trader · Lagos</div></div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section style={{position:'relative',overflow:'hidden',borderTop:'1px solid rgba(255,255,255,.06)'}}>
+        <div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse 70% 50% at 50% 100%,rgba(234,179,8,.06),transparent)',pointerEvents:'none'}} />
+        <div className="spad" style={{padding:'96px 32px',maxWidth:700,margin:'0 auto',textAlign:'center',position:'relative'}}>
+          <Reveal>
+            <h2 style={{fontSize:44,fontWeight:800,letterSpacing:'-.04em',lineHeight:1.1,marginBottom:20}}>
+              Ready to grow your <span style={{color:'#EAB308'}}>business?</span>
+            </h2>
+            <p style={{fontSize:18,color:'rgba(255,255,255,.6)',lineHeight:1.6,maxWidth:460,margin:'0 auto 36px'}}>
+              Join 50,000+ African entrepreneurs who run their entire business from one app.
+            </p>
+            <div className="rfc" style={{display:'flex',justifyContent:'center',gap:14,marginBottom:16}}>
+              <Link href="/signup"><button className="btn-primary rfull" style={{fontSize:16,padding:'16px 36px'}}>Get started free →</button></Link>
+              <Link href="#demo"><button className="btn-secondary rfull">Talk to sales</button></Link>
+            </div>
+            <p style={{fontSize:13,color:'rgba(255,255,255,.4)'}}>Free forever · No credit card · 60 second setup</p>
+          </Reveal>
+        </div>
+      </section>
+
+      <footer style={{borderTop:'1px solid rgba(255,255,255,.06)',background:'#0A0A0A',padding:'64px 32px 40px'}}>
+        <div style={{maxWidth:1100,margin:'0 auto'}}>
+          <div className="rg2 rfc" style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr 1fr',gap:40,marginBottom:48}}>
+            <div>
+              <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:16}}>
+                <div style={{width:30,height:30,borderRadius:8,background:'#EAB308',display:'flex',alignItems:'center',justifyContent:'center'}}>
+                  <span style={{color:'#050505',fontWeight:800,fontSize:14}}>W</span>
+                </div>
+                <span style={{fontSize:17,fontWeight:700}}><span style={{color:'#EAB308'}}>Wakil</span>Chat</span>
+              </div>
+              <p style={{fontSize:14,color:'rgba(255,255,255,.4)',lineHeight:1.6,maxWidth:260}}>The financial infrastructure powering African businesses.</p>
+            </div>
+            <div>
+              <h4 style={{fontSize:13,fontWeight:600,marginBottom:16}}>Products</h4>
+              <div style={{display:'flex',flexDirection:'column',gap:10}}>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Payments</a>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Messaging</a>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>AI Assistant</a>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Marketplace</a>
+              </div>
+            </div>
+            <div>
+              <h4 style={{fontSize:13,fontWeight:600,marginBottom:16}}>Company</h4>
+              <div style={{display:'flex',flexDirection:'column',gap:10}}>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>About</a>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Careers</a>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Blog</a>
+              </div>
+            </div>
+            <div>
+              <h4 style={{fontSize:13,fontWeight:600,marginBottom:16}}>Resources</h4>
+              <div style={{display:'flex',flexDirection:'column',gap:10}}>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Documentation</a>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>API</a>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Help Center</a>
+              </div>
+            </div>
+            <div>
+              <h4 style={{fontSize:13,fontWeight:600,marginBottom:16}}>Legal</h4>
+              <div style={{display:'flex',flexDirection:'column',gap:10}}>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Privacy</a>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Terms</a>
+                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Cookies</a>
+              </div>
+            </div>
+          </div>
+          <div style={{borderTop:'1px solid rgba(255,255,255,.06)',paddingTop:24,display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:16}}>
+            <span style={{fontSize:13,color:'rgba(255,255,255,.4)'}}>© 2026 WakilChat. All rights reserved.</span>
+            <div style={{display:'flex',alignItems:'center',gap:16}}>
+              <span style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>🔒 256-bit encryption</span>
+              <span style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>PCI DSS Compliant</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </>
+  );
 }
