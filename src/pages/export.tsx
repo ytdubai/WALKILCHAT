@@ -29,7 +29,7 @@ export default function ExportPage() {
 
             <div style={{ marginTop: '2rem' }}>
               <p style={{ fontSize: '0.875rem', color: '#FFD700', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>
-                ☕ For African Coffee & Agricultural Exporters 🌾
+                 For African Coffee & Agricultural Exporters 
               </p>
 
               <h1 style={{ fontSize: 'clamp(2.5rem, 7vw, 4.5rem)', fontWeight: 'bold', lineHeight: '1.1', marginBottom: '1.5rem' }}>
@@ -54,10 +54,10 @@ export default function ExportPage() {
                   The Broker Problem:
                 </p>
                 <div style={{ fontSize: '1.125rem', color: '#fee2e2', textAlign: 'left' }}>
-                  ❌ Local broker takes 10%<br />
-                  ❌ Export agent takes 8%<br />
-                  ❌ International broker takes 12%<br />
-                  ❌ Importer markup 15%<br />
+                  X Local broker takes 10%<br />
+                  X Export agent takes 8%<br />
+                  X International broker takes 12%<br />
+                  X Importer markup 15%<br />
                   <div style={{ borderTop: '1px solid rgba(239,68,68,0.4)', marginTop: '1rem', paddingTop: '1rem', fontSize: '1.5rem', textAlign: 'center' }}>
                     = <span style={{ color: '#FEE2E2', fontWeight: 'bold' }}>45% GONE</span>
                   </div>
@@ -77,7 +77,7 @@ export default function ExportPage() {
                 textDecoration: 'none',
                 boxShadow: '0 8px 40px rgba(255,215,0,0.5)'
               }}>
-                🌍 List Your Export Products FREE
+                 List Your Export Products FREE
               </Link>
 
               <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '1.5rem' }}>
@@ -108,7 +108,7 @@ export default function ExportPage() {
               {/* Traditional Way */}
               <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '1rem', padding: '1.5rem' }}>
                 <div style={{ fontSize: '1rem', color: '#fca5a5', fontWeight: 'bold', marginBottom: '1rem' }}>
-                  ❌ TRADITIONAL (With Brokers)
+                  X TRADITIONAL (With Brokers)
                 </div>
                 <div style={{ color: '#fee2e2', fontSize: '0.95rem', lineHeight: '1.8' }}>
                   Sale Price: $200,000<br />
@@ -128,7 +128,7 @@ export default function ExportPage() {
               {/* WakilChat Way */}
               <div style={{ background: 'rgba(16,185,129,0.1)', border: '2px solid rgba(16,185,129,0.4)', borderRadius: '1rem', padding: '1.5rem' }}>
                 <div style={{ fontSize: '1rem', color: '#6ee7b7', fontWeight: 'bold', marginBottom: '1rem' }}>
-                  ✅ WAKILCHAT™ (Direct)
+                  • WAKILCHAT™ (Direct)
                 </div>
                 <div style={{ color: '#d1fae5', fontSize: '0.95rem', lineHeight: '1.8' }}>
                   Sale Price: $200,000<br />
@@ -140,7 +140,7 @@ export default function ExportPage() {
                     YOU GET: $196,000
                   </div>
                   <div style={{ fontSize: '0.875rem', marginTop: '0.5rem', color: '#6ee7b7' }}>
-                    Payment in: 3-5 days ⚡
+                    Payment in: 3-5 days 
                   </div>
                 </div>
               </div>
@@ -155,7 +155,7 @@ export default function ExportPage() {
               fontSize: '1.5rem',
               fontWeight: 'bold'
             }}>
-              💰 YOU SAVE: $66,000 PER CONTAINER
+               YOU SAVE: $66,000 PER CONTAINER
             </div>
 
             <p style={{ textAlign: 'center', color: '#999', marginTop: '1rem', fontSize: '0.875rem' }}>
@@ -174,17 +174,17 @@ export default function ExportPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
               {[
                 {
-                  icon: '🌍',
+                  icon: '',
                   title: 'Global Buyer Network',
                   desc: 'Connect with verified importers in USA, Europe, Middle East, Asia. Direct messaging & FREE video calls.'
                 },
                 {
-                  icon: '💰',
+                  icon: '',
                   title: 'Escrow Protection',
                   desc: 'Buyer pays upfront. Money held safely. Released when shipment confirmed. Zero risk of non-payment.'
                 },
                 {
-                  icon: '⚡',
+                  icon: '',
                   title: 'Fast Payment (3-5 Days)',
                   desc: 'No more 60-90 day waits. Get your money in days, not months. Keep cash flow healthy.'
                 },
@@ -199,7 +199,7 @@ export default function ExportPage() {
                   desc: 'Video call buyers to show them your warehouse, product quality, certifications in real-time.'
                 },
                 {
-                  icon: '📊',
+                  icon: '',
                   title: 'AI Price Intelligence',
                   desc: 'See real-time market prices. Know if you\'re getting fair deals. Optimize your pricing.'
                 }
@@ -332,7 +332,7 @@ export default function ExportPage() {
                       fontWeight: '600',
                       whiteSpace: 'nowrap'
                     }}>
-                      ⏱️ {step.time}
+                       {step.time}
                     </span>
                   </div>
                   <p style={{ color: '#aaa', lineHeight: '1.6' }}>{step.desc}</p>
@@ -396,7 +396,7 @@ export default function ExportPage() {
               textDecoration: 'none',
               boxShadow: '0 8px 40px rgba(255,215,0,0.5)'
             }}>
-              🚀 Start Exporting Direct
+               Start Exporting Direct
             </Link>
             <p style={{ marginTop: '1.5rem', color: '#666', fontSize: '0.875rem' }}>
               Join exporters saving millions in broker fees

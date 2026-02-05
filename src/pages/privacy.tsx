@@ -88,7 +88,7 @@ export default function PrivacyPage() {
               }}>
                 <ul style={{ paddingLeft: '1.5rem', color: '#d1fae5' }}>
                   <li>🔒 End-to-end encryption for sensitive data</li>
-                  <li>🛡️ PCI-DSS compliant payment processing</li>
+                  <li> PCI-DSS compliant payment processing</li>
                   <li>🔐 Two-factor authentication available</li>
                   <li>🚨 24/7 security monitoring</li>
                   <li>💾 Regular security audits</li>

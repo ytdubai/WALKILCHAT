@@ -46,12 +46,12 @@ export default function PricingPage() {
               </div>
               <p style={{ color: '#999', marginBottom: '2rem', fontSize: '1.125rem' }}>per transaction</p>
               <ul style={{ textAlign: 'left', fontSize: '1.125rem', lineHeight: '2.2', color: '#ddd', listStyle: 'none', padding: 0 }}>
-                <li>✅ FREE unlimited calls</li>
-                <li>✅ FREE messaging</li>
-                <li>✅ Online shop</li>
-                <li>✅ Payment processing</li>
-                <li>✅ AI assistant</li>
-                <li>✅ Analytics</li>
+                <li>• FREE unlimited calls</li>
+                <li>• FREE messaging</li>
+                <li>• Online shop</li>
+                <li>• Payment processing</li>
+                <li>• AI assistant</li>
+                <li>• Analytics</li>
               </ul>
             </div>
 
@@ -86,12 +86,12 @@ export default function PricingPage() {
               </div>
               <p style={{ color: '#999', marginBottom: '2rem', fontSize: '1.125rem' }}>per transaction</p>
               <ul style={{ textAlign: 'left', fontSize: '1.125rem', lineHeight: '2.2', color: '#ddd', listStyle: 'none', padding: 0 }}>
-                <li>✅ Everything in Consumer</li>
-                <li>✅ AI buyer matching</li>
-                <li>✅ Escrow protection</li>
-                <li>✅ Quality verification</li>
-                <li>✅ Export documentation</li>
-                <li>✅ Priority support</li>
+                <li>• Everything in Consumer</li>
+                <li>• AI buyer matching</li>
+                <li>• Escrow protection</li>
+                <li>• Quality verification</li>
+                <li>• Export documentation</li>
+                <li>• Priority support</li>
               </ul>
               <p style={{ fontSize: '1rem', color: '#10b981', marginTop: '2rem', fontWeight: 'bold' }}>
                 Save $64,000+ per $200k deal vs brokers!
@@ -113,12 +113,12 @@ export default function PricingPage() {
               </div>
               <p style={{ color: '#999', marginBottom: '2rem', fontSize: '1.125rem' }}>forever</p>
               <ul style={{ textAlign: 'left', fontSize: '1.125rem', lineHeight: '2.2', color: '#ddd', listStyle: 'none', padding: 0 }}>
-                <li>✅ Everything in B2B</li>
-                <li>✅ 0% fees FOREVER</li>
-                <li>✅ 5-star auto rating</li>
-                <li>✅ Priority placement</li>
-                <li>✅ Free AI matching</li>
-                <li>👑 Legendary badge</li>
+                <li>• Everything in B2B</li>
+                <li>• 0% fees FOREVER</li>
+                <li>• 5-star auto rating</li>
+                <li>• Priority placement</li>
+                <li>• Free AI matching</li>
+                <li> Legendary badge</li>
               </ul>
               <Link href="/founder-supplier" style={{
                 display: 'block',

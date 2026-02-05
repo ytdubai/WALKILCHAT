@@ -46,10 +46,10 @@ export default function AIMatchingPage() {
             </Link>
 
             <div style={{ marginTop: '2rem' }}>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🤖🌍</div>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}></div>
               
               <p style={{ fontSize: '0.875rem', color: '#a78bfa', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>
-                ⚡ Powered by Advanced AI Technology
+                 Powered by Advanced AI Technology
               </p>
 
               <h1 style={{ fontSize: 'clamp(2.5rem, 7vw, 4.5rem)', fontWeight: 'bold', lineHeight: '1.1', marginBottom: '1.5rem' }}>
@@ -73,7 +73,7 @@ export default function AIMatchingPage() {
                 margin: '0 auto 2.5rem'
               }}>
                 <p style={{ fontSize: '1.25rem', color: '#c4b5fd', fontWeight: 'bold', marginBottom: '1.5rem' }}>
-                  🎯 Real Example:
+                   Real Example:
                 </p>
                 <div style={{ textAlign: 'left', fontSize: '1.125rem', color: '#e9d5ff', lineHeight: '1.9' }}>
                   <strong>Abebe lists:</strong> 20 tons Ethiopian coffee<br />
@@ -99,7 +99,7 @@ export default function AIMatchingPage() {
                 textDecoration: 'none',
                 boxShadow: '0 8px 40px rgba(139,92,246,0.5)'
               }}>
-                🤖 Activate AI Buyer Matching
+                 Activate AI Buyer Matching
               </Link>
 
               <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '1.5rem' }}>
@@ -117,7 +117,7 @@ export default function AIMatchingPage() {
 
           {[
             {
-              step: '🎯',
+              step: '',
               title: 'You List Your Product (5 minutes)',
               desc: 'Ethiopian coffee, Nigerian sesame, Ghana cocoa, whatever you export. Add photos, specs, certifications.',
               tech: 'Standard listing'
@@ -141,7 +141,7 @@ export default function AIMatchingPage() {
               tech: 'GPT-4 personalization'
             },
             {
-              step: '📊',
+              step: '',
               title: 'You See Responses (Real-time)',
               desc: 'Dashboard shows which buyers opened email, clicked link, expressed interest. AI highlights hot leads.',
               tech: 'Real-time tracking'
@@ -201,9 +201,9 @@ export default function AIMatchingPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem', textAlign: 'center' }}>
               {[
                 { value: '127', label: 'Avg Buyers Found', icon: '🔍' },
-                { value: '30%', label: 'Match Success Rate', icon: '🎯' },
-                { value: '3-5', label: 'Days to First Response', icon: '⚡' },
-                { value: '24/7', label: 'AI Always Working', icon: '🤖' }
+                { value: '30%', label: 'Match Success Rate', icon: '' },
+                { value: '3-5', label: 'Days to First Response', icon: '' },
+                { value: '24/7', label: 'AI Always Working', icon: '' }
               ].map((stat, i) => (
                 <div key={i} style={{
                   background: 'rgba(255,255,255,0.03)',
@@ -289,7 +289,7 @@ export default function AIMatchingPage() {
                 fontSize: '0.75rem',
                 fontWeight: 'bold'
               }}>
-                🔥 RECOMMENDED
+                 RECOMMENDED
               </div>
               
               <div style={{ fontSize: '0.875rem', color: '#a78bfa', fontWeight: '600', marginBottom: '0.5rem' }}>
@@ -408,9 +408,9 @@ export default function AIMatchingPage() {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
               {[
-                { icon: '☕', category: 'Agricultural', products: 'Coffee, Sesame, Cocoa, Cashew, Tea, Spices' },
-                { icon: '🚗', category: 'Vehicles', products: 'Cars, Trucks, Buses, Parts, Motorcycles' },
-                { icon: '💎', category: 'Minerals', products: 'Gold, Diamonds, Lithium, Tantalum, Cobalt' },
+                { icon: '', category: 'Agricultural', products: 'Coffee, Sesame, Cocoa, Cashew, Tea, Spices' },
+                { icon: '', category: 'Vehicles', products: 'Cars, Trucks, Buses, Parts, Motorcycles' },
+                { icon: '', category: 'Minerals', products: 'Gold, Diamonds, Lithium, Tantalum, Cobalt' },
                 { icon: '🏭', category: 'Manufactured', products: 'Textiles, Leather, Furniture, Machinery' },
                 { icon: '🎨', category: 'Artisan', products: 'Art, Crafts, Musical Instruments, Fashion' },
                 { icon: '🐟', category: 'Seafood', products: 'Frozen Fish, Shrimp, Lobster, Tuna' }
@@ -466,7 +466,7 @@ export default function AIMatchingPage() {
               textDecoration: 'none',
               boxShadow: '0 8px 40px rgba(139,92,246,0.5)'
             }}>
-              🤖 Activate AI Now
+               Activate AI Now
             </Link>
             <p style={{ marginTop: '1.5rem', fontSize: '0.875rem', color: '#666' }}>
               First deal FREE • Then $500 per successful match • No monthly fees

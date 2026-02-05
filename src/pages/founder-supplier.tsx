@@ -35,7 +35,7 @@ export default function FounderSupplierPage() {
   return (
     <>
       <Head>
-        <title>👑 Founder Supplier Program - Lifetime 0% Fees | WakilChat™</title>
+        <title> Founder Supplier Program - Lifetime 0% Fees | WakilChat™</title>
       </Head>
 
       <div style={{ minHeight: '100vh', background: '#0a0a0a', color: 'white' }}>
@@ -62,7 +62,7 @@ export default function FounderSupplierPage() {
           textAlign: 'center'
         }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>👑</div>
+            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}></div>
             
             <h1 style={{
               fontSize: 'clamp(2.5rem, 7vw, 4.5rem)',
@@ -94,7 +94,7 @@ export default function FounderSupplierPage() {
                 Legendary Spots Remaining
               </div>
               <div style={{ fontSize: '0.875rem', color: '#999', marginTop: '1rem' }}>
-                🔥 Last signup: <strong>{lastSignup}</strong> (2 minutes ago)
+                 Last signup: <strong>{lastSignup}</strong> (2 minutes ago)
               </div>
             </div>
 
@@ -112,7 +112,7 @@ export default function FounderSupplierPage() {
               boxShadow: '0 8px 40px rgba(255,215,0,0.6)',
               animation: 'pulse 2s ease-in-out infinite'
             }}>
-              👑 CLAIM YOUR FOUNDER STATUS NOW
+               CLAIM YOUR FOUNDER STATUS NOW
             </Link>
             <style>{`
               @keyframes pulse {
@@ -122,7 +122,7 @@ export default function FounderSupplierPage() {
             `}</style>
 
             <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '1rem' }}>
-              ⚡ Setup takes 3 minutes • Spots filling in real-time
+               Setup takes 3 minutes • Spots filling in real-time
             </p>
           </div>
         </section>
@@ -136,12 +136,12 @@ export default function FounderSupplierPage() {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
               {[
-                { icon: '💰', title: '0% Fees FOREVER', value: '$200,000+', desc: 'Never pay transaction fees. Save millions over 10 years.' },
-                { icon: '👑', title: 'Legendary Badge', value: 'Priceless', desc: 'Founder #XX badge on every listing. Instant credibility.' },
+                { icon: '', title: '0% Fees FOREVER', value: '$200,000+', desc: 'Never pay transaction fees. Save millions over 10 years.' },
+                { icon: '', title: 'Legendary Badge', value: 'Priceless', desc: 'Founder #XX badge on every listing. Instant credibility.' },
                 { icon: '⭐', title: 'Auto 5-Star Rating', value: '$50,000', desc: 'Start with perfect rating. Get more sales from day 1.' },
-                { icon: '🎯', title: 'Priority Placement', value: '$36,000', desc: 'Always show first in search results. Forever.' },
-                { icon: '🤖', title: 'Free AI Matching', value: '$60,000', desc: 'AI finds buyers for life. No per-deal fees.' },
-                { icon: '📊', title: 'Premium Analytics', value: '$24,000', desc: 'Advanced insights forever. See what competitors can\'t.' }
+                { icon: '', title: 'Priority Placement', value: '$36,000', desc: 'Always show first in search results. Forever.' },
+                { icon: '', title: 'Free AI Matching', value: '$60,000', desc: 'AI finds buyers for life. No per-deal fees.' },
+                { icon: '', title: 'Premium Analytics', value: '$24,000', desc: 'Advanced insights forever. See what competitors can\'t.' }
               ].map((benefit, i) => (
                 <div key={i} style={{
                   background: 'linear-gradient(135deg, rgba(255,215,0,0.1), rgba(139,92,246,0.05))',
@@ -218,14 +218,14 @@ export default function FounderSupplierPage() {
               padding: '2rem'
             }}>
               <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                <div style={{ fontSize: '3rem' }}>👑</div>
+                <div style={{ fontSize: '3rem' }}></div>
                 <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#10b981' }}>
                   Supplier #100
                 </div>
               </div>
               <div style={{ color: '#d1fae5', lineHeight: '2' }}>
                 <strong>Status:</strong> Legendary Founder<br />
-                <strong>Badge:</strong> 👑 Displayed forever<br />
+                <strong>Badge:</strong>  Displayed forever<br />
                 <strong>Rating:</strong> ⭐⭐⭐⭐⭐ (5.0)<br />
                 <strong>Fees:</strong> 0% forever<br />
                 <strong>AI Matching:</strong> Free for life<br />
@@ -281,7 +281,7 @@ export default function FounderSupplierPage() {
         <section style={{ padding: '4rem 2rem', background: 'rgba(255,255,255,0.02)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '2rem', color: '#FFD700' }}>
-              🔥 Live Registrations
+               Live Registrations
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -353,7 +353,7 @@ export default function FounderSupplierPage() {
                 <tr style={{ borderBottom: '2px solid rgba(255,215,0,0.3)' }}>
                   <th style={{ padding: '1rem', textAlign: 'left', color: '#FFD700' }}>Benefit</th>
                   <th style={{ padding: '1rem', textAlign: 'center', color: '#FFD700', background: 'rgba(255,215,0,0.1)' }}>
-                    👑 FOUNDER<br />(1-100)
+                     FOUNDER<br />(1-100)
                   </th>
                   <th style={{ padding: '1rem', textAlign: 'center' }}>🥇 GOLD<br />(101-500)</th>
                   <th style={{ padding: '1rem', textAlign: 'center' }}>🥈 SILVER<br />(501-1,000)</th>
@@ -365,7 +365,7 @@ export default function FounderSupplierPage() {
                   ['Starting Rating', '⭐⭐⭐⭐⭐ 5.0', '⭐⭐⭐⭐☆ 4.5', '⭐⭐⭐⭐☆ 4.0'],
                   ['AI Matching', 'FREE Forever', '50% Off', '3 Free Matches'],
                   ['Priority Placement', 'Lifetime', '6 Months', 'None'],
-                  ['Badge Display', '👑 #XX', '🥇 #XXX', '🥈 #XXX'],
+                  ['Badge Display', ' #XX', '🥇 #XXX', '🥈 #XXX'],
                   ['Value Over 10 Years', '$370,000+', '$80,000', '$15,000']
                 ].map((row, i) => (
                   <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>

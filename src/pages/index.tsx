@@ -105,7 +105,7 @@ export default function HomePage() {
           </div>
           
           <p style={{ color: '#FFD700', fontSize: '1.25rem', fontWeight: '500', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem' }}>
-            🔥 For African Entrepreneurs Who Want Freedom 🔥
+             For African Entrepreneurs Who Want Freedom 
           </p>
           
           <h1 style={{ fontSize: 'clamp(3rem, 9vw, 5.5rem)', fontWeight: 'bold', lineHeight: '1.1', marginBottom: '1.5rem' }}>
@@ -131,7 +131,7 @@ export default function HomePage() {
               textDecoration: 'none',
               boxShadow: '0 0 40px rgba(255, 215, 0, 0.5)'
             }}>
-              👉 START FREE — NO CARD REQUIRED
+               START FREE — NO CARD REQUIRED
             </Link>
           </div>
           
@@ -167,14 +167,14 @@ export default function HomePage() {
               Right now, you're probably using:
             </p>
             <ul style={{ color: '#FEE2E2', fontSize: '1.25rem', lineHeight: '2', listStyle: 'none', paddingLeft: 0 }}>
-              <li>❌ WhatsApp for customer messages</li>
-              <li>❌ M-Pesa app for payments</li>
-              <li>❌ Excel for inventory tracking</li>
-              <li>❌ Regular phone (₦50,000/month in calls!)</li>
-              <li>❌ Email for invoices</li>
+              <li>X WhatsApp for customer messages</li>
+              <li>X M-Pesa app for payments</li>
+              <li>X Excel for inventory tracking</li>
+              <li>X Regular phone (₦50,000/month in calls!)</li>
+              <li>X Email for invoices</li>
             </ul>
             <p style={{ color: '#FCA5A5', fontSize: '1.75rem', fontWeight: 'bold', marginTop: '1.5rem', textAlign: 'center' }}>
-              That's <span style={{ fontSize: '2rem', color: '#FEE2E2' }}>₦2.1 TRILLION</span> lost annually across Africa. 💸
+              That's <span style={{ fontSize: '2rem', color: '#FEE2E2' }}>₦2.1 TRILLION</span> lost annually across Africa. 
             </p>
           </div>
         </section>
@@ -193,13 +193,13 @@ export default function HomePage() {
 
             <div style={{ background: 'rgba(255,255,255,0.05)', border: '2px solid rgba(255,215,0,0.3)', borderRadius: '1.5rem', padding: '3rem', marginBottom: '3rem' }}>
               <h3 style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#FFD700', marginBottom: '1.5rem' }}>
-                🎯 The Simple Truth:
+                 The Simple Truth:
               </h3>
               <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: '#ddd', marginBottom: '1.5rem' }}>
                 Instead of paying for 5 different apps and wasting hours switching between them...
               </p>
               <p style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#FFD700', textAlign: 'center', padding: '2rem', background: 'rgba(255,215,0,0.1)', borderRadius: '1rem' }}>
-                You get EVERYTHING in ONE place. For FREE. Forever. 🚀
+                You get EVERYTHING in ONE place. For FREE. Forever. 
               </p>
             </div>
           </div>
@@ -286,7 +286,7 @@ export default function HomePage() {
                       fontWeight: '600',
                       whiteSpace: 'nowrap'
                     }}>
-                      ⏱️ {item.time}
+                       {item.time}
                     </span>
                   </div>
                   <p style={{ color: '#aaa', fontSize: '1.25rem', lineHeight: '1.6', margin: 0 }}>{item.desc}</p>
@@ -297,7 +297,7 @@ export default function HomePage() {
 
           <div style={{ textAlign: 'center', marginTop: '3rem' }}>
             <p style={{ fontSize: '1.25rem', color: '#FFD700', fontWeight: 'bold', marginBottom: '1rem' }}>
-              Total setup time: Less than 5 minutes. 🚀
+              Total setup time: Less than 5 minutes. 
             </p>
             <Link href="/signup" style={{ 
               display: 'inline-flex',
@@ -328,12 +328,12 @@ export default function HomePage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
             {[
-              { icon: '📞', gradient: 'linear-gradient(135deg, #10b981, #059669)', title: 'FREE Calls', desc: 'Voice & video calls with zero charges. Save ₦600,000/year.' },
-              { icon: '💬', gradient: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', title: 'Instant Chat', desc: 'Message customers in real-time. Never miss a sale.' },
-              { icon: '💳', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)', title: 'Get Paid Fast', desc: 'Accept M-Pesa, Telebirr, cards. Money in 3 seconds.' },
-              { icon: '🏪', gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)', title: 'Online Shop', desc: 'Sell products 24/7. Even when you sleep.' },
-              { icon: '🛡️', gradient: 'linear-gradient(135deg, #06b6d4, #0284c7)', title: 'Bank Security', desc: 'Military-grade encryption. Your money is safe.' },
-              { icon: '⚡', gradient: 'linear-gradient(135deg, #eab308, #ca8a04)', title: 'Works Offline', desc: 'No internet? No problem. Full access anywhere.' }
+              { icon: '', gradient: 'linear-gradient(135deg, #10b981, #059669)', title: 'FREE Calls', desc: 'Voice & video calls with zero charges. Save ₦600,000/year.' },
+              { icon: '', gradient: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', title: 'Instant Chat', desc: 'Message customers in real-time. Never miss a sale.' },
+              { icon: '', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)', title: 'Get Paid Fast', desc: 'Accept M-Pesa, Telebirr, cards. Money in 3 seconds.' },
+              { icon: '', gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)', title: 'Online Shop', desc: 'Sell products 24/7. Even when you sleep.' },
+              { icon: '', gradient: 'linear-gradient(135deg, #06b6d4, #0284c7)', title: 'Bank Security', desc: 'Military-grade encryption. Your money is safe.' },
+              { icon: '', gradient: 'linear-gradient(135deg, #eab308, #ca8a04)', title: 'Works Offline', desc: 'No internet? No problem. Full access anywhere.' }
             ].map((feature, i) => (
               <div key={i} style={{ 
                 background: 'rgba(255,255,255,0.03)', 
@@ -443,7 +443,7 @@ export default function HomePage() {
                   Claim Your FREE Account Now →
                 </Link>
                 <p style={{ fontSize: '0.75rem', color: '#666', marginTop: '1rem' }}>
-                  ⚡ Limited to 100,000 businesses • 50,000 already joined
+                   Limited to 100,000 businesses • 50,000 already joined
                 </p>
               </div>
             </div>
@@ -562,7 +562,7 @@ export default function HomePage() {
               <Link href="/help" style={{ color: '#999', textDecoration: 'none' }}>Help</Link>
               <Link href="/privacy" style={{ color: '#999', textDecoration: 'none' }}>Privacy</Link>
             </div>
-            <p style={{ color: '#666' }}>Made with 🦁 in Africa</p>
+            <p style={{ color: '#666' }}>Made with  in Africa</p>
           </div>
         </footer>
       </div>

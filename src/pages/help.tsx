@@ -25,7 +25,7 @@ export default function HelpPage() {
 
         {/* Hero */}
         <section style={{ padding: '5rem 2rem', textAlign: 'center', maxWidth: '900px', margin: '0 auto' }}>
-          <div style={{ fontSize: '4rem', marginBottom: '1.5rem' }}>💬</div>
+          <div style={{ fontSize: '4rem', marginBottom: '1.5rem' }}></div>
           <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 'bold', marginBottom: '1.5rem' }}>
             How Can We <span style={{ color: '#FFD700' }}>Help</span>?
           </h1>
@@ -39,21 +39,21 @@ export default function HelpPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
             {[
               {
-                icon: '📧',
+                icon: '',
                 title: 'Email Us',
                 desc: 'Get a response within 24 hours',
                 action: 'support@wakilchat.com',
                 link: 'mailto:support@wakilchat.com'
               },
               {
-                icon: '💼',
+                icon: '',
                 title: 'Business Inquiries',
                 desc: 'Partnerships, press, or enterprise',
                 action: 'business@wakilchat.com',
                 link: 'mailto:business@wakilchat.com'
               },
               {
-                icon: '👑',
+                icon: '',
                 title: 'Founder Program',
                 desc: 'Questions about founder supplier status',
                 action: 'Learn More',
@@ -172,7 +172,7 @@ export default function HelpPage() {
               <Link href="/privacy" style={{ color: '#999', textDecoration: 'none' }}>Privacy</Link>
               <Link href="/terms" style={{ color: '#999', textDecoration: 'none' }}>Terms</Link>
             </div>
-            <p style={{ color: '#999', fontSize: '1.125rem' }}>Pre-Launch 2026 • Made with 🦁 in Africa</p>
+            <p style={{ color: '#999', fontSize: '1.125rem' }}>Pre-Launch 2026 • Made with  in Africa</p>
           </div>
         </footer>
       </div>

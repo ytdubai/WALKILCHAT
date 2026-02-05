@@ -25,7 +25,7 @@ export default function AboutPage() {
 
         {/* Hero */}
         <section style={{ padding: '4rem 2rem', textAlign: 'center', maxWidth: '900px', margin: '0 auto' }}>
-          <div style={{ fontSize: '4rem', marginBottom: '1.5rem' }}>🦁</div>
+          <div style={{ fontSize: '4rem', marginBottom: '1.5rem' }}></div>
           <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 'bold', marginBottom: '1.5rem' }}>
             Built by Africans, <span style={{ color: '#FFD700' }}>For Africans</span>
           </h1>
@@ -74,10 +74,10 @@ export default function AboutPage() {
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
             {[
-              { icon: '🦁', title: 'African Pride', desc: 'Built by Africans, for Africans. We understand your reality because we live it.' },
-              { icon: '💎', title: 'Fair Pricing', desc: 'We charge 2-5% vs brokers\' 40%. Your success is our success.' },
-              { icon: '🤖', title: 'Innovation First', desc: 'AI technology that levels the playing field for African entrepreneurs.' },
-              { icon: '🌍', title: 'Global Reach', desc: 'Connect African suppliers to buyers worldwide. No borders, no limits.' }
+              { icon: '', title: 'African Pride', desc: 'Built by Africans, for Africans. We understand your reality because we live it.' },
+              { icon: '', title: 'Fair Pricing', desc: 'We charge 2-5% vs brokers\' 40%. Your success is our success.' },
+              { icon: '', title: 'Innovation First', desc: 'AI technology that levels the playing field for African entrepreneurs.' },
+              { icon: '', title: 'Global Reach', desc: 'Connect African suppliers to buyers worldwide. No borders, no limits.' }
             ].map((value, i) => (
               <div key={i} style={{
                 background: 'rgba(255,255,255,0.03)',
