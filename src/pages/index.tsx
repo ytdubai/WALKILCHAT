@@ -53,23 +53,10 @@ return () => el.removeEventListener('mousemove', move);
 }, []);
 return ref;
 }
-/* ─── REVEAL COMPONENT ─── */
-function R({ children, d = 0, y = 36, s }: { children: ReactNode; d?: number; y?: number; s?:
-const { ref, inView } = useInView();
-return (
-<div ref={ref} style={{
-opacity: inView ? 1 : 0,
-transform: inView ? 'translate3d(0,0,0)' : `translate3d(0,${y}px,0)`,
-transition: `all .8s cubic-bezier(.16,1,.3,1) ${d}s`,
-willChange: 'transform, opacity',
-...s,
-}}>{children}</div>
-);
-}
-export default function HomePage() {
-const [scrolled, setScrolled] = useState(false);
-const [mounted, setMounted] = useState(false);
-const heroGlow = useMouseGlow();
+
+function R({ children, d = 0, y = 36, s }: { children: ReactNode; d?: number; y?: number; s?: CSSProperties }) {
+  const { ref, inView } = useInView();
+  return (const heroGlow = useMouseGlow();
 useEffect(() => {
 setMounted(true);
 const fn = () => setScrolled(window.scrollY > 40);
