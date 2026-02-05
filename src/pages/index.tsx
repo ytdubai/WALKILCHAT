@@ -1,486 +1,687 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
-import Image from 'next/image';
 
-function useInView(threshold) {
-  if (!threshold) threshold = 0.15;
-  var ref = useRef(null);
-  var s = useState(false);
-  var inView = s[0];
-  var setInView = s[1];
-  useEffect(function () {
-    var el = ref.current;
+// SVG Icon Components
+const Icons = {
+  Messages: () => (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      <path d="M8 9h8M8 13h6" opacity="0.5"/>
+    </svg>
+  ),
+  Payments: () => (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+      <line x1="1" y1="10" x2="23" y2="10"/>
+      <path d="M7 15h4" opacity="0.5"/>
+    </svg>
+  ),
+  AI: () => (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+      <path d="M2 17l10 5 10-5"/>
+      <path d="M2 12l10 5 10-5" opacity="0.5"/>
+    </svg>
+  ),
+  Phone: () => (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+    </svg>
+  ),
+  Dashboard: () => (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="9" rx="1"/>
+      <rect x="14" y="3" width="7" height="5" rx="1"/>
+      <rect x="14" y="12" width="7" height="9" rx="1"/>
+      <rect x="3" y="16" width="7" height="5" rx="1"/>
+    </svg>
+  ),
+  Shield: () => (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      <path d="M9 12l2 2 4-4" opacity="0.5"/>
+    </svg>
+  ),
+  Check: () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  ),
+  Arrow: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="5" y1="12" x2="19" y2="12"/>
+      <polyline points="12 5 19 12 12 19"/>
+    </svg>
+  ),
+  Lock: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+  ),
+  Chart: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="20" x2="18" y2="10"/>
+      <line x1="12" y1="20" x2="12" y2="4"/>
+      <line x1="6" y1="20" x2="6" y2="14"/>
+    </svg>
+  ),
+  Globe: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="2" y1="12" x2="22" y2="12"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </svg>
+  ),
+};
+
+// Animation hook for scroll reveal
+function useInView(threshold: number = 0.15) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  
+  useEffect(() => {
+    const el = ref.current;
     if (!el) return;
-    var obs = new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting) {
-        setInView(true);
-        obs.disconnect();
-      }
-    }, { threshold: threshold });
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setInView(true);
+          obs.disconnect();
+        }
+      },
+      { threshold }
+    );
     obs.observe(el);
-    return function () { obs.disconnect(); };
-  }, []);
-  return { ref: ref, inView: inView };
+    return () => obs.disconnect();
+  }, [threshold]);
+  
+  return { ref, inView };
 }
 
-function useCounter(end, duration) {
-  if (!duration) duration = 2200;
-  var s = useState(0);
-  var count = s[0];
-  var setCount = s[1];
-  var view = useInView(0.3);
-  useEffect(function () {
+// Counter animation hook
+function useCounter(end: number, duration: number = 2000) {
+  const [count, setCount] = useState(0);
+  const view = useInView(0.3);
+  
+  useEffect(() => {
     if (!view.inView) return;
-    var raf;
-    var t0 = performance.now();
-    function step(now) {
-      var p = Math.min((now - t0) / duration, 1);
-      var ease = 1 - Math.pow(1 - p, 4);
+    let raf: number;
+    const t0 = performance.now();
+    function step(now: number) {
+      const p = Math.min((now - t0) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 4);
       setCount(Math.floor(ease * end));
       if (p < 1) raf = requestAnimationFrame(step);
     }
     raf = requestAnimationFrame(step);
-    return function () { cancelAnimationFrame(raf); };
+    return () => cancelAnimationFrame(raf);
   }, [view.inView, end, duration]);
-  return { count: count, ref: view.ref };
+  
+  return { count, ref: view.ref };
 }
 
-function Reveal(props) {
-  var d = props.d || 0;
-  var y = props.y || 36;
-  var view = useInView(0.12);
-  return (
-    <div ref={view.ref} style={{
-      opacity: view.inView ? 1 : 0,
-      transform: view.inView ? 'translate3d(0,0,0)' : 'translate3d(0,' + y + 'px,0)',
-      transition: 'all .8s cubic-bezier(.16,1,.3,1) ' + d + 's',
-    }}>
-      {props.children}
-    </div>
-  );
-}
-
-function FeatureCard(props) {
-  var s = useState(false);
-  var hov = s[0];
-  var setHov = s[1];
+// Reveal animation component
+function Reveal({ children, delay = 0, y = 40 }: { children: React.ReactNode; delay?: number; y?: number }) {
+  const { ref, inView } = useInView(0.1);
   return (
     <div
-      onMouseEnter={function () { setHov(true); }}
-      onMouseLeave={function () { setHov(false); }}
+      ref={ref}
       style={{
-        padding: '32px 28px',
-        borderRadius: 18,
-        background: hov ? '#141414' : '#111111',
-        border: '1px solid ' + (hov ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.06)'),
-        transition: 'all .25s cubic-bezier(.16,1,.3,1)',
-        transform: hov ? 'translateY(-4px)' : 'translateY(0)',
-        boxShadow: hov ? '0 20px 40px -10px rgba(0,0,0,.4)' : 'none',
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'translate3d(0,0,0)' : 'translate3d(0,' + y + 'px,0)',
+        transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1) ' + delay + 's',
       }}
     >
-      <div style={{
-        fontSize: 36, marginBottom: 20, width: 52, height: 52, borderRadius: 14,
-        background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.06)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-      }}>{props.icon}</div>
-      <h3 style={{ fontSize: 36, fontWeight: 700, color: 'rgba(255,255,255,.95)', marginBottom: 8 }}>{props.title}</h3>
-      <p style={{ fontSize: 19, color: 'rgba(255,255,255,.6)', lineHeight: 1.6 }}>{props.desc}</p>
+      {children}
     </div>
   );
 }
 
-function Stat(props) {
-  var c = useCounter(props.target, 2200);
+// Logo component
+function Logo({ size = 40, white = false }: { size?: number; white?: boolean }) {
   return (
-    <div ref={c.ref} style={{ textAlign: 'center', minWidth: 100 }}>
-      <div style={{
-        fontSize: 60, fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1,
-        marginBottom: 8, color: '#EAB308',
-      }}>
-        {c.count.toLocaleString()}{props.suffix}
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div
+        style={{
+          width: size,
+          height: size,
+          borderRadius: size * 0.25,
+          background: white ? 'white' : 'linear-gradient(135deg, #00D4AA, #00A3CC)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: white ? 'none' : '0 4px 20px rgba(0, 212, 170, 0.3)',
+        }}
+      >
+        <svg width={size * 0.6} height={size * 0.6} viewBox="0 0 100 100" fill="none">
+          <path
+            d="M50 10L55 15L65 12L75 20L80 30L82 45L78 60L70 75L55 85L50 90L45 85L30 75L22 60L18 45L20 30L25 20L35 12L45 15L50 10Z"
+            fill={white ? '#0a2540' : 'white'}
+            fillOpacity="0.95"
+          />
+          <circle cx="42" cy="35" r="5" fill={white ? '#00D4AA' : '#0a2540'} />
+          <circle cx="58" cy="50" r="5" fill={white ? '#00D4AA' : '#0a2540'} />
+          <circle cx="38" cy="60" r="5" fill={white ? '#00D4AA' : '#0a2540'} />
+          <line x1="42" y1="35" x2="58" y2="50" stroke={white ? '#00D4AA' : '#0a2540'} strokeWidth="3" />
+          <line x1="58" y1="50" x2="38" y2="60" stroke={white ? '#00D4AA' : '#0a2540'} strokeWidth="3" />
+        </svg>
       </div>
-      <div style={{ fontSize: 18, color: 'rgba(255,255,255,.4)', fontWeight: 500 }}>{props.label}</div>
+      <span style={{ fontSize: size * 0.5, fontWeight: 800, color: white ? 'white' : '#0a2540' }}>
+        WakilChat
+      </span>
+    </div>
+  );
+}
+
+// Stat component
+function Stat({ value, suffix, label }: { value: number; suffix?: string; label: string }) {
+  const counter = useCounter(value, 2200);
+  return (
+    <div ref={counter.ref} style={{ textAlign: 'center' }}>
+      <div style={{ fontSize: 42, fontWeight: 800, color: '#00D4AA', letterSpacing: '-0.02em' }}>
+        {counter.count.toLocaleString()}{suffix || ''}
+      </div>
+      <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', marginTop: 8 }}>{label}</div>
     </div>
   );
 }
 
 export default function HomePage() {
-  var scrollState = useState(false);
-  var scrolled = scrollState[0];
-  var setScrolled = scrollState[1];
+  const [scrolled, setScrolled] = useState(false);
 
-  useEffect(function () {
-    function onScroll() { setScrolled(window.scrollY > 40); }
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', onScroll, { passive: true });
-    return function () { window.removeEventListener('scroll', onScroll); };
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  const features = [
+    { icon: <Icons.Messages />, title: 'Unified Inbox', desc: 'WhatsApp, Telegram, SMS — all in one place. Never miss a customer message.', color: '#00D4AA' },
+    { icon: <Icons.Payments />, title: 'Accept Payments', desc: 'Mobile money, cards, bank transfers. Works with M-Pesa, Telebirr, and 20+ providers.', color: '#00A3CC' },
+    { icon: <Icons.AI />, title: 'AI Assistant', desc: 'Auto-reply to common questions. Qualify leads while you sleep.', color: '#0a2540' },
+    { icon: <Icons.Phone />, title: 'Free Calls', desc: 'Voice and video over internet. No per-minute charges.', color: '#00D4AA' },
+    { icon: <Icons.Dashboard />, title: 'Simple Dashboard', desc: 'See your sales, messages, and tasks at a glance.', color: '#00A3CC' },
+    { icon: <Icons.Shield />, title: 'Secure', desc: '256-bit encryption. Your data stays yours.', color: '#0a2540' },
+  ];
 
   return (
     <>
       <Head>
-        <title>WakilChat — The Financial Infrastructure for African Businesses</title>
-        <meta name="description" content="Accept payments, manage invoices, and grow your business with AI — all from one platform." />
+        <title>WakilChat — Business Tools for African Entrepreneurs</title>
+        <meta name="description" content="Payments, messaging, and AI tools. Free to start, pay only when you make money. Built by African founders." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </Head>
 
       <style jsx global>{`
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-        html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-        body{font-family:'Inter',system-ui,sans-serif;background:#050505;color:rgba(255,255,255,.95);overflow-x:hidden}
-        a{text-decoration:none;color:inherit}
-        ::selection{background:rgba(234,179,8,.3);color:#fff}
-        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
-        @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
-        @keyframes gradient-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-        @keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-        .btn-primary{
-          display:inline-flex;align-items:center;gap:10px;
-          padding:14px 32px;border-radius:14px;border:none;cursor:pointer;
-          font-family:inherit;font-weight:600;font-size:15px;
-          background:#EAB308;color:#050505;
-          box-shadow:0 1px 2px rgba(0,0,0,.3),0 0 0 1px rgba(234,179,8,.3);
-          transition:all .2s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { 
+          font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; 
+          background: #ffffff; 
+          color: #0a2540;
+          -webkit-font-smoothing: antialiased;
+          overflow-x: hidden;
         }
-        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(234,179,8,.3),0 0 0 1px rgba(234,179,8,.5)}
-        .btn-secondary{
-          display:inline-flex;align-items:center;gap:10px;
-          padding:14px 32px;border-radius:14px;cursor:pointer;
-          font-family:inherit;font-weight:500;font-size:15px;
-          background:rgba(255,255,255,.04);color:rgba(255,255,255,.95);
-          border:1px solid rgba(255,255,255,.1);transition:all .2s;
+        a { text-decoration: none; color: inherit; }
+
+        .btn-primary {
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 16px 32px; border-radius: 50px; border: none; cursor: pointer;
+          font-family: inherit; font-weight: 600; font-size: 16px;
+          background: linear-gradient(135deg, #00D4AA, #00A3CC);
+          color: white;
+          box-shadow: 0 4px 20px rgba(0, 212, 170, 0.3);
+          transition: all 0.3s ease;
         }
-        .btn-secondary:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16)}
-        @media(max-width:768px){
-          .rg3{grid-template-columns:1fr !important}
-          .rg2{grid-template-columns:1fr !important}
-          .rfc{flex-direction:column !important}
-          .htitle{font-size:34px !important}
-          .rhide{display:none !important}
-          .rfull{width:100% !important}
-          .spad{padding-top:64px !important;padding-bottom:64px !important}
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(0, 212, 170, 0.4); }
+
+        .btn-secondary {
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 16px 32px; border-radius: 50px; cursor: pointer;
+          font-family: inherit; font-weight: 600; font-size: 16px;
+          background: white; color: #0a2540;
+          border: 2px solid #e2e8f0;
+          transition: all 0.3s ease;
         }
-        @media(max-width:480px){.htitle{font-size:28px !important}}
+        .btn-secondary:hover { border-color: #00D4AA; background: rgba(0, 212, 170, 0.05); }
+
+        .card {
+          background: white;
+          border-radius: 20px;
+          padding: 32px;
+          border: 1px solid #e2e8f0;
+          transition: all 0.3s ease;
+        }
+        .card:hover { border-color: #00D4AA; box-shadow: 0 10px 40px rgba(0, 212, 170, 0.1); transform: translateY(-4px); }
+
+        @media (max-width: 768px) {
+          .hide-mobile { display: none !important; }
+          .stack-mobile { flex-direction: column !important; }
+          .full-mobile { width: 100% !important; }
+          .hero-title { font-size: 36px !important; }
+          .section-pad { padding: 60px 20px !important; }
+          .grid-3 { grid-template-columns: 1fr !important; }
+          .grid-2 { grid-template-columns: 1fr !important; }
+        }
       `}</style>
 
-      <div style={{position:'fixed',inset:0,pointerEvents:'none',zIndex:9999,opacity:.018,backgroundImage:'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 512 512\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'.65\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")'}} />
-
-      <header style={{
-        position:'fixed',top:0,left:0,right:0,zIndex:100,
-        background:scrolled ? 'rgba(5,5,5,.85)' : 'transparent',
-        backdropFilter:scrolled ? 'blur(20px) saturate(1.5)' : 'none',
-        borderBottom:scrolled ? '1px solid rgba(255,255,255,.06)' : '1px solid transparent',
-        transition:'all .35s',
-      }}>
-        <nav style={{maxWidth:1200,margin:'0 auto',padding:'0 32px',display:'flex',alignItems:'center',justifyContent:'space-between',height:scrolled ? 64 : 72,transition:'height .35s'}}>
-          <Link href="/" style={{display:'flex',alignItems:'center',gap:10}}>
-            <div style={{width:34,height:34,borderRadius:10,background:'#EAB308',display:'flex',alignItems:'center',justifyContent:'center',boxShadow:'0 0 20px rgba(234,179,8,.2)'}}>
-              <span style={{color:'#050505',fontWeight:800,fontSize:16}}>W</span>
-            </div>
-            <span style={{fontSize:19,fontWeight:700,letterSpacing:'-.03em'}}>
-              <span style={{color:'#EAB308'}}>Wakil</span><span>Chat</span>
-            </span>
+      {/* NAVIGATION */}
+      <header
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          background: scrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(20px)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(0, 0, 0, 0.05)' : 'none',
+          transition: 'all 0.3s ease',
+        }}
+      >
+        <nav style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 80 }}>
+          <Link href="/">
+            <Logo size={36} />
           </Link>
-          <div className="rhide" style={{display:'flex',alignItems:'center',gap:8}}>
-            <a href="#products" style={{padding:'8px 16px',fontSize:14,color:'rgba(255,255,255,.6)',fontWeight:500,borderRadius:8}}>Products</a>
-            <a href="#pricing" style={{padding:'8px 16px',fontSize:14,color:'rgba(255,255,255,.6)',fontWeight:500,borderRadius:8}}>Pricing</a>
-            <a href="#about" style={{padding:'8px 16px',fontSize:14,color:'rgba(255,255,255,.6)',fontWeight:500,borderRadius:8}}>Company</a>
+
+          <div className="hide-mobile" style={{ display: 'flex', alignItems: 'center', gap: 40 }}>
+            <a href="#features" style={{ fontSize: 15, fontWeight: 500, color: '#64748b', transition: 'color 0.2s' }}>Features</a>
+            <a href="#pricing" style={{ fontSize: 15, fontWeight: 500, color: '#64748b', transition: 'color 0.2s' }}>Pricing</a>
+            <a href="#team" style={{ fontSize: 15, fontWeight: 500, color: '#64748b', transition: 'color 0.2s' }}>Team</a>
+            <a href="https://status.wakilchat.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: 15, fontWeight: 500, color: '#64748b', transition: 'color 0.2s' }}>Status</a>
           </div>
-          <div style={{display:'flex',alignItems:'center',gap:16}}>
-            <Link href="/login" className="rhide" style={{fontSize:14,color:'rgba(255,255,255,.6)',fontWeight:500}}>Sign in</Link>
-            <Link href="/signup"><button className="btn-primary" style={{padding:'10px 22px',fontSize:14}}>Get started</button></Link>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <Link href="/login" className="hide-mobile" style={{ fontSize: 15, fontWeight: 600, color: '#0a2540' }}>Log in</Link>
+            <Link href="/signup"><button className="btn-primary" style={{ padding: '12px 24px', fontSize: 14 }}>Get started</button></Link>
           </div>
         </nav>
       </header>
 
-      <section style={{position:'relative',minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',overflow:'hidden',padding:'120px 32px 80px'}}>
-        <div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse 80% 60% at 50% 0%,rgba(234,179,8,.08) 0%,transparent 50%),radial-gradient(ellipse 60% 40% at 20% 60%,rgba(139,92,246,.04) 0%,transparent 50%),radial-gradient(ellipse 50% 50% at 80% 80%,rgba(34,211,238,.03) 0%,transparent 50%)'}} />
-        <div style={{position:'absolute',inset:0,opacity:.03,backgroundImage:'linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px)',backgroundSize:'64px 64px',maskImage:'radial-gradient(ellipse 70% 50% at 50% 40%,black,transparent)',WebkitMaskImage:'radial-gradient(ellipse 70% 50% at 50% 40%,black,transparent)'}} />
-        <div style={{position:'absolute',top:'15%',left:'10%',width:300,height:300,borderRadius:'50%',background:'radial-gradient(circle,rgba(139,92,246,.06),transparent 70%)',animation:'float 8s ease-in-out infinite',pointerEvents:'none'}} />
-        <div style={{position:'absolute',bottom:'20%',right:'8%',width:250,height:250,borderRadius:'50%',background:'radial-gradient(circle,rgba(34,211,238,.05),transparent 70%)',animation:'float 10s ease-in-out infinite 2s',pointerEvents:'none'}} />
+      {/* HERO SECTION */}
+      <section
+        style={{
+          minHeight: '100vh',
+          paddingTop: 120,
+          paddingBottom: 80,
+          position: 'relative',
+          overflow: 'hidden',
+          background: 'linear-gradient(180deg, #e8f7f5 0%, #ffffff 100%)',
+        }}
+      >
+        {/* Background decoration */}
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+          <div
+            style={{
+              position: 'absolute',
+              top: '10%',
+              right: '5%',
+              width: 400,
+              height: 400,
+              background: 'radial-gradient(circle, rgba(0, 212, 170, 0.15) 0%, transparent 70%)',
+              borderRadius: '50%',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '20%',
+              left: '0%',
+              width: 500,
+              height: 500,
+              background: 'radial-gradient(circle, rgba(0, 163, 204, 0.1) 0%, transparent 70%)',
+              borderRadius: '50%',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundImage: 'linear-gradient(rgba(0, 212, 170, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 212, 170, 0.05) 1px, transparent 1px)',
+              backgroundSize: '60px 60px',
+            }}
+          />
+        </div>
 
-        <div style={{position:'relative',maxWidth:860,margin:'0 auto',textAlign:'center'}}>
-          <Reveal d={0}>
-            <div style={{display:'inline-flex',alignItems:'center',gap:10,padding:'8px 18px',borderRadius:100,background:'rgba(234,179,8,.08)',border:'1px solid rgba(234,179,8,.18)',marginBottom:32}}>
-              <span style={{width:7,height:7,borderRadius:'50%',background:'#34D399',boxShadow:'0 0 10px #34D399',animation:'pulse-dot 2s ease-in-out infinite'}} />
-              <span style={{fontSize:13,fontWeight:600,color:'#EAB308',letterSpacing:'.04em'}}>Trusted by 50,000+ African businesses</span>
+        <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+          <Reveal>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(0, 212, 170, 0.1)', borderRadius: 50, padding: '8px 20px', marginBottom: 32 }}>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#00D4AA' }} />
+              <span style={{ fontSize: 14, fontWeight: 600, color: '#00A3CC' }}>Built for Africa. Growing globally.</span>
             </div>
           </Reveal>
 
-          <Reveal d={0.08}>
-            <h1 className="htitle" style={{fontSize:64,fontWeight:800,lineHeight:1.06,letterSpacing:'-.045em',marginBottom:24,background:'linear-gradient(135deg,#ffffff 0%,rgba(255,255,255,.85) 40%,#FACC15 100%)',backgroundSize:'200% 200%',animation:'gradient-shift 8s ease infinite',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>
-              The financial infrastructure for African businesses
+          <Reveal delay={0.1}>
+            <h1
+              className="hero-title"
+              style={{
+                fontSize: 64,
+                fontWeight: 800,
+                lineHeight: 1.1,
+                letterSpacing: '-0.03em',
+                color: '#0a2540',
+                marginBottom: 24,
+              }}
+            >
+              Business tools that
+              <br />
+              <span style={{ background: 'linear-gradient(135deg, #00D4AA, #00A3CC)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                just work
+              </span>
             </h1>
           </Reveal>
 
-          <Reveal d={0.16}>
-            <p style={{fontSize:19,color:'rgba(255,255,255,.6)',lineHeight:1.65,maxWidth:540,margin:'0 auto 40px'}}>
-              Accept payments, send money, manage invoices, and grow your business with AI — all from one platform.
+          <Reveal delay={0.2}>
+            <p style={{ fontSize: 20, color: '#64748b', lineHeight: 1.7, marginBottom: 40, maxWidth: 600, margin: '0 auto 40px' }}>
+              Payments, messaging, and AI — unified in one app.
+              <br />
+              Free to start. Pay only when you earn.
             </p>
           </Reveal>
 
-          <Reveal d={0.24}>
-            <div className="rfc" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:16,marginBottom:16}}>
-              <Link href="/signup"><button className="btn-primary rfull" style={{fontSize:16,padding:'16px 36px'}}>Start for free →</button></Link>
-              <Link href="#demo"><button className="btn-secondary rfull">Contact sales</button></Link>
+          <Reveal delay={0.3}>
+            <div className="stack-mobile" style={{ display: 'flex', gap: 16, justifyContent: 'center', marginBottom: 40 }}>
+              <Link href="/signup"><button className="btn-primary full-mobile">Start for free <Icons.Arrow /></button></Link>
+              <a href="#features"><button className="btn-secondary full-mobile">See how it works</button></a>
             </div>
-            <p style={{fontSize:13,color:'rgba(255,255,255,.4)'}}>Free forever · No credit card · 60 second setup</p>
           </Reveal>
 
-          <Reveal d={0.38} y={50}>
-            <div style={{marginTop:64,borderRadius:20,background:'linear-gradient(180deg,#111111,#0A0A0A)',border:'1px solid rgba(255,255,255,.06)',padding:3,boxShadow:'0 60px 120px -20px rgba(0,0,0,.7),0 0 80px rgba(234,179,8,.04)',position:'relative',overflow:'hidden'}}>
-              <div style={{position:'absolute',top:0,left:0,right:0,height:1,background:'linear-gradient(90deg,transparent,rgba(234,179,8,.3),transparent)',animation:'shimmer 3s ease-in-out infinite'}} />
-              <div style={{background:'#0A0A0A',borderRadius:17,padding:'24px 28px',display:'flex',flexDirection:'column',gap:18}}>
-                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-                  <div style={{display:'flex',gap:7}}>
-                    <div style={{width:12,height:12,borderRadius:'50%',background:'#ff5f57'}} />
-                    <div style={{width:12,height:12,borderRadius:'50%',background:'#febc2e'}} />
-                    <div style={{width:12,height:12,borderRadius:'50%',background:'#28c840'}} />
-                  </div>
-                  <div style={{color:'rgba(255,255,255,.4)',fontSize:12,background:'rgba(255,255,255,.06)',padding:'5px 16px',borderRadius:8,fontWeight:500}}>dashboard.wakilchat.com</div>
-                  <div style={{width:48}} />
-                </div>
-
-                <div className="rg3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:12}}>
-                  <div style={{background:'#111111',borderRadius:14,padding:'20px 18px',border:'1px solid rgba(255,255,255,.06)'}}>
-                    <div style={{fontSize:11,color:'rgba(255,255,255,.4)',textTransform:'uppercase',letterSpacing:'.08em',marginBottom:10,fontWeight:600}}>Total Revenue</div>
-                    <div style={{fontSize:26,fontWeight:700,color:'rgba(255,255,255,.95)',letterSpacing:'-.02em',marginBottom:4}}>$48,290</div>
-                    <div style={{fontSize:12,color:'#34D399',fontWeight:600}}>↗ +23.5%</div>
-                  </div>
-                  <div style={{background:'#111111',borderRadius:14,padding:'20px 18px',border:'1px solid rgba(255,255,255,.06)'}}>
-                    <div style={{fontSize:11,color:'rgba(255,255,255,.4)',textTransform:'uppercase',letterSpacing:'.08em',marginBottom:10,fontWeight:600}}>Active Users</div>
-                    <div style={{fontSize:26,fontWeight:700,color:'rgba(255,255,255,.95)',letterSpacing:'-.02em',marginBottom:4}}>12,841</div>
-                    <div style={{fontSize:12,color:'#EAB308',fontWeight:600}}>↗ +18.2%</div>
-                  </div>
-                  <div style={{background:'#111111',borderRadius:14,padding:'20px 18px',border:'1px solid rgba(255,255,255,.06)'}}>
-                    <div style={{fontSize:11,color:'rgba(255,255,255,.4)',textTransform:'uppercase',letterSpacing:'.08em',marginBottom:10,fontWeight:600}}>AI Resolved</div>
-                    <div style={{fontSize:26,fontWeight:700,color:'rgba(255,255,255,.95)',letterSpacing:'-.02em',marginBottom:4}}>94.7%</div>
-                    <div style={{fontSize:12,color:'#22D3EE',fontWeight:600}}>↗ +5.1%</div>
-                  </div>
-                </div>
-
-                <div style={{background:'#111111',borderRadius:14,padding:'20px 18px 14px',border:'1px solid rgba(255,255,255,.06)'}}>
-                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:16}}>
-                    <span style={{fontSize:13,fontWeight:600,color:'rgba(255,255,255,.95)'}}>Revenue Overview</span>
-                    <div style={{display:'flex',gap:6}}>
-                      <span style={{fontSize:11,padding:'4px 10px',borderRadius:6,background:'transparent',color:'rgba(255,255,255,.4)',fontWeight:600}}>1W</span>
-                      <span style={{fontSize:11,padding:'4px 10px',borderRadius:6,background:'rgba(234,179,8,.12)',color:'#EAB308',fontWeight:600}}>1M</span>
-                      <span style={{fontSize:11,padding:'4px 10px',borderRadius:6,background:'transparent',color:'rgba(255,255,255,.4)',fontWeight:600}}>3M</span>
-                      <span style={{fontSize:11,padding:'4px 10px',borderRadius:6,background:'transparent',color:'rgba(255,255,255,.4)',fontWeight:600}}>1Y</span>
-                    </div>
-                  </div>
-                  <svg viewBox="0 0 500 100" style={{width:'100%',height:80}}>
-                    <defs>
-                      <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#EAB308" stopOpacity=".25" />
-                        <stop offset="100%" stopColor="#EAB308" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path d="M0,70 C30,65 60,55 90,50 C120,45 150,60 180,42 C210,24 240,35 270,20 C300,15 330,25 360,18 C390,12 420,22 450,10 C470,6 490,8 500,5 L500,100 L0,100 Z" fill="url(#cg)" />
-                    <path d="M0,70 C30,65 60,55 90,50 C120,45 150,60 180,42 C210,24 240,35 270,20 C300,15 330,25 360,18 C390,12 420,22 450,10 C470,6 490,8 500,5" fill="none" stroke="#EAB308" strokeWidth="2" />
-                    <circle cx="450" cy="10" r="4" fill="#EAB308"><animate attributeName="opacity" values="1;.4;1" dur="2s" repeatCount="indefinite" /></circle>
-                  </svg>
-                </div>
+          <Reveal delay={0.4}>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 32, flexWrap: 'wrap', marginTop: 48 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#64748b', fontSize: 14 }}>
+                <Icons.Check /> <span>No credit card required</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#64748b', fontSize: 14 }}>
+                <Icons.Check /> <span>2-5% transaction fees only</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#64748b', fontSize: 14 }}>
+                <Icons.Check /> <span>Cancel anytime</span>
               </div>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section style={{borderTop:'1px solid rgba(255,255,255,.06)',borderBottom:'1px solid rgba(255,255,255,.06)',padding:'40px 32px',background:'#0A0A0A'}}>
-        <div style={{maxWidth:900,margin:'0 auto',textAlign:'center'}}>
-          <p style={{fontSize:13,color:'rgba(255,255,255,.4)',marginBottom:24,fontWeight:500,letterSpacing:'.04em',textTransform:'uppercase'}}>Integrated with leading African payment platforms</p>
-          <div className="rfc" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:40,opacity:.4}}>
-            <span style={{fontSize:16,fontWeight:600}}>M-Pesa</span>
-            <span style={{fontSize:16,fontWeight:600}}>Telebirr</span>
-            <span style={{fontSize:16,fontWeight:600}}>Paystack</span>
-            <span style={{fontSize:16,fontWeight:600}}>Flutterwave</span>
-            <span style={{fontSize:16,fontWeight:600}}>MTN MoMo</span>
+      {/* STATS SECTION */}
+      <section style={{ padding: '60px 24px', background: '#0a2540', color: 'white' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32, textAlign: 'center' }}>
+            <Stat value={50} suffix="K+" label="Businesses signed up" />
+            <Stat value={12800} label="Monthly active users" />
+            <Stat value={35} suffix="+" label="Countries served" />
+            <Stat value={99.7} suffix="%" label="Uptime (30-day)" />
           </div>
+          <p style={{ textAlign: 'center', fontSize: 13, color: 'rgba(255,255,255,0.4)', marginTop: 24 }}>
+            Real numbers, updated monthly. <a href="https://status.wakilchat.com" style={{ color: '#00D4AA', textDecoration: 'underline' }}>View live status →</a>
+          </p>
         </div>
       </section>
 
-      <section className="spad" style={{padding:'96px 32px'}}>
-        <div className="rg2" style={{maxWidth:1000,margin:'0 auto',display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:32,textAlign:'center'}}>
-          <Reveal d={0}><Stat target={50000} suffix="+" label="Businesses" /></Reveal>
-          <Reveal d={0.06}><Stat target={35} suffix="+" label="Countries" /></Reveal>
-          <Reveal d={0.12}><Stat target={99} suffix=".9%" label="Uptime" /></Reveal>
-          <Reveal d={0.18}><Stat target={2} suffix="M+" label="Transactions" /></Reveal>
-        </div>
-      </section>
-
-      <section id="products" className="spad" style={{padding:'96px 32px'}}>
-        <div style={{maxWidth:1100,margin:'0 auto'}}>
+      {/* FEATURES SECTION */}
+      <section id="features" className="section-pad" style={{ padding: '100px 24px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <Reveal>
-            <div style={{maxWidth:560,marginBottom:64}}>
-              <p style={{fontSize:13,fontWeight:600,color:'#EAB308',textTransform:'uppercase',letterSpacing:'.1em',marginBottom:14}}>Products</p>
-              <h2 style={{fontSize:40,fontWeight:800,letterSpacing:'-.035em',lineHeight:1.1,marginBottom:16}}>Everything your business needs</h2>
-              <p style={{fontSize:17,color:'rgba(255,255,255,.6)',lineHeight:1.65}}>One platform for payments, messaging, AI, and growth.</p>
+            <div style={{ textAlign: 'center', marginBottom: 64 }}>
+              <h2 style={{ fontSize: 42, fontWeight: 800, color: '#0a2540', marginBottom: 16 }}>
+                Everything you need to grow
+              </h2>
+              <p style={{ fontSize: 18, color: '#64748b', maxWidth: 500, margin: '0 auto' }}>
+                Simple tools that solve real problems. No complexity, no learning curve.
+              </p>
             </div>
           </Reveal>
-          <div className="rg3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16}}>
-            <Reveal d={0}><FeatureCard icon="" title="Unified Messaging" desc="WhatsApp, Telegram, and SMS in one inbox. AI handles first response, you close the deal." /></Reveal>
-            <Reveal d={0.05}><FeatureCard icon="" title="Free Voice & Video" desc="Crystal-clear calls over data. Zero per-minute charges. Works across 2G and 3G networks." /></Reveal>
-            <Reveal d={0.1}><FeatureCard icon="" title="AI Assistant" desc="Qualifies leads, answers FAQs, and drafts follow-ups 24/7 — trained on your business." /></Reveal>
-            <Reveal d={0.15}><FeatureCard icon="�" title="Revenue Dashboard" desc="Real-time financials. Every payment, invoice, and expense tracked automatically." /></Reveal>
-            <Reveal d={0.2}><FeatureCard icon="�" title="Marketplace" desc="List products, take orders, manage inventory. Your storefront inside the conversation." /></Reveal>
-            <Reveal d={0.25}><FeatureCard icon="" title="Bank-Grade Security" desc="End-to-end encryption, scam detection, and fraud monitoring built into every layer." /></Reveal>
+
+          <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+            {features.map((f, i) => (
+              <Reveal key={i} delay={i * 0.05}>
+                <div className="card" style={{ height: '100%' }}>
+                  <div
+                    style={{
+                      width: 56,
+                      height: 56,
+                      borderRadius: 14,
+                      background: f.color + '15',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginBottom: 20,
+                      color: f.color,
+                    }}
+                  >
+                    {f.icon}
+                  </div>
+                  <h3 style={{ fontSize: 20, fontWeight: 700, color: '#0a2540', marginBottom: 12 }}>{f.title}</h3>
+                  <p style={{ fontSize: 15, color: '#64748b', lineHeight: 1.7 }}>{f.desc}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="spad" style={{padding:'96px 32px',borderTop:'1px solid rgba(255,255,255,.06)',borderBottom:'1px solid rgba(255,255,255,.06)',background:'#0A0A0A'}}>
-        <div style={{maxWidth:1100,margin:'0 auto'}}>
-          <div className="rg2 rfc" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:64,alignItems:'center'}}>
+      {/* PRICING SECTION */}
+      <section id="pricing" className="section-pad" style={{ padding: '100px 24px', background: '#f8fafb' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <Reveal>
+            <div style={{ textAlign: 'center', marginBottom: 64 }}>
+              <h2 style={{ fontSize: 42, fontWeight: 800, color: '#0a2540', marginBottom: 16 }}>
+                Simple, honest pricing
+              </h2>
+              <p style={{ fontSize: 18, color: '#64748b' }}>
+                No monthly fees. No hidden charges. Pay only when you earn.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24 }}>
+            <Reveal>
+              <div style={{ background: 'white', borderRadius: 24, padding: 40, border: '2px solid #e2e8f0', height: '100%' }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#00D4AA', marginBottom: 8, letterSpacing: '0.05em' }}>FREE FOREVER</div>
+                <div style={{ fontSize: 56, fontWeight: 800, color: '#0a2540', marginBottom: 8 }}>$0</div>
+                <div style={{ fontSize: 16, color: '#64748b', marginBottom: 32 }}>Perfect for getting started</div>
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px' }}>
+                  {['Unified messaging inbox', '100 AI responses/month', 'Basic dashboard', 'Community support'].map((item) => (
+                    <li key={item} style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 15, color: '#374151', padding: '12px 0', borderBottom: '1px solid #f3f4f6' }}>
+                      <span style={{ color: '#00D4AA' }}><Icons.Check /></span> {item}
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/signup"><button className="btn-secondary" style={{ width: '100%' }}>Start free</button></Link>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <div style={{ background: '#0a2540', borderRadius: 24, padding: 40, border: '2px solid #0a2540', height: '100%', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: 20, right: 20, background: '#00D4AA', color: '#0a2540', fontSize: 12, fontWeight: 700, padding: '4px 12px', borderRadius: 20 }}>POPULAR</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#00D4AA', marginBottom: 8, letterSpacing: '0.05em' }}>PAY AS YOU GROW</div>
+                <div style={{ fontSize: 56, fontWeight: 800, color: 'white', marginBottom: 8 }}>2-5%</div>
+                <div style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)', marginBottom: 32 }}>Per transaction, when you earn</div>
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px' }}>
+                  {['Everything in Free', '2% on consumer sales', '5% on B2B/exports', 'Unlimited AI responses', 'Priority support', 'Custom rates for high volume'].map((item) => (
+                    <li key={item} style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 15, color: 'rgba(255,255,255,0.9)', padding: '12px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                      <span style={{ color: '#00D4AA' }}><Icons.Check /></span> {item}
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/signup"><button className="btn-primary" style={{ width: '100%' }}>Get started</button></Link>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.2}>
+            <div style={{ marginTop: 32, background: 'linear-gradient(135deg, rgba(0, 212, 170, 0.1), rgba(0, 163, 204, 0.1))', borderRadius: 16, padding: 24, textAlign: 'center' }}>
+              <p style={{ fontSize: 15, color: '#0a2540', margin: 0 }}>
+                <strong>Honest comparison:</strong> For businesses under $50K/month revenue, we are cheaper than subscriptions. For high-volume businesses, <a href="mailto:hello@wakilchat.com" style={{ color: '#00A3CC', textDecoration: 'underline' }}>contact us for custom rates</a>.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* TEAM SECTION */}
+      <section id="team" className="section-pad" style={{ padding: '100px 24px' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto' }}>
+          <Reveal>
+            <div style={{ textAlign: 'center', marginBottom: 64 }}>
+              <h2 style={{ fontSize: 42, fontWeight: 800, color: '#0a2540', marginBottom: 16 }}>Meet the team</h2>
+              <p style={{ fontSize: 18, color: '#64748b' }}>Real people building this. Not a faceless corporation.</p>
+            </div>
+          </Reveal>
+
+          <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24 }}>
+            <Reveal>
+              <div className="card" style={{ textAlign: 'center', padding: 40 }}>
+                <div style={{ width: 100, height: 100, borderRadius: '50%', background: 'linear-gradient(135deg, #00D4AA, #00A3CC)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontSize: 40, fontWeight: 700, color: 'white' }}>Y</span>
+                </div>
+                <div style={{ fontSize: 22, fontWeight: 700, color: '#0a2540', marginBottom: 4 }}>Yitayal</div>
+                <div style={{ fontSize: 14, color: '#00A3CC', fontWeight: 600, marginBottom: 16 }}>Founder & CEO</div>
+                <p style={{ fontSize: 15, color: '#64748b', lineHeight: 1.7, marginBottom: 20 }}>
+                  Real estate advisor turned fintech builder. 5+ years helping African businesses navigate payments and operations.
+                </p>
+                <a href="https://linkedin.com/in/yitayal" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, color: '#00A3CC', fontWeight: 500 }}>LinkedIn →</a>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <div className="card" style={{ textAlign: 'center', padding: 40 }}>
+                <div style={{ width: 100, height: 100, borderRadius: '50%', background: '#f1f5f9', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontSize: 32, color: '#94a3b8' }}>+</span>
+                </div>
+                <div style={{ fontSize: 22, fontWeight: 700, color: '#0a2540', marginBottom: 4 }}>Join Us</div>
+                <div style={{ fontSize: 14, color: '#64748b', fontWeight: 600, marginBottom: 16 }}>We are hiring</div>
+                <p style={{ fontSize: 15, color: '#64748b', lineHeight: 1.7, marginBottom: 20 }}>
+                  Looking for engineers, designers, and operators who want to build something meaningful for Africa.
+                </p>
+                <a href="mailto:careers@wakilchat.com" style={{ fontSize: 14, color: '#00A3CC', fontWeight: 500 }}>careers@wakilchat.com →</a>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.2}>
+            <div style={{ marginTop: 32, background: '#f8fafb', borderRadius: 16, padding: 24, textAlign: 'center' }}>
+              <p style={{ fontSize: 14, color: '#64748b', margin: 0 }}>
+                <strong>Transparency note:</strong> We are a small, bootstrapped team. No fancy office or millions in funding. Just building tools we wish we had.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* TRUST SECTION */}
+      <section style={{ padding: '60px 24px', borderTop: '1px solid #e2e8f0' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto' }}>
+          <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, textAlign: 'center' }}>
             <Reveal>
               <div>
-                <p style={{fontSize:13,fontWeight:600,color:'#EAB308',textTransform:'uppercase',letterSpacing:'.1em',marginBottom:14}}>Why WakilChat</p>
-                <h2 style={{fontSize:38,fontWeight:800,letterSpacing:'-.035em',lineHeight:1.12,marginBottom:20}}>Replace $304/mo in tools with one free platform</h2>
-                <p style={{fontSize:16,color:'rgba(255,255,255,.6)',lineHeight:1.65,marginBottom:32}}>Every tool your competitors pay hundreds for — unified in WakilChat. Free to start, scales with you.</p>
-                <Link href="/signup"><button className="btn-primary">Start for free →</button></Link>
+                <div style={{ color: '#00D4AA', marginBottom: 12 }}><Icons.Lock /></div>
+                <div style={{ fontSize: 15, fontWeight: 600, color: '#0a2540' }}>256-bit Encryption</div>
+                <div style={{ fontSize: 13, color: '#64748b' }}>AES-256, TLS 1.3</div>
               </div>
             </Reveal>
-            <Reveal d={0.1}>
-              <div style={{background:'#111111',borderRadius:20,border:'1px solid rgba(255,255,255,.06)',padding:32,position:'relative',overflow:'hidden'}}>
-                <div style={{position:'absolute',top:0,left:0,right:0,height:1,background:'linear-gradient(90deg,transparent,rgba(234,179,8,.22),transparent)'}} />
-                <div style={{display:'flex',justifyContent:'space-between',padding:'13px 0',borderBottom:'1px solid rgba(255,255,255,.06)'}}><span style={{fontSize:14.5,color:'rgba(255,255,255,.6)'}}>✓ Business Phone Line</span><span style={{fontSize:14,color:'rgba(255,255,255,.4)',fontWeight:600}}>$30/mo</span></div>
-                <div style={{display:'flex',justifyContent:'space-between',padding:'13px 0',borderBottom:'1px solid rgba(255,255,255,.06)'}}><span style={{fontSize:14.5,color:'rgba(255,255,255,.6)'}}>✓ CRM Software</span><span style={{fontSize:14,color:'rgba(255,255,255,.4)',fontWeight:600}}>$50/mo</span></div>
-                <div style={{display:'flex',justifyContent:'space-between',padding:'13px 0',borderBottom:'1px solid rgba(255,255,255,.06)'}}><span style={{fontSize:14.5,color:'rgba(255,255,255,.6)'}}>✓ AI Chatbot Service</span><span style={{fontSize:14,color:'rgba(255,255,255,.4)',fontWeight:600}}>$99/mo</span></div>
-                <div style={{display:'flex',justifyContent:'space-between',padding:'13px 0',borderBottom:'1px solid rgba(255,255,255,.06)'}}><span style={{fontSize:14.5,color:'rgba(255,255,255,.6)'}}>✓ Payment Processing</span><span style={{fontSize:14,color:'rgba(255,255,255,.4)',fontWeight:600}}>$40/mo</span></div>
-                <div style={{display:'flex',justifyContent:'space-between',padding:'13px 0',borderBottom:'1px solid rgba(255,255,255,.06)'}}><span style={{fontSize:14.5,color:'rgba(255,255,255,.6)'}}>✓ Analytics Dashboard</span><span style={{fontSize:14,color:'rgba(255,255,255,.4)',fontWeight:600}}>$25/mo</span></div>
-                <div style={{display:'flex',justifyContent:'space-between',padding:'13px 0'}}><span style={{fontSize:14.5,color:'rgba(255,255,255,.6)'}}>✓ Marketing Automation</span><span style={{fontSize:14,color:'rgba(255,255,255,.4)',fontWeight:600}}>$60/mo</span></div>
-                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',paddingTop:16,marginTop:8}}>
-                  <span style={{fontSize:15,color:'rgba(255,255,255,.4)'}}>Total separately</span>
-                  <span style={{fontSize:18,color:'rgba(255,255,255,.4)',fontWeight:700,textDecoration:'line-through'}}>$304/mo</span>
-                </div>
-                <div style={{marginTop:16,padding:'18px 22px',borderRadius:14,background:'rgba(234,179,8,.08)',border:'1px solid rgba(234,179,8,.22)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-                  <span style={{fontSize:16,fontWeight:700,color:'#EAB308'}}>WakilChat</span>
-                  <span style={{fontSize:28,fontWeight:800,color:'#EAB308'}}>FREE</span>
-                </div>
-                <p style={{fontSize:12,color:'rgba(255,255,255,.4)',textAlign:'center',marginTop:12}}>Premium from $2/mo · Cancel anytime</p>
+            <Reveal delay={0.05}>
+              <div>
+                <div style={{ color: '#00D4AA', marginBottom: 12 }}><Icons.Chart /></div>
+                <div style={{ fontSize: 15, fontWeight: 600, color: '#0a2540' }}>Public Status Page</div>
+                <a href="https://status.wakilchat.com" style={{ fontSize: 13, color: '#00A3CC' }}>status.wakilchat.com</a>
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <div>
+                <div style={{ color: '#00D4AA', marginBottom: 12 }}><Icons.Globe /></div>
+                <div style={{ fontSize: 15, fontWeight: 600, color: '#0a2540' }}>35+ Countries</div>
+                <div style={{ fontSize: 13, color: '#64748b' }}>Growing across Africa</div>
               </div>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="spad" style={{padding:'96px 32px'}}>
-        <div style={{maxWidth:1100,margin:'0 auto'}}>
-          <Reveal>
-            <div style={{textAlign:'center',marginBottom:56}}>
-              <p style={{fontSize:13,fontWeight:600,color:'#EAB308',textTransform:'uppercase',letterSpacing:'.1em',marginBottom:14}}>Loved by entrepreneurs</p>
-              <h2 style={{fontSize:38,fontWeight:800,letterSpacing:'-.035em'}}>Built for Africa. Proven by thousands.</h2>
-            </div>
-          </Reveal>
-          <div className="rg3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16}}>
-            <Reveal d={0}>
-              <div style={{background:'#111111',border:'1px solid rgba(255,255,255,.06)',borderRadius:18,padding:'28px 24px',display:'flex',flexDirection:'column',height:'100%'}}>
-                <div style={{marginBottom:16,color:'#EAB308'}}>★★★★★</div>
-                <p style={{fontSize:15,color:'rgba(255,255,255,.95)',lineHeight:1.65,flex:1,marginBottom:20}}>&quot;I was juggling WhatsApp, Excel, and a notebook. WakilChat replaced all three. Customers think I hired a team.&quot;</p>
-                <div style={{display:'flex',alignItems:'center',gap:12}}>
-                  <div style={{width:40,height:40,borderRadius:12,background:'#34D399',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:15,color:'#050505'}}>A</div>
-                  <div><div style={{fontSize:14,fontWeight:600}}>Amina K.</div><div style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>Fashion Designer · Nairobi</div></div>
-                </div>
-              </div>
-            </Reveal>
-            <Reveal d={0.06}>
-              <div style={{background:'#111111',border:'1px solid rgba(255,255,255,.06)',borderRadius:18,padding:'28px 24px',display:'flex',flexDirection:'column',height:'100%'}}>
-                <div style={{marginBottom:16,color:'#EAB308'}}>★★★★★</div>
-                <p style={{fontSize:15,color:'rgba(255,255,255,.95)',lineHeight:1.65,flex:1,marginBottom:20}}>&quot;The AI handles 80% of customer questions overnight. I wake up to qualified leads ready to buy.&quot;</p>
-                <div style={{display:'flex',alignItems:'center',gap:12}}>
-                  <div style={{width:40,height:40,borderRadius:12,background:'#EAB308',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:15,color:'#050505'}}>D</div>
-                  <div><div style={{fontSize:14,fontWeight:600}}>Dawit T.</div><div style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>Real Estate Broker · Addis Ababa</div></div>
-                </div>
-              </div>
-            </Reveal>
-            <Reveal d={0.12}>
-              <div style={{background:'#111111',border:'1px solid rgba(255,255,255,.06)',borderRadius:18,padding:'28px 24px',display:'flex',flexDirection:'column',height:'100%'}}>
-                <div style={{marginBottom:16,color:'#EAB308'}}>★★★★★</div>
-                <p style={{fontSize:15,color:'rgba(255,255,255,.95)',lineHeight:1.65,flex:1,marginBottom:20}}>&quot;Free calls saved $200 a month. I talk to suppliers in Lagos without worrying about airtime ever again.&quot;</p>
-                <div style={{display:'flex',alignItems:'center',gap:12}}>
-                  <div style={{width:40,height:40,borderRadius:12,background:'#22D3EE',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:15,color:'#050505'}}>C</div>
-                  <div><div style={{fontSize:14,fontWeight:600}}>Chidi O.</div><div style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>Electronics Trader · Lagos</div></div>
-                </div>
-              </div>
-            </Reveal>
-          </div>
+      {/* CTA SECTION */}
+      <section
+        style={{
+          padding: '100px 24px',
+          background: 'linear-gradient(135deg, #0a2540 0%, #1a365d 100%)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+          <div style={{ position: 'absolute', top: '20%', left: '10%', width: 300, height: 300, background: 'radial-gradient(circle, rgba(0, 212, 170, 0.15) 0%, transparent 70%)', borderRadius: '50%' }} />
+          <div style={{ position: 'absolute', bottom: '10%', right: '10%', width: 400, height: 400, background: 'radial-gradient(circle, rgba(0, 163, 204, 0.1) 0%, transparent 70%)', borderRadius: '50%' }} />
         </div>
-      </section>
 
-      <section style={{position:'relative',overflow:'hidden',borderTop:'1px solid rgba(255,255,255,.06)'}}>
-        <div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse 70% 50% at 50% 100%,rgba(234,179,8,.06),transparent)',pointerEvents:'none'}} />
-        <div className="spad" style={{padding:'96px 32px',maxWidth:700,margin:'0 auto',textAlign:'center',position:'relative'}}>
+        <div style={{ maxWidth: 600, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <Reveal>
-            <h2 style={{fontSize:44,fontWeight:800,letterSpacing:'-.04em',lineHeight:1.1,marginBottom:20}}>
-              Ready to grow your <span style={{color:'#EAB308'}}>business?</span>
+            <h2 style={{ fontSize: 42, fontWeight: 800, color: 'white', marginBottom: 16 }}>
+              Ready to grow your business?
             </h2>
-            <p style={{fontSize:18,color:'rgba(255,255,255,.6)',lineHeight:1.6,maxWidth:460,margin:'0 auto 36px'}}>
-              Join 50,000+ African entrepreneurs who run their entire business from one app.
+            <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.7)', marginBottom: 40 }}>
+              Start free. No credit card required. No sales calls.
             </p>
-            <div className="rfc" style={{display:'flex',justifyContent:'center',gap:14,marginBottom:16}}>
-              <Link href="/signup"><button className="btn-primary rfull" style={{fontSize:16,padding:'16px 36px'}}>Get started free →</button></Link>
-              <Link href="#demo"><button className="btn-secondary rfull">Talk to sales</button></Link>
+            <div className="stack-mobile" style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
+              <Link href="/signup">
+                <button className="btn-primary" style={{ background: 'white', color: '#0a2540' }}>
+                  Start for free <Icons.Arrow />
+                </button>
+              </Link>
+              <a href="mailto:hello@wakilchat.com">
+                <button className="btn-secondary" style={{ borderColor: 'rgba(255,255,255,0.3)', color: 'white', background: 'transparent' }}>
+                  Contact us
+                </button>
+              </a>
             </div>
-            <p style={{fontSize:13,color:'rgba(255,255,255,.4)'}}>Free forever · No credit card · 60 second setup</p>
           </Reveal>
         </div>
       </section>
 
-      <footer style={{borderTop:'1px solid rgba(255,255,255,.06)',background:'#0A0A0A',padding:'64px 32px 40px'}}>
-        <div style={{maxWidth:1100,margin:'0 auto'}}>
-          <div className="rg2 rfc" style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr 1fr',gap:40,marginBottom:48}}>
+      {/* FOOTER */}
+      <footer style={{ background: '#0a2540', padding: '80px 24px 40px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 48, marginBottom: 64 }}>
             <div>
-              <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:16}}>
-                <div style={{width:30,height:30,borderRadius:8,background:'#EAB308',display:'flex',alignItems:'center',justifyContent:'center'}}>
-                  <span style={{color:'#050505',fontWeight:800,fontSize:14}}>W</span>
-                </div>
-                <span style={{fontSize:17,fontWeight:700}}><span style={{color:'#EAB308'}}>Wakil</span>Chat</span>
-              </div>
-              <p style={{fontSize:14,color:'rgba(255,255,255,.4)',lineHeight:1.6,maxWidth:260}}>The financial infrastructure powering African businesses.</p>
+              <Logo size={32} white />
+              <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, marginTop: 20, maxWidth: 280 }}>
+                Built by African founders, for African entrepreneurs. Simple tools that just work.
+              </p>
             </div>
+
             <div>
-              <h4 style={{fontSize:13,fontWeight:600,marginBottom:16}}>Products</h4>
-              <div style={{display:'flex',flexDirection:'column',gap:10}}>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Payments</a>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Messaging</a>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>AI Assistant</a>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Marketplace</a>
+              <h4 style={{ fontSize: 13, fontWeight: 700, color: 'white', marginBottom: 20, letterSpacing: '0.05em' }}>PRODUCT</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <a href="#features" style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>Features</a>
+                <a href="#pricing" style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>Pricing</a>
+                <a href="https://status.wakilchat.com" style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>Status</a>
               </div>
             </div>
+
             <div>
-              <h4 style={{fontSize:13,fontWeight:600,marginBottom:16}}>Company</h4>
-              <div style={{display:'flex',flexDirection:'column',gap:10}}>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>About</a>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Careers</a>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Blog</a>
+              <h4 style={{ fontSize: 13, fontWeight: 700, color: 'white', marginBottom: 20, letterSpacing: '0.05em' }}>COMPANY</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <a href="#team" style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>Team</a>
+                <a href="mailto:careers@wakilchat.com" style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>Careers</a>
+                <a href="mailto:hello@wakilchat.com" style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>Contact</a>
               </div>
             </div>
+
             <div>
-              <h4 style={{fontSize:13,fontWeight:600,marginBottom:16}}>Resources</h4>
-              <div style={{display:'flex',flexDirection:'column',gap:10}}>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Documentation</a>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>API</a>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Help Center</a>
-              </div>
-            </div>
-            <div>
-              <h4 style={{fontSize:13,fontWeight:600,marginBottom:16}}>Legal</h4>
-              <div style={{display:'flex',flexDirection:'column',gap:10}}>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Privacy</a>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Terms</a>
-                <a href="#" style={{fontSize:13.5,color:'rgba(255,255,255,.4)'}}>Cookies</a>
+              <h4 style={{ fontSize: 13, fontWeight: 700, color: 'white', marginBottom: 20, letterSpacing: '0.05em' }}>LEGAL</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <a href="/privacy" style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>Privacy</a>
+                <a href="/terms" style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>Terms</a>
+                <a href="/security" style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>Security</a>
               </div>
             </div>
           </div>
-          <div style={{borderTop:'1px solid rgba(255,255,255,.06)',paddingTop:24,display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:16}}>
-            <span style={{fontSize:13,color:'rgba(255,255,255,.4)'}}>© 2026 WakilChat. All rights reserved.</span>
-            <div style={{display:'flex',alignItems:'center',gap:16}}>
-              <span style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>� 256-bit encryption</span>
-              <span style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>PCI DSS Compliant</span>
-            </div>
+
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+            <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>© 2026 WakilChat. Built with honesty.</span>
+            <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>Based in Dubai · Serving Africa</span>
           </div>
         </div>
       </footer>
