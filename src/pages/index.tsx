@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import { MobileMenu } from '../components/MobileMenu';
 
 export default function HomePage() {
   return (
@@ -86,7 +87,8 @@ export default function HomePage() {
                 <span style={{ color: '#FFD700' }}>Wakil</span>Chat
               </span>
             </Link>
-            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <div className="desktop-nav-links" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+              <MobileMenu />
               <Link href="/login" style={{ 
                 color: 'white',
                 textDecoration: 'none',
