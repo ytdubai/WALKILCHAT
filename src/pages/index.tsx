@@ -7,6 +7,7 @@ export default function HomePage() {
     <>
       <Head>
         <title>WakilChat - Run Your Entire Business From One App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
         <meta name="description" content="The all-in-one super app for African entrepreneurs. Free calls, instant payments, and AI-powered business tools." />
         <style>{`
           body { 
@@ -29,10 +30,44 @@ export default function HomePage() {
           .pulse-animate {
             animation: pulse 2s ease-in-out infinite;
           }
+          /* Mobile Optimizations */
+          @media (max-width: 768px) {
+            body {
+              font-size: 16px; /* Prevent zoom on input focus */
+            }
+            nav {
+              padding: 0.75rem 1rem !important;
+            }
+            h1 {
+              font-size: clamp(2rem, 10vw, 3rem) !important;
+              line-height: 1.2 !important;
+            }
+            h2 {
+              font-size: clamp(1.75rem, 8vw, 2.5rem) !important;
+            }
+            p {
+              font-size: 1.125rem !important;
+            }
+            button, a {
+              min-height: 44px; /* Touch-friendly */
+              font-size: 1.125rem !important;
+            }
+          }
+          
+          /* Prevent horizontal scroll */
+          * {
+            max-width: 100%;
+          }
+          
+          /* Smooth scrolling */
+          html {
+            scroll-behavior: smooth;
+          }
+
         `}</style>
       </Head>
 
-      <div style={{ minHeight: '100vh', background: '#0a0a0a', color: 'white' }}>
+      <div style={{ minHeight: '100vh', background: '#0a0a0a', color: 'white', overflowX: 'hidden' }}>
         {/* Navigation */}
         <nav style={{ 
           position: 'fixed', 
@@ -44,7 +79,7 @@ export default function HomePage() {
           backdropFilter: 'blur(10px)', 
           borderBottom: '1px solid rgba(255, 215, 0, 0.2)'
         }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'min(1.25rem, 5vw)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
               <Image src="/branding/logo-icon.jpg" alt="WakilChat Lion" width={40} height={40} style={{ borderRadius: '50%' }} />
               <span style={{ fontSize: '1.75rem', fontWeight: 'bold', color: 'white' }}>
@@ -55,7 +90,7 @@ export default function HomePage() {
               <Link href="/login" style={{ 
                 color: 'white',
                 textDecoration: 'none',
-                padding: '0.5rem 1.5rem',
+                padding: '0.75rem 1.5rem',
                 borderRadius: '50px',
                 border: '1px solid rgba(255,215,0,0.3)',
                 fontWeight: '500'
@@ -65,7 +100,7 @@ export default function HomePage() {
               <Link href="/signup" style={{ 
                 background: '#FFD700', 
                 color: '#000', 
-                padding: '0.5rem 1.5rem', 
+                padding: '0.75rem 1.5rem', 
                 borderRadius: '50px', 
                 fontWeight: '600', 
                 textDecoration: 'none',
@@ -93,7 +128,7 @@ export default function HomePage() {
         </div>
 
         {/* Hero Section */}
-        <section style={{ paddingTop: '4rem', paddingBottom: '4rem', textAlign: 'center', maxWidth: '1000px', margin: '0 auto', padding: '4rem 2rem' }}>
+        <section style={{ paddingTop: '4rem', paddingBottom: '4rem', textAlign: 'center', maxWidth: '1000px', margin: '0 auto', padding: 'min(4rem, 8vw) min(2rem, 5vw)' }}>
           <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center' }}>
             <Image 
               src="/branding/logo-icon.jpg" 
@@ -156,13 +191,13 @@ export default function HomePage() {
         </section>
 
         {/* The Problem - Hormozi Style */}
-        <section style={{ padding: '4rem 2rem', maxWidth: '900px', margin: '0 auto' }}>
+        <section style={{ padding: 'min(4rem, 8vw) min(2rem, 5vw)', maxWidth: '900px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
             <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
               Here's The <span style={{ color: '#ef4444' }}>PAINFUL</span> Truth...
             </h2>
           </div>
-          <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '2px solid rgba(239, 68, 68, 0.3)', borderRadius: '1rem', padding: '2rem' }}>
+          <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '2px solid rgba(239, 68, 68, 0.3)', borderRadius: '1rem', padding: 'min(2rem, 6vw)' }}>
             <p style={{ color: '#FCA5A5', fontSize: '1.25rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>
               Right now, you're probably using:
             </p>
@@ -180,7 +215,7 @@ export default function HomePage() {
         </section>
 
         {/* What Is WakilChat - Detailed Explanation */}
-        <section style={{ padding: '4rem 2rem', background: 'rgba(255,215,0,0.03)' }}>
+        <section style={{ padding: 'min(4rem, 8vw) min(2rem, 5vw)', background: 'rgba(255,215,0,0.03)' }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
               <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
@@ -198,7 +233,7 @@ export default function HomePage() {
               <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: '#ddd', marginBottom: '1.5rem' }}>
                 Instead of paying for 5 different apps and wasting hours switching between them...
               </p>
-              <p style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#FFD700', textAlign: 'center', padding: '2rem', background: 'rgba(255,215,0,0.1)', borderRadius: '1rem' }}>
+              <p style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#FFD700', textAlign: 'center', padding: 'min(2rem, 6vw)', background: 'rgba(255,215,0,0.1)', borderRadius: '1rem' }}>
                 You get EVERYTHING in ONE place. For FREE. Forever. 
               </p>
             </div>
@@ -206,7 +241,7 @@ export default function HomePage() {
         </section>
 
         {/* How It Works - Step by Step */}
-        <section style={{ padding: '4rem 2rem', maxWidth: '1000px', margin: '0 auto' }}>
+        <section style={{ padding: 'min(4rem, 8vw) min(2rem, 5vw)', maxWidth: '1000px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
               How It <span style={{ color: '#FFD700' }}>Works</span>
@@ -255,7 +290,7 @@ export default function HomePage() {
                 background: 'rgba(255,255,255,0.03)', 
                 border: '1px solid rgba(255,215,0,0.2)', 
                 borderRadius: '1rem', 
-                padding: '2rem',
+                padding: 'min(2rem, 6vw)',
                 position: 'relative'
               }}>
                 <div style={{
@@ -318,7 +353,7 @@ export default function HomePage() {
         </section>
 
         {/* Features with Modern Icons */}
-        <section style={{ padding: '4rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
+        <section style={{ padding: 'min(4rem, 8vw) min(2rem, 5vw)', maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
               Everything You Need. <span style={{ color: '#FFD700' }}>Nothing You Don't.</span>
@@ -381,7 +416,7 @@ export default function HomePage() {
         </section>
 
         {/* Value Stack - What You Get */}
-        <section style={{ padding: '4rem 2rem', background: 'linear-gradient(to bottom, rgba(255,215,0,0.05), transparent)' }}>
+        <section style={{ padding: 'min(4rem, 8vw) min(2rem, 5vw)', background: 'linear-gradient(to bottom, rgba(255,215,0,0.05), transparent)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
               <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
@@ -392,7 +427,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div style={{ background: '#111', border:'2px solid rgba(255,215,0,0.3)', borderRadius: '1.5rem', padding: '2rem' }}>
+            <div style={{ background: '#111', border:'2px solid rgba(255,215,0,0.3)', borderRadius: '1.5rem', padding: 'min(2rem, 6vw)' }}>
               {[
                 { item: 'Business Phone System (Unlimited Calls)', value: '₦750,000/yr' },
                 { item: 'Customer Chat & CRM Software', value: '₦480,000/yr' },
@@ -451,7 +486,7 @@ export default function HomePage() {
         </section>
 
         {/* Social Proof - Testimonials */}
-        <section style={{ padding: '4rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
+        <section style={{ padding: 'min(4rem, 8vw) min(2rem, 5vw)', maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
               Don't Take <span style={{ color: '#FFD700' }}>Our</span> Word For It
@@ -484,7 +519,7 @@ export default function HomePage() {
                 background: 'rgba(255,255,255,0.05)',
                 border: '1px solid rgba(255,215,0,0.2)',
                 borderRadius: '1rem',
-                padding: '2rem',
+                padding: 'min(2rem, 6vw)',
                 position: 'relative'
               }}>
                 <div style={{ marginBottom: '1rem' }}>
@@ -569,3 +604,4 @@ export default function HomePage() {
     </>
   );
 }
+/* Mobile-specific CSS added inline */
