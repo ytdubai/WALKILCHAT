@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
 
 function useInView(threshold) {
   if (!threshold) threshold = 0.15;
@@ -79,12 +80,12 @@ function FeatureCard(props) {
       }}
     >
       <div style={{
-        fontSize: 28, marginBottom: 20, width: 52, height: 52, borderRadius: 14,
+        fontSize: 36, marginBottom: 20, width: 52, height: 52, borderRadius: 14,
         background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.06)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>{props.icon}</div>
-      <h3 style={{ fontSize: 17, fontWeight: 700, color: 'rgba(255,255,255,.95)', marginBottom: 8 }}>{props.title}</h3>
-      <p style={{ fontSize: 14.5, color: 'rgba(255,255,255,.6)', lineHeight: 1.6 }}>{props.desc}</p>
+      <h3 style={{ fontSize: 36, fontWeight: 700, color: 'rgba(255,255,255,.95)', marginBottom: 8 }}>{props.title}</h3>
+      <p style={{ fontSize: 19, color: 'rgba(255,255,255,.6)', lineHeight: 1.6 }}>{props.desc}</p>
     </div>
   );
 }
@@ -94,12 +95,12 @@ function Stat(props) {
   return (
     <div ref={c.ref} style={{ textAlign: 'center', minWidth: 100 }}>
       <div style={{
-        fontSize: 48, fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1,
+        fontSize: 60, fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1,
         marginBottom: 8, color: '#EAB308',
       }}>
         {c.count.toLocaleString()}{props.suffix}
       </div>
-      <div style={{ fontSize: 14, color: 'rgba(255,255,255,.4)', fontWeight: 500 }}>{props.label}</div>
+      <div style={{ fontSize: 18, color: 'rgba(255,255,255,.4)', fontWeight: 500 }}>{props.label}</div>
     </div>
   );
 }
@@ -321,12 +322,12 @@ export default function HomePage() {
             </div>
           </Reveal>
           <div className="rg3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16}}>
-            <Reveal d={0}><FeatureCard icon="💬" title="Unified Messaging" desc="WhatsApp, Telegram, and SMS in one inbox. AI handles first response, you close the deal." /></Reveal>
-            <Reveal d={0.05}><FeatureCard icon="📞" title="Free Voice & Video" desc="Crystal-clear calls over data. Zero per-minute charges. Works across 2G and 3G networks." /></Reveal>
-            <Reveal d={0.1}><FeatureCard icon="⚡" title="AI Assistant" desc="Qualifies leads, answers FAQs, and drafts follow-ups 24/7 — trained on your business." /></Reveal>
-            <Reveal d={0.15}><FeatureCard icon="📊" title="Revenue Dashboard" desc="Real-time financials. Every payment, invoice, and expense tracked automatically." /></Reveal>
-            <Reveal d={0.2}><FeatureCard icon="🛍️" title="Marketplace" desc="List products, take orders, manage inventory. Your storefront inside the conversation." /></Reveal>
-            <Reveal d={0.25}><FeatureCard icon="🛡️" title="Bank-Grade Security" desc="End-to-end encryption, scam detection, and fraud monitoring built into every layer." /></Reveal>
+            <Reveal d={0}><FeatureCard icon="" title="Unified Messaging" desc="WhatsApp, Telegram, and SMS in one inbox. AI handles first response, you close the deal." /></Reveal>
+            <Reveal d={0.05}><FeatureCard icon="" title="Free Voice & Video" desc="Crystal-clear calls over data. Zero per-minute charges. Works across 2G and 3G networks." /></Reveal>
+            <Reveal d={0.1}><FeatureCard icon="" title="AI Assistant" desc="Qualifies leads, answers FAQs, and drafts follow-ups 24/7 — trained on your business." /></Reveal>
+            <Reveal d={0.15}><FeatureCard icon="�" title="Revenue Dashboard" desc="Real-time financials. Every payment, invoice, and expense tracked automatically." /></Reveal>
+            <Reveal d={0.2}><FeatureCard icon="�" title="Marketplace" desc="List products, take orders, manage inventory. Your storefront inside the conversation." /></Reveal>
+            <Reveal d={0.25}><FeatureCard icon="" title="Bank-Grade Security" desc="End-to-end encryption, scam detection, and fraud monitoring built into every layer." /></Reveal>
           </div>
         </div>
       </section>
@@ -477,7 +478,7 @@ export default function HomePage() {
           <div style={{borderTop:'1px solid rgba(255,255,255,.06)',paddingTop:24,display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:16}}>
             <span style={{fontSize:13,color:'rgba(255,255,255,.4)'}}>© 2026 WakilChat. All rights reserved.</span>
             <div style={{display:'flex',alignItems:'center',gap:16}}>
-              <span style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>🔒 256-bit encryption</span>
+              <span style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>� 256-bit encryption</span>
               <span style={{fontSize:12,color:'rgba(255,255,255,.4)'}}>PCI DSS Compliant</span>
             </div>
           </div>
