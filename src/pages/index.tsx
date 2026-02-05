@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════════════
-// WAKILCHAT HOMEPAGE — Plaid × Hormozi × Premium African Fintech
-// Copy this entire file → src/pages/index.tsx → build & push
-// Zero external dependencies. All inline styles. Works without Tailwind.
-// ═══════════════════════════════════════════════════════════════════════
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState, useRef, CSSProperties, ReactNode } from 'react';
