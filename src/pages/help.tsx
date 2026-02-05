@@ -176,5 +176,6 @@ export default function HelpPage() {
           </div>
         </footer>
       </div>
+    </>>
   );
 }
