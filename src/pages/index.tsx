@@ -24,9 +24,7 @@ const [vis, setVis] = useState(false);
 useEffect(() => {
 const el = ref.current;
 if (!el) return;
-const obs = new IntersectionObserver(([e]) => e.isIntersecting && setVis(true), { thresho
-obs.observe(el);
-return () => obs.disconnect();
+const obs = new IntersectionObserver(([e]) => e.isIntersecting && setVis(true), { threshold });return () => obs.disconnect();
 }, [threshold]);
 return { ref, vis };
 }
