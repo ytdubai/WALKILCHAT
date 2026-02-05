@@ -2,18 +2,23 @@ import { useEffect } from 'react';
 
 export function ProtectionLayer() {
   useEffect(() => {
-    // Disable right-click
+    // Only apply protection in production and NOT on mobile
+    if (process.env.NODE_ENV !== 'production') return;
+    
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) return; // Don't block mobile users!
+
+    // Disable right-click (desktop only)
     const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();
       return false;
     };
 
-    // Disable common shortcuts
+    // Disable F12, Ctrl+Shift+I, Ctrl+U (desktop only)
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
       if (
         e.key === 'F12' ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
         (e.ctrlKey && e.key === 'U')
       ) {
         e.preventDefault();
@@ -21,39 +26,13 @@ export function ProtectionLayer() {
       }
     };
 
-    // Detect DevTools
-    const detectDevTools = () => {
-      const threshold = 160;
-      const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-      const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-      
-      if (widthThreshold || heightThreshold) {
-        // Redirect or show warning
-        document.body.innerHTML = '<h1 style="color: red; text-align: center; margin-top: 50px;">Unauthorized access detected</h1>';
-      }
-    };
-
-    // Disable text selection
-    document.body.style.userSelect = 'none';
-    document.body.style.webkitUserSelect = 'none';
-
-    // Add event listeners
-    document.addEventListener('contextmenu', handleContextMenu);
-    document.addEventListener('keydown', handleKeyDown);
-    
-    // Check for DevTools periodically (only in production)
-    let devToolsInterval: NodeJS.Timeout;
-    if (process.env.NODE_ENV === 'production') {
-      devToolsInterval = setInterval(detectDevTools, 1000);
-    }
-
-    // Add copyright watermark
+    // Add console warning (always)
     console.log(
       '%c⚠️ WARNING',
       'color: red; font-size: 40px; font-weight: bold;'
     );
     console.log(
-      '%cThis is proprietary code. Unauthorized copying, modification, or distribution is strictly prohibited and will be prosecuted.',
+      '%cThis is proprietary code. Unauthorized copying, modification, or distribution is strictly prohibited.',
       'color: yellow; font-size: 16px;'
     );
     console.log(
@@ -61,12 +40,17 @@ export function ProtectionLayer() {
       'color: white; font-size: 14px;'
     );
 
+    // Only add event listeners on desktop
+    if (!isMobile) {
+      document.addEventListener('contextmenu', handleContextMenu);
+      document.addEventListener('keydown', handleKeyDown);
+    }
+
     // Cleanup
     return () => {
-      document.removeEventListener('contextmenu', handleContextMenu);
-      document.removeEventListener('keydown', handleKeyDown);
-      if (devToolsInterval) {
-        clearInterval(devToolsInterval);
+      if (!isMobile) {
+        document.removeEventListener('contextmenu', handleContextMenu);
+        document.removeEventListener('keydown', handleKeyDown);
       }
     };
   }, []);

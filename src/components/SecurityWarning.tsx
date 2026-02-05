@@ -4,11 +4,8 @@ export function SecurityWarning() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    // Show warning in development or when DevTools are open
-    const isDev = process.env.NODE_ENV === 'development';
-    const isDevToolsOpen = window.outerWidth - window.innerWidth > 160;
-    
-    if (isDev || isDevToolsOpen) {
+    // Only show in development mode, not to regular users!
+    if (process.env.NODE_ENV === 'development') {
       setShow(true);
     }
   }, []);
@@ -31,10 +28,7 @@ export function SecurityWarning() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <span style={{ fontSize: '1.5rem' }}>⚠️</span>
           <div>
-            <p style={{ fontWeight: 'bold', fontSize: '0.875rem', margin: 0 }}>SECURITY WARNING - PROTECTED CODE</p>
-            <p style={{ fontSize: '0.75rem', margin: 0 }}>
-              This code is copyrighted © 2026 WakilChat™. Unauthorized copying is illegal and monitored.
-            </p>
+            <p style={{ fontWeight: 'bold', fontSize: '0.875rem', margin: 0 }}>DEV MODE - Code Protected</p>
           </div>
         </div>
         <button
@@ -48,33 +42,32 @@ export function SecurityWarning() {
   );
 }
 
-// Permanent copyright footer - ALWAYS VISIBLE
+// Copyright footer - ALWAYS VISIBLE but subtle
 export function CopyrightWatermark() {
   return (
     <>
-      {/* ALWAYS VISIBLE copyright footer */}
+      {/* Subtle copyright footer */}
       <div style={{
         position: 'fixed',
         bottom: 0,
         left: 0,
         right: 0,
-        background: 'rgba(0,0,0,0.9)',
+        background: 'rgba(0,0,0,0.8)',
         backdropFilter: 'blur(10px)',
         color: 'white',
         padding: '0.5rem 1rem',
         textAlign: 'center',
-        fontSize: '0.75rem',
-        borderTop: '1px solid rgba(239,68,68,0.3)',
-        zIndex: 50
+        fontSize: '0.7rem',
+        borderTop: '1px solid rgba(255,215,0,0.2)',
+        zIndex: 40,
+        opacity: 0.7
       }}>
         <p style={{ margin: 0 }}>
-          © 2026 WakilChat™ • All Rights Reserved • Patent Pending • Trademark Pending • 
-          <span style={{ color: '#fca5a5', fontWeight: '600' }}> Protected by Law</span> • 
-          Unauthorized use is monitored and prosecuted
+          © 2026 WakilChat™ • All Rights Reserved • Patent Pending
         </p>
       </div>
 
-      {/* Invisible watermark in DOM */}
+      {/* Invisible metadata for legal protection */}
       <div
         style={{
           position: 'absolute',
@@ -83,29 +76,9 @@ export function CopyrightWatermark() {
           opacity: 0,
           pointerEvents: 'none',
         }}
-        data-copyright="WakilChat-2026-All-Rights-Reserved"
+        data-copyright="WakilChat-2026"
         data-license="Proprietary"
-        data-tracking-id="WK-BUILD-20260204"
-        data-warning="Unauthorized-copying-is-illegal-and-monitored"
       />
-
-      {/* CSS watermark - giant background text */}
-      <style jsx global>{`
-        body::before {
-          content: 'WakilChat © 2026';
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%) rotate(-45deg);
-          font-size: 120px;
-          font-weight: bold;
-          opacity: 0.03;
-          pointer-events: none;
-          z-index: 1;
-          color: #8B5CF6;
-          user-select: none;
-        }
-      `}</style>
     </>
   );
 }
