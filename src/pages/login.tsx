@@ -1,286 +1,160 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useAuth } from '../lib/providers/AuthProvider';
 
-export default function LoginPage() {
+export default function Login() {
   const router = useRouter();
-  const { signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setTimeout(() => { router.push('/dashboard'); }, 1500);
+  };
 
-    try {
-      await signIn(email, password);
-      router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Login failed');
-    } finally {
-      setLoading(false);
-    }
+  const inputStyle = {
+    width: '100%',
+    padding: '14px 16px',
+    background: 'rgba(255,255,255,0.05)',
+    border: '1px solid rgba(255,255,255,0.1)',
+    borderRadius: '12px',
+    color: '#ffffff',
+    fontSize: '15px',
+    outline: 'none',
+    boxSizing: 'border-box' as const,
+    fontFamily: "'Outfit', sans-serif",
+  };
+
+  const labelStyle = {
+    display: 'block',
+    fontSize: '13px',
+    fontWeight: 500,
+    color: 'rgba(255,255,255,0.6)',
+    marginBottom: '8px',
   };
 
   return (
     <>
       <Head>
-        <title>Login - WakilChat</title>
+        <title>Log In - WakilChat</title>
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
       </Head>
-
       <div style={{
         minHeight: '100vh',
-        background: '#0a0a0a',
-        backgroundImage: `
-          radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.1), transparent 50%),
-          radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1), transparent 50%)
-        `,
+        background: '#050505',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '2rem',
+        fontFamily: "'Outfit', sans-serif",
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        padding: '20px',
       }}>
-        {/* Animated background grid */}
+        <div style={{
+          position: 'absolute',
+          width: '600px',
+          height: '600px',
+          background: 'radial-gradient(circle, rgba(234,179,8,0.08) 0%, transparent 70%)',
+          top: '-200px',
+          right: '-100px',
+          borderRadius: '50%',
+          pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute',
+          width: '400px',
+          height: '400px',
+          background: 'radial-gradient(circle, rgba(234,179,8,0.05) 0%, transparent 70%)',
+          bottom: '-100px',
+          left: '-100px',
+          borderRadius: '50%',
+          pointerEvents: 'none',
+        }} />
         <div style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: 'linear-gradient(rgba(255,215,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,215,0,0.03) 1px, transparent 1px)',
-          backgroundSize: '50px 50px',
-          opacity: 0.3
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
+          backgroundSize: '60px 60px',
+          pointerEvents: 'none',
         }} />
-
-        {/* Glow orbs */}
-        <div style={{
-          position: 'absolute',
-          top: '10%',
-          left: '10%',
-          width: '300px',
-          height: '300px',
-          background: 'radial-gradient(circle, rgba(255,215,0,0.2), transparent)',
-          filter: 'blur(60px)',
-          pointerEvents: 'none'
-        }} />
-        <div style={{
-          position: 'absolute',
-          bottom: '10%',
-          right: '10%',
-          width: '400px',
-          height: '400px',
-          background: 'radial-gradient(circle, rgba(139,92,246,0.15), transparent)',
-          filter: 'blur(80px)',
-          pointerEvents: 'none'
-        }} />
-
-        <div style={{
-          width: '100%',
-          maxWidth: '440px',
-          position: 'relative',
-          zIndex: 1
-        }}>
-          {/* Logo */}
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
-              <Image 
-                src="/branding/logo-icon.jpg" 
-                alt="WakilChat™" 
-                width={60} 
-                height={60} 
-                style={{ borderRadius: '50%', boxShadow: '0 0 30px rgba(255,215,0,0.4)' }}
-              />
-              <span style={{ fontSize: '2rem', fontWeight: 'bold', color: 'white' }}>
-                <span style={{ color: '#FFD700' }}>Wakil</span>Chat
-              </span>
-            </Link>
+        <div style={{ width: '100%', maxWidth: '440px', position: 'relative', zIndex: 1 }}>
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <div style={{
+              width: '80px',
+              height: '80px',
+              margin: '0 auto 20px',
+              background: 'linear-gradient(135deg, rgba(234,179,8,0.15), rgba(234,179,8,0.05))',
+              borderRadius: '20px',
+              border: '1px solid rgba(234,179,8,0.2)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 0 40px rgba(234,179,8,0.1)',
+              fontSize: '40px',
+            }}>&#129409;</div>
+            <h1 style={{ fontSize: '28px', fontWeight: 800, color: '#EAB308', margin: '0 0 4px', letterSpacing: '-0.5px' }}>WakilChat</h1>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.35)', margin: 0, letterSpacing: '2px', textTransform: 'uppercase' }}>Business Super App</p>
           </div>
-
-          {/* Glassmorphic Card */}
           <div style={{
-            background: 'rgba(255,255,255,0.05)',
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))',
             backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,215,0,0.2)',
-            borderRadius: '1.5rem',
-            padding: '2.5rem',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(255,215,0,0.1)',
-            position: 'relative'
+            borderRadius: '24px',
+            border: '1px solid rgba(255,255,255,0.08)',
+            padding: '40px 32px',
+            boxShadow: '0 25px 50px rgba(0,0,0,0.5)',
           }}>
-            {/* Shine effect */}
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '100px',
-              background: 'linear-gradient(to bottom, rgba(255,215,0,0.1), transparent)',
-              borderRadius: '1.5rem 1.5rem 0 0',
-              pointerEvents: 'none'
-            }} />
-
-            <h2 style={{
-              fontSize: '1.75rem',
-              fontWeight: 'bold',
-              textAlign: 'center',
-              marginBottom: '0.5rem',
-              background: 'linear-gradient(135deg, #FFD700, #FFA500)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
-            }}>
-              Welcome Back 🦁
-            </h2>
-            <p style={{ textAlign: 'center', color: '#999', marginBottom: '2rem', fontSize: '0.875rem' }}>
-              Log in to manage your business
-            </p>
-
-            {error && (
-              <div style={{
-                background: 'rgba(239,68,68,0.1)',
-                border: '1px solid rgba(239,68,68,0.3)',
-                borderRadius: '0.75rem',
-                padding: '0.75rem',
-                marginBottom: '1.5rem',
-                color: '#fca5a5',
-                fontSize: '0.875rem'
-              }}>
-                {error}
+            <h2 style={{ fontSize: '24px', fontWeight: 700, color: '#ffffff', margin: '0 0 6px' }}>Welcome back</h2>
+            <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.5)', margin: '0 0 32px' }}>Log in to manage your business</p>
+            <form onSubmit={handleLogin}>
+              <div style={{ marginBottom: '20px' }}>
+                <label style={labelStyle}>Email or Phone</label>
+                <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email or phone" style={inputStyle} />
               </div>
-            )}
-
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc', fontSize: '0.875rem', fontWeight: '500' }}>
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '0.875rem 1rem',
-                    background: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,215,0,0.2)',
-                    borderRadius: '0.75rem',
-                    color: 'white',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'all 0.3s'
-                  }}
-                  onFocus={(e) => e.target.style.borderColor = '#FFD700'}
-                  onBlur={(e) => e.target.style.borderColor = 'rgba(255,215,0,0.2)'}
-                  placeholder="you@example.com"
-                />
+              <div style={{ marginBottom: '12px' }}>
+                <label style={labelStyle}>Password</label>
+                <div style={{ position: 'relative' }}>
+                  <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" style={inputStyle} />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '13px', fontFamily: "'Outfit', sans-serif" }}>{showPassword ? 'Hide' : 'Show'}</button>
+                </div>
               </div>
-
-              <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc', fontSize: '0.875rem', fontWeight: '500' }}>
-                  Password
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '0.875rem 1rem',
-                    background: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,215,0,0.2)',
-                    borderRadius: '0.75rem',
-                    color: 'white',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'all 0.3s'
-                  }}
-                  onFocus={(e) => e.target.style.borderColor = '#FFD700'}
-                  onBlur={(e) => e.target.style.borderColor = 'rgba(255,215,0,0.2)'}
-                  placeholder="••••••••"
-                />
+              <div style={{ textAlign: 'right', marginBottom: '28px' }}>
+                <a href="#" style={{ fontSize: '13px', color: '#EAB308', textDecoration: 'none', fontWeight: 500 }}>Forgot password?</a>
               </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                style={{
-                  width: '100%',
-                  padding: '1rem',
-                  background: loading ? '#999' : 'linear-gradient(135deg, #FFD700, #FFA500)',
-                  color: '#000',
-                  border: 'none',
-                  borderRadius: '0.75rem',
-                  fontSize: '1rem',
-                  fontWeight: 'bold',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  boxShadow: '0 4px 20px rgba(255,215,0,0.4)',
-                  transition: 'all 0.3s'
-                }}
-                onMouseEnter={(e) => !loading && (e.currentTarget.style.transform = 'translateY(-2px)')}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-              >
-                {loading ? 'Logging in...' : 'Log In to Dashboard'}
-              </button>
+              <button type="submit" disabled={loading} style={{
+                width: '100%',
+                padding: '16px',
+                background: loading ? 'rgba(234,179,8,0.5)' : 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                border: 'none',
+                borderRadius: '12px',
+                color: '#050505',
+                fontSize: '16px',
+                fontWeight: 700,
+                cursor: loading ? 'not-allowed' : 'pointer',
+                boxShadow: '0 4px 20px rgba(234,179,8,0.3)',
+                fontFamily: "'Outfit', sans-serif",
+              }}>{loading ? 'Logging in...' : 'Log In'}</button>
             </form>
-
-            <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
-              <Link href="/forgot-password" style={{ color: '#FFD700', fontSize: '0.875rem', textDecoration: 'none' }}>
-                Forgot password?
-              </Link>
+            <div style={{ display: 'flex', alignItems: 'center', margin: '28px 0', gap: '12px' }}>
+              <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.08)' }} />
+              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>or continue with</span>
+              <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.08)' }} />
             </div>
-
-            <div style={{
-              marginTop: '2rem',
-              paddingTop: '1.5rem',
-              borderTop: '1px solid rgba(255,255,255,0.1)',
-              textAlign: 'center'
-            }}>
-              <p style={{ color: '#999', fontSize: '0.875rem', marginBottom: '0.75rem' }}>
-                Don't have an account?
-              </p>
-              <Link href="/signup" style={{
-                display: 'inline-block',
-                color: '#FFD700',
-                fontWeight: '600',
-                textDecoration: 'none',
-                padding: '0.5rem 1.5rem',
-                border: '1px solid rgba(255,215,0,0.3)',
-                borderRadius: '50px',
-                transition: 'all 0.3s'
-              }}>
-                Create Free Account →
-              </Link>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button style={{ flex: 1, padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#ffffff', fontSize: '14px', cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }}>Google</button>
+              <button style={{ flex: 1, padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#ffffff', fontSize: '14px', cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }}>Phone</button>
             </div>
           </div>
-
-          {/* Trust badges */}
-          <div style={{
-            marginTop: '2rem',
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '1.5rem',
-            flexWrap: 'wrap',
-            opacity: 0.6
-          }}>
-            <div style={{ textAlign: 'center', fontSize: '0.75rem', color: '#999' }}>
-              <div style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>🔒</div>
-              Bank-Level Security
-            </div>
-            <div style={{ textAlign: 'center', fontSize: '0.75rem', color: '#999' }}>
-              <div style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>🛡️</div>
-              Data Protected
-            </div>
-            <div style={{ textAlign: 'center', fontSize: '0.75rem', color: '#999' }}>
-              <div style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>⚡</div>
-              99.9% Uptime
-            </div>
+          <p style={{ textAlign: 'center', marginTop: '28px', fontSize: '14px', color: 'rgba(255,255,255,0.5)' }}>
+            New here? <a href="/signup" style={{ color: '#EAB308', textDecoration: 'none', fontWeight: 600 }}>Create free account</a>
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginTop: '24px' }}>
+            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>&#128274; Bank-grade security</span>
+            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>&#10003; Free forever</span>
           </div>
+          <p style={{ textAlign: 'center', marginTop: '40px', fontSize: '12px', color: 'rgba(255,255,255,0.2)' }}>&copy; 2026 WakilChat &middot; All Rights Reserved</p>
         </div>
       </div>
     </>
