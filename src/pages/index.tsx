@@ -47,7 +47,7 @@ export default function HomePage() {
           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
               <Image src="/branding/logo-icon.jpg" alt="WakilChat Lion" width={40} height={40} style={{ borderRadius: '50%' }} />
-              <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>
+              <span style={{ fontSize: '1.75rem', fontWeight: 'bold', color: 'white' }}>
                 <span style={{ color: '#FFD700' }}>Wakil</span>Chat
               </span>
             </Link>
@@ -104,16 +104,16 @@ export default function HomePage() {
             />
           </div>
           
-          <p style={{ color: '#FFD700', fontSize: '0.875rem', fontWeight: '500', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+          <p style={{ color: '#FFD700', fontSize: '1.25rem', fontWeight: '500', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem' }}>
             🔥 For African Entrepreneurs Who Want Freedom 🔥
           </p>
           
-          <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', fontWeight: 'bold', lineHeight: '1.1', marginBottom: '1.5rem' }}>
+          <h1 style={{ fontSize: 'clamp(3rem, 9vw, 5.5rem)', fontWeight: 'bold', lineHeight: '1.1', marginBottom: '1.5rem' }}>
             Run Your <span style={{ color: '#FFD700' }}>ENTIRE</span> Business <br />
             From <span style={{ color: '#FFD700' }}>ONE APP</span>
           </h1>
           
-          <p style={{ fontSize: '1.25rem', color: '#ccc', maxWidth: '700px', margin: '0 auto 2rem' }}>
+          <p style={{ fontSize: '1.5rem', color: '#ccc', maxWidth: '700px', margin: '0 auto 2rem' }}>
             Stop juggling 5 different apps. Stop paying ₦50,000/month on calls. Stop losing money to payment delays.
           </p>
           
@@ -124,7 +124,7 @@ export default function HomePage() {
               gap: '0.5rem',
               background: '#FFD700', 
               color: '#000', 
-              padding: '1.25rem 2.5rem', 
+              padding: '1.5rem 3rem', 
               borderRadius: '50px', 
               fontSize: '1.25rem',
               fontWeight: 'bold', 
@@ -135,7 +135,7 @@ export default function HomePage() {
             </Link>
           </div>
           
-          <p style={{ fontSize: '0.875rem', color: '#666' }}>
+          <p style={{ fontSize: '1.25rem', color: '#666' }}>
             ✓ Free FOREVER &nbsp;•&nbsp; ✓ Setup in 60 seconds &nbsp;•&nbsp; ✓ Cancel anytime
           </p>
         </section>
@@ -147,8 +147,8 @@ export default function HomePage() {
               const [value, label] = stat.split('|');
               return (
                 <div key={i}>
-                  <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#FFD700' }}>{value}</div>
-                  <div style={{ color: '#999', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</div>
+                  <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#FFD700' }}>{value}</div>
+                  <div style={{ color: '#999', fontSize: '1.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</div>
                 </div>
               );
             })}
@@ -158,7 +158,7 @@ export default function HomePage() {
         {/* The Problem - Hormozi Style */}
         <section style={{ padding: '4rem 2rem', maxWidth: '900px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
+            <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
               Here's The <span style={{ color: '#ef4444' }}>PAINFUL</span> Truth...
             </h2>
           </div>
@@ -166,14 +166,14 @@ export default function HomePage() {
             <p style={{ color: '#FCA5A5', fontSize: '1.25rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>
               Right now, you're probably using:
             </p>
-            <ul style={{ color: '#FEE2E2', fontSize: '1.125rem', lineHeight: '2', listStyle: 'none', paddingLeft: 0 }}>
+            <ul style={{ color: '#FEE2E2', fontSize: '1.25rem', lineHeight: '2', listStyle: 'none', paddingLeft: 0 }}>
               <li>❌ WhatsApp for customer messages</li>
               <li>❌ M-Pesa app for payments</li>
               <li>❌ Excel for inventory tracking</li>
               <li>❌ Regular phone (₦50,000/month in calls!)</li>
               <li>❌ Email for invoices</li>
             </ul>
-            <p style={{ color: '#FCA5A5', fontSize: '1.5rem', fontWeight: 'bold', marginTop: '1.5rem', textAlign: 'center' }}>
+            <p style={{ color: '#FCA5A5', fontSize: '1.75rem', fontWeight: 'bold', marginTop: '1.5rem', textAlign: 'center' }}>
               That's <span style={{ fontSize: '2rem', color: '#FEE2E2' }}>₦2.1 TRILLION</span> lost annually across Africa. 💸
             </p>
           </div>
@@ -183,10 +183,10 @@ export default function HomePage() {
         <section style={{ padding: '4rem 2rem', background: 'rgba(255,215,0,0.03)' }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-              <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
+              <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
                 What Is <span style={{ color: '#FFD700' }}>WakilChat</span>?
               </h2>
-              <p style={{ fontSize: '1.25rem', color: '#ccc', maxWidth: '800px', margin: '0 auto' }}>
+              <p style={{ fontSize: '1.5rem', color: '#ccc', maxWidth: '800px', margin: '0 auto' }}>
                 WakilChat is the FIRST and ONLY all-in-one business super app built specifically for African entrepreneurs.
               </p>
             </div>
@@ -195,10 +195,10 @@ export default function HomePage() {
               <h3 style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#FFD700', marginBottom: '1.5rem' }}>
                 🎯 The Simple Truth:
               </h3>
-              <p style={{ fontSize: '1.125rem', lineHeight: '1.8', color: '#ddd', marginBottom: '1.5rem' }}>
+              <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: '#ddd', marginBottom: '1.5rem' }}>
                 Instead of paying for 5 different apps and wasting hours switching between them...
               </p>
-              <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#FFD700', textAlign: 'center', padding: '2rem', background: 'rgba(255,215,0,0.1)', borderRadius: '1rem' }}>
+              <p style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#FFD700', textAlign: 'center', padding: '2rem', background: 'rgba(255,215,0,0.1)', borderRadius: '1rem' }}>
                 You get EVERYTHING in ONE place. For FREE. Forever. 🚀
               </p>
             </div>
@@ -208,10 +208,10 @@ export default function HomePage() {
         {/* How It Works - Step by Step */}
         <section style={{ padding: '4rem 2rem', maxWidth: '1000px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
+            <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
               How It <span style={{ color: '#FFD700' }}>Works</span>
             </h2>
-            <p style={{ fontSize: '1.125rem', color: '#999' }}>
+            <p style={{ fontSize: '1.25rem', color: '#999' }}>
               It's ridiculously simple. Here's the exact process:
             </p>
           </div>
@@ -276,7 +276,7 @@ export default function HomePage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.5rem' }}>
-                    <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white', margin: 0 }}>{item.title}</h3>
+                    <h3 style={{ fontSize: '1.75rem', fontWeight: 'bold', color: 'white', margin: 0 }}>{item.title}</h3>
                     <span style={{
                       background: 'rgba(255,215,0,0.2)',
                       color: '#FFD700',
@@ -289,7 +289,7 @@ export default function HomePage() {
                       ⏱️ {item.time}
                     </span>
                   </div>
-                  <p style={{ color: '#aaa', fontSize: '1rem', lineHeight: '1.6', margin: 0 }}>{item.desc}</p>
+                  <p style={{ color: '#aaa', fontSize: '1.25rem', lineHeight: '1.6', margin: 0 }}>{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -307,7 +307,7 @@ export default function HomePage() {
               color: '#000', 
               padding: '1rem 2rem', 
               borderRadius: '50px', 
-              fontSize: '1.125rem',
+              fontSize: '1.25rem',
               fontWeight: 'bold', 
               textDecoration: 'none',
               boxShadow: '0 0 30px rgba(255, 215, 0, 0.4)'
@@ -320,10 +320,10 @@ export default function HomePage() {
         {/* Features with Modern Icons */}
         <section style={{ padding: '4rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
+            <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
               Everything You Need. <span style={{ color: '#FFD700' }}>Nothing You Don't.</span>
             </h2>
-            <p style={{ color: '#999', fontSize: '1.125rem' }}>No bloat. No confusion. Just tools that make you money.</p>
+            <p style={{ color: '#999', fontSize: '1.25rem' }}>No bloat. No confusion. Just tools that make you money.</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
@@ -384,10 +384,10 @@ export default function HomePage() {
         <section style={{ padding: '4rem 2rem', background: 'linear-gradient(to bottom, rgba(255,215,0,0.05), transparent)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-              <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
+              <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
                 The <span style={{ color: '#FFD700' }}>FULL</span> Value Stack
               </h2>
-              <p style={{ fontSize: '1.125rem', color: '#999' }}>
+              <p style={{ fontSize: '1.25rem', color: '#999' }}>
                 If you paid for each feature separately, here's what it would cost:
               </p>
             </div>
@@ -410,19 +410,19 @@ export default function HomePage() {
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     <span style={{ color: '#10b981', fontSize: '1.25rem' }}>✓</span>
-                    <span style={{ fontSize: '1rem', color: 'white' }}>{item.item}</span>
+                    <span style={{ fontSize: '1.25rem', color: 'white' }}>{item.item}</span>
                   </div>
-                  <span style={{ color: '#FFD700', fontWeight: '600', fontSize: '1rem' }}>{item.value}</span>
+                  <span style={{ color: '#FFD700', fontWeight: '600', fontSize: '1.25rem' }}>{item.value}</span>
                 </div>
               ))}
               
               <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '2px solid rgba(255,215,0,0.2)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                  <span style={{ fontSize: '1.125rem', color: '#999' }}>Normal Price:</span>
-                  <span style={{ fontSize: '1.5rem', fontWeight: 'bold', textDecoration: 'line-through', color: '#666' }}>₦2,430,000/yr</span>
+                  <span style={{ fontSize: '1.25rem', color: '#999' }}>Normal Price:</span>
+                  <span style={{ fontSize: '1.75rem', fontWeight: 'bold', textDecoration: 'line-through', color: '#666' }}>₦2,430,000/yr</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>Your Price with WakilChat:</span>
+                  <span style={{ fontSize: '1.75rem', fontWeight: 'bold', color: 'white' }}>Your Price with WakilChat:</span>
                   <span style={{ fontSize: '3rem', fontWeight: 'bold', color: '#FFD700' }}>FREE</span>
                 </div>
               </div>
@@ -453,10 +453,10 @@ export default function HomePage() {
         {/* Social Proof - Testimonials */}
         <section style={{ padding: '4rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
+            <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
               Don't Take <span style={{ color: '#FFD700' }}>Our</span> Word For It
             </h2>
-            <p style={{ fontSize: '1.125rem', color: '#999' }}>Here's what real African entrepreneurs are saying:</p>
+            <p style={{ fontSize: '1.25rem', color: '#999' }}>Here's what real African entrepreneurs are saying:</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
@@ -492,20 +492,20 @@ export default function HomePage() {
                     <span key={star} style={{ color: '#FFD700', fontSize: '1.25rem' }}>★</span>
                   ))}
                 </div>
-                <p style={{ fontSize: '1rem', color: '#ddd', lineHeight: '1.7', marginBottom: '1.5rem', fontStyle: 'italic' }}>
+                <p style={{ fontSize: '1.25rem', color: '#ddd', lineHeight: '1.7', marginBottom: '1.5rem', fontStyle: 'italic' }}>
                   {testimonial.text}
                 </p>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <p style={{ fontWeight: 'bold', color: 'white', marginBottom: '0.25rem' }}>{testimonial.name}</p>
-                    <p style={{ fontSize: '0.875rem', color: '#999' }}>{testimonial.role}</p>
+                    <p style={{ fontSize: '1.25rem', color: '#999' }}>{testimonial.role}</p>
                   </div>
                   <div style={{
                     background: 'rgba(16,185,129,0.2)',
                     color: '#10b981',
                     padding: '0.5rem 1rem',
                     borderRadius: '50px',
-                    fontSize: '0.875rem',
+                    fontSize: '1.25rem',
                     fontWeight: '600'
                   }}>
                     {testimonial.saved}
@@ -519,11 +519,11 @@ export default function HomePage() {
         {/* Final CTA */}
         <section style={{ padding: '4rem 2rem 6rem', background: 'linear-gradient(to top, rgba(255,215,0,0.1), transparent)' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-            <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
+            <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
               Stop Losing Money. <br />
               <span style={{ color: '#FFD700' }}>Start With WakilChat.</span>
             </h2>
-            <p style={{ fontSize: '1.25rem', color: '#ccc', marginBottom: '2rem' }}>
+            <p style={{ fontSize: '1.5rem', color: '#ccc', marginBottom: '2rem' }}>
               50,000+ businesses already made the switch. Will you be next?
             </p>
             <Link href="/signup" style={{
@@ -534,14 +534,14 @@ export default function HomePage() {
               color: '#000',
               padding: '1.5rem 3rem',
               borderRadius: '50px',
-              fontSize: '1.5rem',
+              fontSize: '1.75rem',
               fontWeight: 'bold',
               textDecoration: 'none',
               boxShadow: '0 0 50px rgba(255, 215, 0, 0.5)'
             }}>
               YES! Get WakilChat FREE →
             </Link>
-            <p style={{ marginTop: '1.5rem', fontSize: '0.875rem', color: '#666' }}>
+            <p style={{ marginTop: '1.5rem', fontSize: '1.25rem', color: '#666' }}>
               Free forever • No credit card • Setup in 60 seconds
             </p>
           </div>
@@ -552,7 +552,7 @@ export default function HomePage() {
           <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1.5rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <Image src="/branding/logo-icon.jpg" alt="WakilChat" width={32} height={32} style={{ borderRadius: '50%' }} />
-              <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
+              <span style={{ fontSize: '1.75rem', fontWeight: 'bold' }}>
                 <span style={{ color: '#FFD700' }}>Wakil</span>Chat
               </span>
             </div>
