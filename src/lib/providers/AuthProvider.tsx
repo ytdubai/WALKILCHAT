@@ -5,9 +5,14 @@ import { supabase } from '../supabase';
 type AuthContextType = {
   user: User | null;
   loading: boolean;
+  signUp: (email: string, password: string, metadata?: any) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
+  signInWithPhone: (phone: string) => Promise<void>;
+  signOut: () => Promise<void>;
 };
 
-const AuthContext = createContext<AuthContextType>({ user: null, loading: true });
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function useAuth() {
   const context = useContext(AuthContext);
@@ -45,9 +50,61 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  const signUp = async (email: string, password: string, metadata?: any) => {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: metadata,
+      },
+    });
+
+    if (error) throw error;
+    return;
+  };
+
+  const signIn = async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) throw error;
+    return;
+  };
+
+  const signInWithGoogle = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/dashboard`,
+      },
+    });
+
+    if (error) throw error;
+  };
+
+  const signInWithPhone = async (phone: string) => {
+    const { data, error } = await supabase.auth.signInWithOtp({
+      phone,
+    });
+
+    if (error) throw error;
+  };
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+  };
+
   const value = {
     user,
     loading,
+    signUp,
+    signIn,
+    signInWithGoogle,
+    signInWithPhone,
+    signOut,
   };
 
   return (
