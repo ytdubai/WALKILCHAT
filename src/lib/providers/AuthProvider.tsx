@@ -77,6 +77,14 @@ const signInWithGoogle = async () => {
 ## **The Flow After Fix:**
 ```
 Login → Google → Supabase → /auth/callback → /dashboard ✅
+};
+```
+
+---
+
+## **The Flow After Fix:**
+```
+Login → Google → Supabase → /auth/callback → /dashboard ✅
     return;
   };
 
