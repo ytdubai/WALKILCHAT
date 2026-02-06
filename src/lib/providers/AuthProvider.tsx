@@ -61,15 +61,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (error) throw error;
     return;
-  };
+const signInWithGoogle = async () => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: 'https://wakilchat.com/auth/callback',
+    },
+  });
+  if (error) throw error;
+};
+```
 
-  const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+---
 
-    if (error) throw error;
+## **The Flow After Fix:**
+```
+Login → Google → Supabase → /auth/callback → /dashboard ✅
     return;
   };
 
