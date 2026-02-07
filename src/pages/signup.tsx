@@ -19,14 +19,30 @@ export default function Signup() {
     setLoading(true);
     setError('');
     
+    // Validate
+    if (!email && !phone) {
+      setError('Please enter email or phone number');
+      setLoading(false);
+      return;
+    }
+    
+    if (!fullName) {
+      setError('Please enter your name');
+      setLoading(false);
+      return;
+    }
+    
     try {
+      console.log('Attempting signup...', { email, phone });
       await signUp(email || phone, password, {
         full_name: fullName,
         phone: phone
       });
-      router.push('/dashboard');
+      console.log('Signup successful!');
+      window.location.href = '/dashboard';
     } catch (err: any) {
-      setError(err.message || 'Signup failed');
+      console.error('Signup error:', err);
+      setError(err.message || err.error_description || 'Signup failed. Please try again.');
       setLoading(false);
     }
   };
