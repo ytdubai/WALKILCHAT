@@ -17,7 +17,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useAuth must be used within AuthProvider');
   }
   return context;
 }
@@ -27,83 +27,49 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let mounted = true;
-
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (mounted) {
-        setUser(session?.user ?? null);
-        setLoading(false);
-      }
+      setUser(session?.user ?? null);
+      setLoading(false);
     });
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
-      if (mounted) {
-        setUser(session?.user ?? null);
-      }
+      setUser(session?.user ?? null);
     });
 
-    return () => {
-      mounted = false;
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, []);
 
   const signUp = async (email: string, password: string, metadata?: any) => {
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        data: metadata,
-      },
+      options: { data: metadata },
     });
-
     if (error) throw error;
-    return;
-const signInWithGoogle = async () => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: 'https://wakilchat.com/auth/callback',
-    },
-  });
-  if (error) throw error;
-};
-```
+  };
 
----
-
-## **The Flow After Fix:**
-```
-Login → Google → Supabase → /auth/callback → /dashboard ✅
-};
-```
-
----
-
-## **The Flow After Fix:**
-```
-Login → Google → Supabase → /auth/callback → /dashboard ✅
-    return;
+  const signIn = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) throw error;
   };
 
   const signInWithGoogle = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: `${window.location.origin}/dashboard`,
       },
     });
-
     if (error) throw error;
   };
 
   const signInWithPhone = async (phone: string) => {
-    const { data, error } = await supabase.auth.signInWithOtp({
-      phone,
-    });
-
+    const { error } = await supabase.auth.signInWithOtp({ phone });
     if (error) throw error;
   };
 
@@ -112,18 +78,8 @@ Login → Google → Supabase → /auth/callback → /dashboard ✅
     if (error) throw error;
   };
 
-  const value = {
-    user,
-    loading,
-    signUp,
-    signIn,
-    signInWithGoogle,
-    signInWithPhone,
-    signOut,
-  };
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ user, loading, signUp, signIn, signInWithGoogle, signInWithPhone, signOut }}>
       {children}
     </AuthContext.Provider>
   );
