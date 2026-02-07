@@ -38,9 +38,13 @@ export default function Login() {
     setIsLoading(true);
     setError('');
     try {
-      await signIn(email, password);
-      router.push('/dashboard');
+      const result = await signIn(email, password);
+      console.log('Login successful, redirecting...');
+      // Small delay to ensure session is set
+      await new Promise(resolve => setTimeout(resolve, 500));
+      window.location.href = '/dashboard'; // Use window.location for hard redirect
     } catch (err: any) {
+      console.error('Login error:', err);
       setError(err.message || 'Invalid email or password');
       setIsLoading(false);
     }
