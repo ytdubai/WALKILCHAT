@@ -13,8 +13,32 @@ import { TransactionItem } from '../components/transactions/TransactionItem';
 import { demoStats, demoTransactions, demoRevenueData } from '../lib/demoData';
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [stats, setStats] = useState(demoStats);
+
+  // Show loading while checking auth
+  if (loading) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⏳</div>
+          <p style={{ fontSize: '1.25rem' }}>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // If not logged in, show message (middleware should catch this)
+  if (!user) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+        <div style={{ textAlign: 'center' }}>
+          <p style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>Please log in to access dashboard</p>
+          <a href="/login" style={{ color: '#FFD700' }}>Go to Login →</a>
+        </div>
+      </div>
+    );
+  }
 
   const recentActivities = [
     {
