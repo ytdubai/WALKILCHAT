@@ -7,66 +7,45 @@ export default function AuthCallback() {
   const [status, setStatus] = useState('Logging in...');
 
   useEffect(() => {
-    const handleCallback = async () => {
-      try {
-        // Get the code from URL query params (PKCE flow)
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
+    let cancelled = false;
 
-        if (code) {
-          // Exchange the code for a session
-          const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-          if (error) {
-            console.error('Code exchange error:', error);
-            setStatus('Authentication failed');
-            setTimeout(() => router.push('/login?error=auth_failed'), 1500);
-            return;
-          }
-          if (data.session) {
-            setStatus('Success! Redirecting...');
-            setTimeout(() => router.push('/dashboard'), 500);
-            return;
-          }
+    // Set up auth state listener FIRST to catch events
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (!cancelled && session) {
+          setStatus('Success! Redirecting...');
+          router.push('/dashboard');
         }
+      }
+    );
 
-        // Check for hash fragments (implicit flow fallback)
-        const hashParams = new URLSearchParams(window.location.hash.substring(1));
-        const accessToken = hashParams.get('access_token');
-
-        if (accessToken) {
-          // Wait for Supabase to detect the session from URL
-          const { data: { session } } = await supabase.auth.getSession();
-          if (session) {
-            setStatus('Success! Redirecting...');
-            setTimeout(() => router.push('/dashboard'), 500);
-            return;
-          }
+    // Poll for session - handles both PKCE and implicit flows
+    // detectSessionInUrl processes the URL automatically,
+    // so we just need to wait for the session to appear
+    const checkSession = async () => {
+      for (let i = 0; i < 20; i++) {
+        if (cancelled) return;
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          setStatus('Success! Redirecting...');
+          router.push('/dashboard');
+          return;
         }
-
-        // Listen for auth state changes as fallback
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-          if (event === 'SIGNED_IN' && session) {
-            setStatus('Success! Redirecting...');
-            setTimeout(() => router.push('/dashboard'), 500);
-            subscription.unsubscribe();
-          }
-        });
-
-        // Timeout after 5 seconds
-        setTimeout(() => {
-          setStatus('Session not found');
-          subscription.unsubscribe();
-          router.push('/login');
-        }, 5000);
-
-      } catch (err) {
-        console.error('Callback error:', err);
-        setStatus('Something went wrong');
-        setTimeout(() => router.push('/login?error=callback_failed'), 1500);
+        await new Promise(r => setTimeout(r, 500));
+      }
+      // Timed out after 10 seconds
+      if (!cancelled) {
+        setStatus('Authentication failed. Redirecting...');
+        router.push('/login?error=timeout');
       }
     };
 
-    handleCallback();
+    checkSession();
+
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
   }, [router]);
 
   return (
