@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Direct Supabase Test</title>
+</head>
+<body style="background: #0a0a0a; color: white; padding: 2rem; font-family: monospace;">
+    <h1>Direct Supabase Connection Test</h1>
+    <button onclick="testSignup()" style="padding: 1rem 2rem; background: #FFD700; color: #000; border: none; border-radius: 0.5rem; cursor: pointer; font-size: 1rem; margin: 1rem 0;">
+        Test Signup
+    </button>
+    <button onclick="testLogin()" style="padding: 1rem 2rem; background: #10b981; color: #fff; border: none; border-radius: 0.5rem; cursor: pointer; font-size: 1rem; margin: 1rem;">
+        Test Login
+    </button>
+    <pre id="result" style="background: #111; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem;"></pre>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://xjbuktmaktupkssretbt.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqYnVrdG1ha3R1cGtzc3JldGJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwNDEwOTgsImV4cCI6MjA4NTYxNzA5OH0.Cp6dschu3CWjHPCuf9k8GaibxP8hqE1PchLx3ox_opU';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        async function testSignup() {
+            document.getElementById('result').textContent = 'Testing signup...';
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: 'test@wakilchat.com',
+                    password: 'Test123456!'
+                });
+                
+                if (error) {
+                    document.getElementById('result').textContent = 'ERROR:\n' + JSON.stringify(error, null, 2);
+                } else {
+                    document.getElementById('result').textContent = 'SUCCESS!\n' + JSON.stringify(data, null, 2);
+                }
+            } catch (err) {
+                document.getElementById('result').textContent = 'EXCEPTION:\n' + err.toString();
+            }
+        }
+        
+        async function testLogin() {
+            document.getElementById('result').textContent = 'Testing login...';
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: 'test@wakilchat.com',
+                    password: 'Test123456!'
+                });
+                
+                if (error) {
+                    document.getElementById('result').textContent = 'ERROR:\n' + JSON.stringify(error, null, 2);
+                } else {
+                    document.getElementById('result').textContent = 'SUCCESS!\n' + JSON.stringify(data, null, 2);
+                }
+            } catch (err) {
+                document.getElementById('result').textContent = 'EXCEPTION:\n' + err.toString();
+            }
+        }
+    </script>
+</body>
+</html>
