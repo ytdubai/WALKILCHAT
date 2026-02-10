@@ -7,37 +7,59 @@ export default function AuthCallback() {
   const [status, setStatus] = useState('Signing you in...');
 
   useEffect(() => {
-    // With implicit flow + detectSessionInUrl: true,
-    // Supabase automatically processes the #access_token hash fragment.
-    // We just listen for the SIGNED_IN event.
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === 'SIGNED_IN' && session) {
+    const handleCallback = async () => {
+      // Get the code from URL query params (PKCE flow)
+      const code = new URLSearchParams(window.location.search).get('code');
+      
+      if (code) {
+        // Explicitly exchange the PKCE code for a session
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+        
+        if (error) {
+          console.error('Code exchange error:', error);
+          setStatus('Authentication failed');
+          setTimeout(() => router.replace('/login?error=exchange_failed'), 1500);
+          return;
+        }
+        
+        if (data.session) {
           setStatus('Success! Redirecting...');
           setTimeout(() => router.replace('/dashboard'), 300);
+          return;
         }
       }
-    );
 
-    // Also check if session already exists (in case event fired before listener)
-    supabase.auth.getSession().then(({ data: { session } }) => {
+      // Also listen for auth state changes as fallback
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        (event, session) => {
+          if (event === 'SIGNED_IN' && session) {
+            setStatus('Success! Redirecting...');
+            setTimeout(() => router.replace('/dashboard'), 300);
+          }
+        }
+      );
+
+      // Check if session already exists
+      const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         setStatus('Success! Redirecting...');
         setTimeout(() => router.replace('/dashboard'), 300);
+        return;
       }
-    });
 
-    // Timeout fallback
-    const timeout = setTimeout(() => {
-      setStatus('Authentication timed out');
-      router.replace('/login?error=timeout');
-    }, 10000);
+      // Timeout fallback
+      const timeout = setTimeout(() => {
+        setStatus('Authentication timed out');
+        router.replace('/login?error=timeout');
+      }, 10000);
 
-    return () => {
-      subscription.unsubscribe();
-      clearTimeout(timeout);
+      return () => {
+        subscription.unsubscribe();
+        clearTimeout(timeout);
+      };
     };
+
+    handleCallback();
   }, [router]);
 
   return (
@@ -48,13 +70,7 @@ export default function AuthCallback() {
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       `}</style>
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#0f0f0f' }}>
-        <div style={{
-          width: 64, height: 64, borderRadius: 16,
-          background: 'linear-gradient(135deg, #D4AF37, #F4D03F)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          marginBottom: 32, animation: 'pulse 1.5s ease-in-out infinite',
-          boxShadow: '0 4px 32px rgba(212,175,55,0.3)'
-        }}>
+        <div style={{ width: 64, height: 64, borderRadius: 16, background: 'linear-gradient(135deg, #D4AF37, #F4D03F)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 32, animation: 'pulse 1.5s ease-in-out infinite', boxShadow: '0 4px 32px rgba(212,175,55,0.3)' }}>
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
             <path d="M12 2L15 8L22 9L17 14L18 21L12 18L6 21L7 14L2 9L9 8L12 2Z" fill="#0f0f0f" fillOpacity="0.9"/>
             <circle cx="12" cy="11" r="2.5" fill="#D4AF37"/>
@@ -62,12 +78,7 @@ export default function AuthCallback() {
         </div>
         <p style={{ fontSize: 18, fontWeight: 600, color: '#fff', marginBottom: 8 }}>Signing you in</p>
         <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)' }}>{status}</p>
-        <div style={{
-          marginTop: 32, width: 24, height: 24,
-          border: '2px solid rgba(212,175,55,0.2)',
-          borderTopColor: '#D4AF37', borderRadius: '50%',
-          animation: 'spin 0.8s linear infinite'
-        }} />
+        <div style={{ marginTop: 32, width: 24, height: 24, border: '2px solid rgba(212,175,55,0.2)', borderTopColor: '#D4AF37', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
       </div>
     </>
   );
