@@ -72,3 +72,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { error } = await supabase.auth.signInWithOtp({ phone });
     if (error) throw error;
   };
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, loading, signUp, signIn, signInWithGoogle, signInWithPhone, signOut }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
