@@ -62,7 +62,7 @@ export default function Signup() {
     }
     try {
       await signInWithPhone(phone);
-      router.push(`/verify-otp?phone=${encodeURIComponent(phone)}`);
+      setError('OTP sent! Check your phone and enter the code below.');
     } catch (err: any) {
       setError(err.message || 'Phone signup failed');
     }
