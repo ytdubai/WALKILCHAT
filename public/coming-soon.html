@@ -6,19 +6,19 @@
   <title>WakilChat™ — Coming Soon</title>
   <style>
     :root{
-      --bg1:#7fe8ff;--bg2:#38c6ff;--ink:#0b2b3a;--muted:#3b6475;
-      --accent:#ff4d7d;--gold:#d4a853;--emerald:#00c9a7;--purple:#7c3aed;
-      --shadow:0 16px 48px rgba(0,0,0,.12);--radius:20px;
+      --bg1:#f5f0e8;--bg2:#ebe3d5;--ink:#1c1917;--muted:#78716c;
+      --accent:#92400e;--gold:#b8860b;--emerald:#059669;--purple:#44403c;
+      --shadow:0 16px 48px rgba(0,0,0,.08);--radius:20px;
       font-family:'Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif;
     }
     *{box-sizing:border-box;margin:0;padding:0}
-    body{min-height:100vh;color:var(--ink);background:radial-gradient(ellipse 1400px 700px at 10% 10%,rgba(255,255,255,.3),transparent),radial-gradient(ellipse 1000px 600px at 90% 20%,rgba(255,255,255,.2),transparent),linear-gradient(180deg,var(--bg1),var(--bg2));overflow-x:hidden}
+    body{min-height:100vh;color:var(--ink);background:radial-gradient(ellipse 1200px 600px at 10% 10%,rgba(184,134,11,.04),transparent),radial-gradient(ellipse 1000px 600px at 90% 20%,rgba(146,64,14,.03),transparent),linear-gradient(180deg,var(--bg1),var(--bg2));overflow-x:hidden}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;position:relative;z-index:10}
     .nav-brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px;color:var(--ink);text-decoration:none}
-    .nav-logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--purple));box-shadow:0 6px 16px rgba(124,58,237,.2)}
+    .nav-logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#b8860b,#d4a853);box-shadow:0 6px 16px rgba(184,134,11,.2)}
     .nav-links{display:flex;gap:6px;align-items:center}
-    .nav-links a{text-decoration:none;color:var(--ink);font-weight:600;font-size:13px;padding:8px 14px;border-radius:12px;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.6);transition:.2s}
-    .nav-links a:hover{background:rgba(255,255,255,.75)}
+    .nav-links a{text-decoration:none;color:var(--ink);font-weight:600;font-size:13px;padding:8px 14px;border-radius:12px;background:rgba(255,255,255,.6);border:1px solid rgba(28,25,23,.06);transition:.2s}
+    .nav-links a:hover{background:rgba(255,255,255,.9)}
     .nav-patent{font-size:10px;font-weight:800;padding:6px 12px;border-radius:16px;letter-spacing:1.5px;text-transform:uppercase;background:linear-gradient(135deg,rgba(212,168,83,.15),rgba(0,201,167,.15));border:1px solid rgba(212,168,83,.35);color:#8B5500}
     @media(max-width:768px){.nav-links{display:none}}
     .hero{width:min(1120px,100%);margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:20px;padding:0 20px 32px;align-items:stretch}
@@ -27,9 +27,9 @@
     .map-header{position:absolute;left:16px;top:14px;z-index:2;display:flex;gap:8px;align-items:center;padding:8px 14px;background:rgba(212,168,83,.15);border:1px solid rgba(212,168,83,.25);border-radius:999px}
     .map-dot{width:8px;height:8px;border-radius:50%}.map-dot.r{background:#ff4d4d}.map-dot.y{background:#ffd24d}.map-dot.g{background:#4dff9a}
     .map-label{font-weight:800;font-size:12px;letter-spacing:.3px;color:#D4A853}
-    .panel{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.85);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px 28px;display:flex;flex-direction:column;gap:18px}
+    .panel{background:rgba(255,255,255,.85);border:1px solid rgba(28,25,23,.06);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px 28px;display:flex;flex-direction:column;gap:18px}
     h1{font-size:clamp(28px,4vw,44px);line-height:1.05;letter-spacing:-1px;font-weight:900}
-    h1 .grad{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    h1 .grad{background:linear-gradient(135deg,#b8860b,#d4a853);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
     .sub{color:var(--muted);font-size:15px;line-height:1.6;max-width:48ch}
     .tm{font-size:10px;vertical-align:super;color:var(--gold)}
     .cd-row{display:flex;gap:10px;flex-wrap:wrap}
@@ -40,9 +40,9 @@
     .trust-pill .chk{color:var(--emerald);font-weight:900}
     .email-form{display:flex;gap:10px;flex-wrap:wrap}
     .email-form input{flex:1 1 200px;border:1px solid rgba(11,43,58,.15);border-radius:12px;padding:12px 16px;font-size:14px;outline:none;background:rgba(255,255,255,.9);font-family:inherit;transition:.2s}
-    .email-form input:focus{border-color:rgba(124,58,237,.5);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
-    .email-form button{flex:0 0 auto;border:0;border-radius:12px;padding:12px 22px;font-weight:800;font-size:14px;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--accent),var(--purple));box-shadow:0 8px 20px rgba(124,58,237,.25);transition:.15s;font-family:inherit}
-    .email-form button:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(124,58,237,.3)}
+    .email-form input:focus{border-color:rgba(184,134,11,.5);box-shadow:0 0 0 3px rgba(184,134,11,.1)}
+    .email-form button{flex:0 0 auto;border:0;border-radius:12px;padding:12px 22px;font-weight:800;font-size:14px;cursor:pointer;color:#fff;background:linear-gradient(135deg,#1c1917,#44403c);box-shadow:0 8px 20px rgba(28,25,23,.25);transition:.15s;font-family:inherit}
+    .email-form button:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(28,25,23,.35)}
     .email-form button:active{transform:translateY(0)}
     .toast{display:none;padding:10px 14px;border-radius:12px;background:rgba(0,201,167,.12);border:1px solid rgba(0,201,167,.3);font-weight:700;color:var(--ink);font-size:13px}
     .note{color:rgba(11,43,58,.45);font-size:11px}
@@ -53,11 +53,11 @@
     .stats-bar{width:min(1120px,100%);margin:0 auto;padding:0 20px}
     .stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:24px 0}
     @media(max-width:768px){.stats-inner{grid-template-columns:repeat(2,1fr)}}
-    .stat-item{text-align:center;padding:16px 12px;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.6);border-radius:16px;backdrop-filter:blur(8px)}
+    .stat-item{text-align:center;padding:16px 12px;background:rgba(255,255,255,.6);border:1px solid rgba(28,25,23,.06);border-radius:16px;backdrop-filter:blur(8px)}
     .stat-num{font-size:clamp(24px,3.5vw,32px);font-weight:900;color:var(--ink);line-height:1}
     .stat-lbl{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.3}
     .sections{width:min(1120px,100%);margin:0 auto;padding:0 20px}
-    .sec-card{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.7);backdrop-filter:blur(10px);border-radius:var(--radius);box-shadow:var(--shadow);padding:40px 32px;margin-bottom:20px}
+    .sec-card{background:rgba(255,255,255,.7);border:1px solid rgba(28,25,23,.06);backdrop-filter:blur(10px);border-radius:var(--radius);box-shadow:var(--shadow);padding:40px 32px;margin-bottom:20px}
     .sec-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:6px;text-align:center}
     .sec-title{font-size:clamp(22px,3.5vw,34px);font-weight:900;text-align:center;letter-spacing:-.5px;margin-bottom:6px}
     .sec-sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:32px;max-width:50ch;margin-left:auto;margin-right:auto;line-height:1.6}
@@ -88,36 +88,36 @@
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
     .quiz-bar{display:flex;gap:6px;justify-content:center;margin-bottom:24px}
     .quiz-bar-dot{width:28px;height:3px;border-radius:3px;background:rgba(11,43,58,.1);transition:.3s}
-    .quiz-bar-dot.active{background:linear-gradient(90deg,var(--accent),var(--purple));width:44px}
+    .quiz-bar-dot.active{background:linear-gradient(90deg,#b8860b,#d4a853);width:44px}
     .quiz-bar-dot.done{background:var(--emerald)}
     .quiz-q{font-size:20px;font-weight:800;text-align:center;margin-bottom:20px}
     .quiz-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     @media(max-width:600px){.quiz-grid{grid-template-columns:1fr}}
     .quiz-opt{background:rgba(255,255,255,.5);border:2px solid rgba(11,43,58,.06);border-radius:14px;padding:18px 16px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:14px}
-    .quiz-opt:hover{border-color:rgba(124,58,237,.3);transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.06)}
+    .quiz-opt:hover{border-color:rgba(184,134,11,.3);transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.06)}
     .quiz-opt.sel{border-color:var(--emerald);background:rgba(0,201,167,.06)}
     .opt-icon{width:36px;height:36px;border-radius:10px;flex-shrink:0}
     .opt-text .opt-title{font-weight:800;font-size:14px;margin-bottom:2px}.opt-text .opt-desc{font-size:11px;color:var(--muted)}
-    .quiz-btn{display:block;margin:20px auto 0;background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;font-weight:800;font-size:13px;padding:12px 36px;border:none;border-radius:12px;cursor:pointer;box-shadow:0 8px 20px rgba(124,58,237,.2);opacity:.35;pointer-events:none;transition:.2s;font-family:inherit}
+    .quiz-btn{display:block;margin:20px auto 0;background:linear-gradient(135deg,#1c1917,#44403c);color:#fff;font-weight:800;font-size:13px;padding:12px 36px;border:none;border-radius:12px;cursor:pointer;box-shadow:0 8px 20px rgba(28,25,23,.2);opacity:.35;pointer-events:none;transition:.2s;font-family:inherit}
     .quiz-btn.on{opacity:1;pointer-events:auto}.quiz-btn:active{transform:translateY(1px)}
     .quiz-done{display:none;text-align:center;animation:fadeIn .5s ease}.quiz-done.active{display:block}
     .quiz-done h3{font-size:24px;font-weight:900;margin-bottom:6px}.quiz-done p{color:var(--muted);font-size:14px}
     .story-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-    .story-card{background:rgba(255,255,255,.45);border:1px solid rgba(11,43,58,.06);border-radius:16px;padding:24px 20px;transition:.3s}
+    .story-card{background:rgba(255,255,255,.6);border:1px solid rgba(28,25,23,.06);border-radius:16px;padding:24px 20px;transition:.3s}
     .story-card:hover{transform:translateY(-2px);border-color:rgba(212,168,83,.25);box-shadow:0 10px 28px rgba(0,0,0,.08)}
     .story-num{font-size:28px;font-weight:900;color:rgba(11,43,58,.08);margin-bottom:8px}
     .story-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:6px}
     .story-card h3{font-size:17px;font-weight:800;margin-bottom:6px}.story-card p{font-size:13px;color:var(--muted);line-height:1.6}
     .feat-scroll{display:flex;gap:12px;overflow-x:auto;padding:8px 2px;scrollbar-width:none;scroll-snap-type:x mandatory}
     .feat-scroll::-webkit-scrollbar{display:none}
-    .feat-card{min-width:240px;max-width:240px;flex-shrink:0;background:rgba(255,255,255,.45);border:1px solid rgba(11,43,58,.06);border-radius:16px;padding:22px 18px;scroll-snap-align:start;transition:.3s}
-    .feat-card:hover{border-color:rgba(124,58,237,.2);transform:translateY(-2px)}
+    .feat-card{min-width:240px;max-width:240px;flex-shrink:0;background:rgba(255,255,255,.6);border:1px solid rgba(28,25,23,.06);border-radius:16px;padding:22px 18px;scroll-snap-align:start;transition:.3s}
+    .feat-card:hover{border-color:rgba(184,134,11,.25);transform:translateY(-2px)}
     .feat-num{font-size:28px;font-weight:900;color:rgba(11,43,58,.08);line-height:1;margin-bottom:8px}
     .feat-card h4{font-size:15px;font-weight:800;margin-bottom:6px}.feat-card p{font-size:12px;color:var(--muted);line-height:1.5}
     .feat-tag{display:inline-block;margin-top:8px;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 8px;border-radius:8px}
     .feat-tag.patent{color:#8B5500;background:rgba(212,168,83,.1);border:1px solid rgba(212,168,83,.2)}
     .feat-tag.opt{color:#006B5A;background:rgba(0,201,167,.1);border:1px solid rgba(0,201,167,.2)}
-    .feat-tag.ai{color:#5B21B6;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.15)}
+    .feat-tag.ai{color:#44403c;background:rgba(68,64,60,.08);border:1px solid rgba(68,64,60,.15)}
     .site-footer{width:min(1120px,100%);margin:0 auto;padding:20px 20px 32px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center}
     .site-footer .legal{display:flex;flex-direction:column;gap:2px}
     .site-footer .legal span{font-size:11px;color:var(--muted);opacity:.6}
@@ -192,7 +192,7 @@
         <g transform="translate(370,140)"><g class="anim-sway" style="animation-delay:.3s">
           <!-- Mane -->
           <circle r="24" fill="#C4922F"/>
-          <circle cx="-17" cy="-15" r="8" fill="#8B6914"/><circle cx="0" cy="-22" r="8" fill="#8B6914"/>
+          <circle cx="-17" cy="-15" r="8" fill="#8B6914"/><circle cx="0" cy="-22" r="8"/>" fill="#8B6914"/>
           <circle cx="17" cy="-15" r="8" fill="#8B6914"/><circle cx="22" cy="0" r="8" fill="#8B6914"/>
           <circle cx="-22" cy="0" r="8" fill="#8B6914"/><circle cx="17" cy="15" r="7" fill="#8B6914"/>
           <circle cx="-17" cy="15" r="7" fill="#8B6914"/>
@@ -342,7 +342,7 @@
     <div style="display:flex;align-items:center;gap:10px"><span class="nav-logo"></span><span style="font-weight:900;font-size:17px">WakilChat<span class="tm">&#8482;</span></span></div>
     <h1>Africa's Voice,<br><span class="grad">Amplified.</span></h1>
     <p class="sub">AI-powered communication built from the continent, for a billion people. Join the waitlist and be first when we launch.</p>
-    <div class="cd-row" id="countdown"><div class="cd-box"><div class="cd-num" id="cd-d">00</div><div class="cd-lbl">Days</div></div><div class="cd-box"><div class="cd-num" id="cd-h">00</div><div class="cd-lbl">Hours</div></div><div class="cd-box"><div class="cd-num" id="cd-m">00</div><div class="cd-lbl">Min</div></div><div class="cd-box"><div class="cd-num" id="cd-s">00</div><div class="cd-lbl">Sec</div></div></div>
+    <div class="cd-row" id="countdown"><div class="cd-box"><div class="cd-num" id="cd-d">00</div><div class="cd-lbl">Days</div></div><div class="cd-box"><div class="cd-num" id="cd-h">00</div><div class="cd-lbl">Hours</div></div><div class="cd-box"><div class="cd-num" id="cd-m">00</div><div class="cd-lbl">Min</div>></div><div class="cd-box"><div class="cd-num" id="cd-s">00</div><div class="cd-lbl">Sec</div></div></div>
     <div class="trust-row"><span class="trust-pill"><span class="chk">&#10003;</span> Patent Pending</span><span class="trust-pill"><span class="chk">&#10003;</span> Early Access</span><span class="trust-pill"><span class="chk">&#10003;</span> Zero Spam</span></div>
     <form class="email-form" id="notifyForm"><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required/><button type="submit">Get Early Access</button></form>
     <div id="toast" class="toast">You're on the list. We'll reach out when it's live.</div>
@@ -379,22 +379,22 @@
   <p class="sec-sub">Three quick questions to personalize your launch experience.</p>
   <div id="quiz-wrap"><div class="quiz-bar" id="qbar"><div class="quiz-bar-dot active"></div><div class="quiz-bar-dot"></div><div class="quiz-bar-dot"></div></div>
     <div class="quiz-step active" id="qs1"><div class="quiz-q">What describes you best?</div><div class="quiz-grid">
-      <div class="quiz-opt" onclick="pick(this,1)"><div class="opt-icon" style="background:linear-gradient(135deg,#ff4d7d,#ff7a59)"></div><div class="opt-text"><div class="opt-title">Entrepreneur</div><div class="opt-desc">Building the next big thing</div></div></div>
-      <div class="quiz-opt" onclick="pick(this,1)"><div class="opt-icon" style="background:linear-gradient(135deg,#7c3aed,#a855f7)"></div><div class="opt-text"><div class="opt-title">Creator</div><div class="opt-desc">Content, art &amp; influence</div></div></div>
-      <div class="quiz-opt" onclick="pick(this,1)"><div class="opt-icon" style="background:linear-gradient(135deg,#0b2b3a,#3b6475)"></div><div class="opt-text"><div class="opt-title">Professional</div><div class="opt-desc">Corporate &amp; enterprise</div></div></div>
-      <div class="quiz-opt" onclick="pick(this,1)"><div class="opt-icon" style="background:linear-gradient(135deg,#00c9a7,#38c6ff)"></div><div class="opt-text"><div class="opt-title">Community Builder</div><div class="opt-desc">Connecting people &amp; causes</div></div></div>
+      <div class="quiz-opt" onclick="pick(this,1)"><div class="opt-icon" style="background:linear-gradient(135deg,#92400e,#b8860b)"></div><div class="opt-text"><div class="opt-title">Entrepreneur</div><div class="opt-desc">Building the next big thing</div></div></div>
+      <div class="quiz-opt" onclick="pick(this,1)"><div class="opt-icon" style="background:linear-gradient(135deg,#1c1917,#44403c)"></div><div class="opt-text"><div class="opt-title">Creator</div><div class="opt-desc">Content, art &amp; influence</div></div></div>
+      <div class="quiz-opt" onclick="pick(this,1)"><div class="opt-icon" style="background:linear-gradient(135deg,#0f766e,#059669)"></div><div class="opt-text"><div class="opt-title">Professional</div><div class="opt-desc">Corporate &amp; enterprise</div></div></div>
+      <div class="quiz-opt" onclick="pick(this,1)"><div class="opt-icon" style="background:linear-gradient(135deg,#78350f,#a16207)"></div><div class="opt-text"><div class="opt-title">Community Builder</div><div class="opt-desc">Connecting people &amp; causes</div></div></div>
     </div><button class="quiz-btn" id="qb1" onclick="goStep(2)">Continue</button></div>
     <div class="quiz-step" id="qs2"><div class="quiz-q">What matters most to you?</div><div class="quiz-grid">
-      <div class="quiz-opt" onclick="pick(this,2)"><div class="opt-icon" style="background:linear-gradient(135deg,#0d1f2d,#1a2744)"></div><div class="opt-text"><div class="opt-title">Privacy First</div><div class="opt-desc">End-to-end encryption</div></div></div>
-      <div class="quiz-opt" onclick="pick(this,2)"><div class="opt-icon" style="background:linear-gradient(135deg,#d4a853,#f5d791)"></div><div class="opt-text"><div class="opt-title">Speed</div><div class="opt-desc">Lightning-fast messaging</div></div></div>
-      <div class="quiz-opt" onclick="pick(this,2)"><div class="opt-icon" style="background:linear-gradient(135deg,#7c3aed,#ff4d7d)"></div><div class="opt-text"><div class="opt-title">AI Intelligence</div><div class="opt-desc">Smart automation &amp; translation</div></div></div>
-      <div class="quiz-opt" onclick="pick(this,2)"><div class="opt-icon" style="background:linear-gradient(135deg,#00c9a7,#4dff9a)"></div><div class="opt-text"><div class="opt-title">Multilingual</div><div class="opt-desc">50+ African languages</div></div></div>
+      <div class="quiz-opt" onclick="pick(this,2)"><div class="opt-icon" style="background:linear-gradient(135deg,#1c1917,#374151)"></div><div class="opt-text"><div class="opt-title">Privacy First</div><div class="opt-desc">End-to-end encryption</div></div></div>
+      <div class="quiz-opt" onclick="pick(this,2)"><div class="opt-icon" style="background:linear-gradient(135deg,#b8860b,#d4a853)"></div><div class="opt-text"><div class="opt-title">Speed</div><div class="opt-desc">Lightning-fast messaging</div></div></div>
+      <div class="quiz-opt" onclick="pick(this,2)"><div class="opt-icon" style="background:linear-gradient(135deg,#44403c,#78716c)"></div><div class="opt-text"><div class="opt-title">AI Intelligence</div><div class="opt-desc">Smart automation &amp; translation</div></div></div>
+      <div class="quiz-opt" onclick="pick(this,2)"><div class="opt-icon" style="background:linear-gradient(135deg,#059669,#0f766e)"></div><div class="opt-text"><div class="opt-title">Multilingual</div><div class="opt-desc">50+ African languages</div></div></div>
     </div><button class="quiz-btn" id="qb2" onclick="goStep(3)">Continue</button></div>
     <div class="quiz-step" id="qs3"><div class="quiz-q">When do you want to start?</div><div class="quiz-grid">
-      <div class="quiz-opt" onclick="pick(this,3)"><div class="opt-icon" style="background:linear-gradient(135deg,#ff4d7d,#d4a853)"></div><div class="opt-text"><div class="opt-title">Day One</div><div class="opt-desc">First in line for access</div></div></div>
-      <div class="quiz-opt" onclick="pick(this,3)"><div class="opt-icon" style="background:linear-gradient(135deg,#38c6ff,#7c3aed)"></div><div class="opt-text"><div class="opt-title">Beta Tester</div><div class="opt-desc">Test early &amp; give feedback</div></div></div>
-      <div class="quiz-opt" onclick="pick(this,3)"><div class="opt-icon" style="background:linear-gradient(135deg,#d4a853,#00c9a7)"></div><div class="opt-text"><div class="opt-title">Ambassador</div><div class="opt-desc">Help spread the word</div></div></div>
-      <div class="quiz-opt" onclick="pick(this,3)"><div class="opt-icon" style="background:linear-gradient(135deg,#3b6475,#38c6ff)"></div><div class="opt-text"><div class="opt-title">Just Curious</div><div class="opt-desc">Keep me in the loop</div></div></div>
+      <div class="quiz-opt" onclick="pick(this,3)"><div class="opt-icon" style="background:linear-gradient(135deg,#92400e,#d4a853)"></div><div class="opt-text"><div class="opt-title">Day One</div><div class="opt-desc">First in line for access</div></div></div>
+      <div class="quiz-opt" onclick="pick(this,3)"><div class="opt-icon" style="background:linear-gradient(135deg,#374151,#6b7280)"></div><div class="opt-text"><div class="opt-title">Beta Tester</div><div class="opt-desc">Test early &amp; give feedback</div></div></div>
+      <div class="quiz-opt" onclick="pick(this,3)"><div class="opt-icon" style="background:linear-gradient(135deg,#b8860b,#059669)"></div><div class="opt-text"><div class="opt-title">Ambassador</div><div class="opt-desc">Help spread the word</div></div></div>
+      <div class="quiz-opt" onclick="pick(this,3)"><div class="opt-icon" style="background:linear-gradient(135deg,#57534e,#78716c)"></div><div class="opt-text"><div class="opt-title">Just Curious</div><div class="opt-desc">Keep me in the loop</div></div></div>
     </div><button class="quiz-btn" id="qb3" onclick="showDone()">See My Result</button></div>
     <div class="quiz-done" id="qdone"><h3>You're an Early Pioneer</h3><p>Scroll up and drop your email to lock in your spot.</p></div>
   </div>
