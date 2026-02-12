@@ -207,7 +207,7 @@
     .sector-card p{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:12px}
     .sector-stat{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#d4a853;background:transparent;padding:4px 10px;border-radius:0;border:none}
     /* === PAYMENT CARDS === */
-    .pay-card{display:flex;align-items:center;gap:14px;background:transparent;border:none;border-radius:0;padding:18px 16px;min-width:300px;max-width:300px;flex-shrink:0;transition:.3s}
+    .pay-card{display:flex;align-items:center;gap:14px;background:transparent;border:none;border-radius:0;padding:18px 16px;min-width:220px;max-width:220px;flex-shrink:0;transition:.3s}
     .pay-card:hover{transform:translateY(-2px);box-shadow:none}
     .pay-logo{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;flex-shrink:0;font-family:'Playfair Display',serif}
     .pay-info h4{font-size:14px;font-weight:800;margin-bottom:2px;font-family:'Playfair Display',serif;color:var(--ink)}
@@ -507,189 +507,50 @@
     </div>
   </div>
 </div>
-<!-- AFRICAN PAYMENT GATEWAYS -->
+<!-- AFRICAN CURRENCIES -->
 <div class="sections reveal"><div class="sec-card" style="overflow:hidden">
-  <div class="sec-label">Subscribe Your Way</div>
-  <div class="sec-title">Pay for WakilChat Your Way</div>
-  <p class="sec-sub">Subscribe to WakilChat using the payment method you already trust. No international cards needed.</p>
+  <div class="sec-label">Pay in Your Currency</div>
+  <div class="sec-title">Africa's Currencies, All Welcome</div>
+  <p class="sec-sub">WakilChat supports payments in local currencies across the continent. Pay the way you already know.</p>
   <div class="swim-wrap">
     <div class="swim-track">
-      <!-- First set of 6 payment cards -->
-      <div class="pay-card" style="">
-        <div class="pay-logo" style="background:#4CAF50">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <defs>
-              <linearGradient id="mpesaGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#45a049;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect width="42" height="42" fill="url(#mpesaGrad)" rx="4"/>
-            <path d="M 12 10 Q 15 14 12 18 L 12 24 Q 12 28 16 30 L 20 32 Q 24 28 24 24 L 24 18 Q 21 14 24 10 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
-            <path d="M 26 10 Q 29 14 26 18 L 26 24 Q 26 28 30 30 L 30 32 Q 34 28 34 24 L 34 18 Q 31 14 34 10 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
-          </svg>
-        </div>
-        <div class="pay-info"><h4>M-Pesa</h4><p>Subscribe instantly via M-Pesa in Kenya, Tanzania, DRC &amp; more</p></div><span class="pay-badge">750M+ transactions/yr</span>
-      </div>
-      <div class="pay-card" style="">
-        <div class="pay-logo" style="background:#E53935">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <defs>
-              <linearGradient id="airtelGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" style="stop-color:#E53935;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#d32f2f;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect width="42" height="42" fill="url(#airtelGrad)" rx="4"/>
-            <path d="M 21 8 Q 28 12 30 20 Q 28 18 21 18 Q 14 18 12 20 Q 14 12 21 8 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
-            <path d="M 21 16 Q 27 19 28 26 Q 27 24 21 24 Q 15 24 14 26 Q 15 19 21 16 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
-            <path d="M 21 24 Q 26 26 27 32 Q 26 30 21 30 Q 16 30 15 32 Q 16 26 21 24 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
-          </svg>
-        </div>
-        <div class="pay-info"><h4>Airtel Money</h4><p>Pay your plan with Airtel Money across 14 African countries</p></div><span class="pay-badge">14 African countries</span>
-      </div>
-      <div class="pay-card" style="">
-        <div class="pay-logo" style="background:#FF9800">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <defs>
-              <linearGradient id="orangeGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" style="stop-color:#FF9800;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#f57c00;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect width="42" height="42" fill="url(#orangeGrad)" rx="4"/>
-            <circle cx="21" cy="21" r="14" fill="#FFF"/>
-            <circle cx="21" cy="21" r="10" fill="#FF9800"/>
-            <circle cx="21" cy="21" r="6" fill="#FFF"/>
-          </svg>
-        </div>
-        <div class="pay-info"><h4>Orange Money</h4><p>Subscribe via Orange Money in West &amp; Central Africa</p></div><span class="pay-badge">West &amp; Central Africa</span>
-      </div>
-      <div class="pay-card" style="">
-        <div class="pay-logo" style="background:#FFC107">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <defs>
-              <linearGradient id="mtnGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" style="stop-color:#FFC107;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#ffb300;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect width="42" height="42" fill="url(#mtnGrad)" rx="4"/>
-            <ellipse cx="21" cy="21" rx="13" ry="10" fill="#000"/>
-            <ellipse cx="21" cy="21" rx="10" ry="7" fill="#FFC107"/>
-            <text x="21" y="25" font-size="10" font-weight="bold" fill="#000" text-anchor="middle">MTN</text>
-          </svg>
-        </div>
-        <div class="pay-info"><h4>MTN Mobile Money</h4><p>Use MTN MoMo to pay in Ghana, Nigeria, Uganda &amp; more</p></div><span class="pay-badge">60M+ wallets</span>
-      </div>
-      <div class="pay-card" style="">
-        <div class="pay-logo" style="background:linear-gradient(135deg,#F97316,#F59E0B)">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <path d="M 21 6 Q 28 8 30 15 Q 32 22 30 29 Q 28 36 21 38 Q 14 36 12 29 Q 10 22 12 15 Q 14 8 21 6 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
-            <path d="M 15 16 Q 18 14 21 16 L 21 28 Q 18 30 15 28 Z" fill="#F97316"/>
-            <path d="M 27 16 Q 24 14 21 16 L 21 28 Q 24 30 27 28 Z" fill="#F59E0B"/>
-          </svg>
-        </div>
-        <div class="pay-info"><h4>Flutterwave</h4><p>Cards, bank transfer, or mobile money across 34 countries</p></div><span class="pay-badge">$16B+ processed</span>
-      </div>
-      <div class="pay-card" style="">
-        <div class="pay-logo" style="background:linear-gradient(135deg,#00C3F7,#0070BA)">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <path d="M 12 12 L 30 12 Q 33 12 33 15 L 33 27 Q 33 30 30 30 L 12 30 Q 9 30 9 27 L 9 15 Q 9 12 12 12 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
-            <path d="M 15 18 L 27 18" stroke="#0070BA" stroke-width="2" stroke-linecap="round"/>
-            <path d="M 15 23 L 27 23" stroke="#0070BA" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="pay-info"><h4>Paystack</h4><p>Pay with cards or bank in Nigeria, Ghana, South Africa &amp; Kenya</p></div><span class="pay-badge">Backed by Stripe</span>
-      </div>
-      <!-- Duplicate set of 6 payment cards for seamless loop -->
-      <div class="pay-card" style="">
-        <div class="pay-logo" style="background:#4CAF50">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <defs>
-              <linearGradient id="mpesaGrad2" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#45a049;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect width="42" height="42" fill="url(#mpesaGrad2)" rx="4"/>
-            <path d="M 12 10 Q 15 14 12 18 L 12 24 Q 12 28 16 30 L 20 32 Q 24 28 24 24 L 24 18 Q 21 14 24 10 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
-            <path d="M 26 10 Q 29 14 26 18 L 26 24 Q 26 28 30 30 L 30 32 Q 34 28 34 24 L 34 18 Q 31 14 34 10 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
-          </svg>
-        </div>
-        <div class="pay-info"><h4>M-Pesa</h4><p>Subscribe instantly via M-Pesa in Kenya, Tanzania, DRC &amp; more</p></div><span class="pay-badge">750M+ transactions/yr</span>
-      </div>
-      <div class="pay-card" style="">
-        <div class="pay-logo" style="background:#E53935">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <defs>
-              <linearGradient id="airtelGrad2" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" style="stop-color:#E53935;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#d32f2f;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect width="42" height="42" fill="url(#airtelGrad2)" rx="4"/>
-            <path d="M 21 8 Q 28 12 30 20 Q 28 18 21 18 Q 14 18 12 20 Q 14 12 21 8 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
-            <path d="M 21 16 Q 27 19 28 26 Q 27 24 21 24 Q 15 24 14 26 Q 15 19 21 16 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
-            <path d="M 21 24 Q 26 26 27 32 Q 26 30 21 30 Q 16 30 15 32 Q 16 26 21 24 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
-          </svg>
-        </div>
-        <div class="pay-info"><h4>Airtel Money</h4><p>Pay your plan with Airtel Money across 14 African countries</p></div><span class="pay-badge">14 African countries</span>
-      </div>
-      <div class="pay-card" style="">
-        <div class="pay-logo" style="background:#FF9800">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <defs>
-              <linearGradient id="orangeGrad2" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" style="stop-color:#FF9800;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#f57c00;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect width="42" height="42" fill="url(#orangeGrad2)" rx="4"/>
-            <circle cx="21" cy="21" r="14" fill="#FFF"/>
-            <circle cx="21" cy="21" r="10" fill="#FF9800"/>
-            <circle cx="21" cy="21" r="6" fill="#FFF"/>
-          </svg>
-        </div>
-        <div class="pay-info"><h4>Orange Money</h4><p>Subscribe via Orange Money in West &amp; Central Africa</p></div><span class="pay-badge">West &amp; Central Africa</span>
-      </div>
-      <div class="pay-card" style="">
-        <div class="pay-logo" style="background:#FFC107">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <defs>
-              <linearGradient id="mtnGrad2" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" style="stop-color:#FFC107;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#ffb300;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect width="42" height="42" fill="url(#mtnGrad2)" rx="4"/>
-            <ellipse cx="21" cy="21" rx="13" ry="10" fill="#000"/>
-            <ellipse cx="21" cy="21" rx="10" ry="7" fill="#FFC107"/>
-            <text x="21" y="25" font-size="10" font-weight="bold" fill="#000" text-anchor="middle">MTN</text>
-          </svg>
-        </div>
-        <div class="pay-info"><h4>MTN Mobile Money</h4><p>Use MTN MoMo to pay in Ghana, Nigeria, Uganda &amp; more</p></div><span class="pay-badge">60M+ wallets</span>
-      </div>
-      <div class="pay-card" style="">
-        <div class="pay-logo" style="background:linear-gradient(135deg,#F97316,#F59E0B)">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <path d="M 21 6 Q 28 8 30 15 Q 32 22 30 29 Q 28 36 21 38 Q 14 36 12 29 Q 10 22 12 15 Q 14 8 21 6 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
-            <path d="M 15 16 Q 18 14 21 16 L 21 28 Q 18 30 15 28 Z" fill="#F97316"/>
-            <path d="M 27 16 Q 24 14 21 16 L 21 28 Q 24 30 27 28 Z" fill="#F59E0B"/>
-          </svg>
-        </div>
-        <div class="pay-info"><h4>Flutterwave</h4><p>Cards, bank transfer, or mobile money across 34 countries</p></div><span class="pay-badge">$16B+ processed</span>
-      </div>
-      <div class="pay-card" style="">
-        <div class="pay-logo" style="background:linear-gradient(135deg,#00C3F7,#0070BA)">
-          <svg viewBox="0 0 42 42" width="42" height="42">
-            <path d="M 12 12 L 30 12 Q 33 12 33 15 L 33 27 Q 33 30 30 30 L 12 30 Q 9 30 9 27 L 9 15 Q 9 12 12 12 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
-            <path d="M 15 18 L 27 18" stroke="#0070BA" stroke-width="2" stroke-linecap="round"/>
-            <path d="M 15 23 L 27 23" stroke="#0070BA" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="pay-info"><h4>Paystack</h4><p>Pay with cards or bank in Nigeria, Ghana, South Africa &amp; Kenya</p></div><span class="pay-badge">Backed by Stripe</span>
-      </div>
+      <!-- Kenya -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="10" fill="#000"/><rect y="10" width="60" height="3" fill="#fff"/><rect y="13" width="60" height="14" fill="#B22222"/><rect y="27" width="60" height="3" fill="#fff"/><rect y="30" width="60" height="10" fill="#006600"/><ellipse cx="30" cy="20" rx="8" ry="12" fill="none" stroke="#fff" stroke-width="1.5"/><line x1="30" y1="8" x2="30" y2="32" stroke="#fff" stroke-width="1.5"/></svg></div><div class="pay-info"><h4>Kenya</h4><p>Kenyan Shilling (KES)</p></div></div>
+      <!-- Ethiopia -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="13.3" fill="#009B3A"/><rect y="13.3" width="60" height="13.4" fill="#FCDD09"/><rect y="26.7" width="60" height="13.3" fill="#EF2118"/><circle cx="30" cy="20" r="8" fill="#0C3F8E"/><circle cx="30" cy="20" r="4" fill="none" stroke="#FCDD09" stroke-width="1"/></svg></div><div class="pay-info"><h4>Ethiopia</h4><p>Ethiopian Birr (ETB)</p></div></div>
+      <!-- Nigeria -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="20" height="40" fill="#008751"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#008751"/></svg></div><div class="pay-info"><h4>Nigeria</h4><p>Nigerian Naira (NGN)</p></div></div>
+      <!-- South Africa -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="13.3" fill="#E03C31"/><rect y="13.3" width="60" height="13.4" fill="#fff"/><rect y="26.7" width="60" height="13.3" fill="#001489"/><polygon points="0,0 20,20 0,40" fill="#007749"/><polygon points="0,3 17,20 0,37" fill="#000"/><polygon points="0,6 14,20 0,34" fill="#FFB81C"/></svg></div><div class="pay-info"><h4>South Africa</h4><p>South African Rand (ZAR)</p></div></div>
+      <!-- Ghana -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="13.3" fill="#CE1126"/><rect y="13.3" width="60" height="13.4" fill="#FCD116"/><rect y="26.7" width="60" height="13.3" fill="#006B3F"/><polygon points="30,15 31.5,19.5 36,19.5 32.5,22 33.5,26.5 30,24 26.5,26.5 27.5,22 24,19.5 28.5,19.5" fill="#000"/></svg></div><div class="pay-info"><h4>Ghana</h4><p>Ghanaian Cedi (GHS)</p></div></div>
+      <!-- Tanzania -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="40" fill="#1EB53A"/><polygon points="0,40 60,0 60,40" fill="#00A3DD"/><line x1="0" y1="40" x2="60" y2="0" stroke="#FCD116" stroke-width="5"/><line x1="0" y1="40" x2="60" y2="0" stroke="#000" stroke-width="3"/></svg></div><div class="pay-info"><h4>Tanzania</h4><p>Tanzanian Shilling (TZS)</p></div></div>
+      <!-- Egypt -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="13.3" fill="#CE1126"/><rect y="13.3" width="60" height="13.4" fill="#fff"/><rect y="26.7" width="60" height="13.3" fill="#000"/><path d="M27,16 L30,12 L33,16 L33,24 L27,24Z" fill="#C09300" opacity=".8"/></svg></div><div class="pay-info"><h4>Egypt</h4><p>Egyptian Pound (EGP)</p></div></div>
+      <!-- Uganda -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="6.6" fill="#000"/><rect y="6.6" width="60" height="6.7" fill="#FCDC04"/><rect y="13.3" width="60" height="6.7" fill="#D90000"/><rect y="20" width="60" height="6.7" fill="#000"/><rect y="26.7" width="60" height="6.6" fill="#FCDC04"/><rect y="33.3" width="60" height="6.7" fill="#D90000"/><circle cx="30" cy="20" r="7" fill="#fff"/></svg></div><div class="pay-info"><h4>Uganda</h4><p>Ugandan Shilling (UGX)</p></div></div>
+      <!-- Rwanda -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="20" fill="#00A1DE"/><rect y="20" width="60" height="10" fill="#FAD201"/><rect y="30" width="60" height="10" fill="#20603D"/><circle cx="48" cy="10" r="5" fill="#FAD201" stroke="#FAD201" stroke-width="1"/></svg></div><div class="pay-info"><h4>Rwanda</h4><p>Rwandan Franc (RWF)</p></div></div>
+      <!-- Morocco -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="40" fill="#C1272D"/><polygon points="30,12 32,18 38,18 33,22 35,28 30,24 25,28 27,22 22,18 28,18" fill="none" stroke="#006233" stroke-width="1.5"/></svg></div><div class="pay-info"><h4>Morocco</h4><p>Moroccan Dirham (MAD)</p></div></div>
+      <!-- Senegal -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="20" height="40" fill="#00853F"/><rect x="20" width="20" height="40" fill="#FDEF42"/><rect x="40" width="20" height="40" fill="#E31B23"/><polygon points="30,14 31.2,18 35,18 32,20.5 33,24.5 30,22 27,24.5 28,20.5 25,18 28.8,18" fill="#00853F"/></svg></div><div class="pay-info"><h4>Senegal</h4><p>CFA Franc (XOF)</p></div></div>
+      <!-- DRC -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="40" fill="#007FFF"/><line x1="0" y1="40" x2="60" y2="0" stroke="#CE1021" stroke-width="5"/><line x1="0" y1="40" x2="60" y2="0" stroke="#F7D618" stroke-width="2"/><polygon points="8,4 9.5,8 13,8 10,10.5 11,14 8,12 5,14 6,10.5 3,8 6.5,8" fill="#F7D618"/></svg></div><div class="pay-info"><h4>DR Congo</h4><p>Congolese Franc (CDF)</p></div></div>
+      <!-- Duplicate set for seamless loop -->
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="10" fill="#000"/><rect y="10" width="60" height="3" fill="#fff"/><rect y="13" width="60" height="14" fill="#B22222"/><rect y="27" width="60" height="3" fill="#fff"/><rect y="30" width="60" height="10" fill="#006600"/><ellipse cx="30" cy="20" rx="8" ry="12" fill="none" stroke="#fff" stroke-width="1.5"/><line x1="30" y1="8" x2="30" y2="32" stroke="#fff" stroke-width="1.5"/></svg></div><div class="pay-info"><h4>Kenya</h4><p>Kenyan Shilling (KES)</p></div></div>
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="13.3" fill="#009B3A"/><rect y="13.3" width="60" height="13.4" fill="#FCDD09"/><rect y="26.7" width="60" height="13.3" fill="#EF2118"/><circle cx="30" cy="20" r="8" fill="#0C3F8E"/><circle cx="30" cy="20" r="4" fill="none" stroke="#FCDD09" stroke-width="1"/></svg></div><div class="pay-info"><h4>Ethiopia</h4><p>Ethiopian Birr (ETB)</p></div></div>
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="20" height="40" fill="#008751"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#008751"/></svg></div><div class="pay-info"><h4>Nigeria</h4><p>Nigerian Naira (NGN)</p></div></div>
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="13.3" fill="#E03C31"/><rect y="13.3" width="60" height="13.4" fill="#fff"/><rect y="26.7" width="60" height="13.3" fill="#001489"/><polygon points="0,0 20,20 0,40" fill="#007749"/><polygon points="0,3 17,20 0,37" fill="#000"/><polygon points="0,6 14,20 0,34" fill="#FFB81C"/></svg></div><div class="pay-info"><h4>South Africa</h4><p>South African Rand (ZAR)</p></div></div>
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="13.3" fill="#CE1126"/><rect y="13.3" width="60" height="13.4" fill="#FCD116"/><rect y="26.7" width="60" height="13.3" fill="#006B3F"/><polygon points="30,15 31.5,19.5 36,19.5 32.5,22 33.5,26.5 30,24 26.5,26.5 27.5,22 24,19.5 28.5,19.5" fill="#000"/></svg></div><div class="pay-info"><h4>Ghana</h4><p>Ghanaian Cedi (GHS)</p></div></div>
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="40" fill="#1EB53A"/><polygon points="0,40 60,0 60,40" fill="#00A3DD"/><line x1="0" y1="40" x2="60" y2="0" stroke="#FCD116" stroke-width="5"/><line x1="0" y1="40" x2="60" y2="0" stroke="#000" stroke-width="3"/></svg></div><div class="pay-info"><h4>Tanzania</h4><p>Tanzanian Shilling (TZS)</p></div></div>
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="13.3" fill="#CE1126"/><rect y="13.3" width="60" height="13.4" fill="#fff"/><rect y="26.7" width="60" height="13.3" fill="#000"/><path d="M27,16 L30,12 L33,16 L33,24 L27,24Z" fill="#C09300" opacity=".8"/></svg></div><div class="pay-info"><h4>Egypt</h4><p>Egyptian Pound (EGP)</p></div></div>
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="6.6" fill="#000"/><rect y="6.6" width="60" height="6.7" fill="#FCDC04"/><rect y="13.3" width="60" height="6.7" fill="#D90000"/><rect y="20" width="60" height="6.7" fill="#000"/><rect y="26.7" width="60" height="6.6" fill="#FCDC04"/><rect y="33.3" width="60" height="6.7" fill="#D90000"/><circle cx="30" cy="20" r="7" fill="#fff"/></svg></div><div class="pay-info"><h4>Uganda</h4><p>Ugandan Shilling (UGX)</p></div></div>
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="20" fill="#00A1DE"/><rect y="20" width="60" height="10" fill="#FAD201"/><rect y="30" width="60" height="10" fill="#20603D"/><circle cx="48" cy="10" r="5" fill="#FAD201" stroke="#FAD201" stroke-width="1"/></svg></div><div class="pay-info"><h4>Rwanda</h4><p>Rwandan Franc (RWF)</p></div></div>
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="40" fill="#C1272D"/><polygon points="30,12 32,18 38,18 33,22 35,28 30,24 25,28 27,22 22,18 28,18" fill="none" stroke="#006233" stroke-width="1.5"/></svg></div><div class="pay-info"><h4>Morocco</h4><p>Moroccan Dirham (MAD)</p></div></div>
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="20" height="40" fill="#00853F"/><rect x="20" width="20" height="40" fill="#FDEF42"/><rect x="40" width="20" height="40" fill="#E31B23"/><polygon points="30,14 31.2,18 35,18 32,20.5 33,24.5 30,22 27,24.5 28,20.5 25,18 28.8,18" fill="#00853F"/></svg></div><div class="pay-info"><h4>Senegal</h4><p>CFA Franc (XOF)</p></div></div>
+      <div class="pay-card"><div class="pay-logo" style="background:transparent;padding:0"><svg viewBox="0 0 60 40" width="52" height="35"><rect width="60" height="40" fill="#007FFF"/><line x1="0" y1="40" x2="60" y2="0" stroke="#CE1021" stroke-width="5"/><line x1="0" y1="40" x2="60" y2="0" stroke="#F7D618" stroke-width="2"/><polygon points="8,4 9.5,8 13,8 10,10.5 11,14 8,12 5,14 6,10.5 3,8 6.5,8" fill="#F7D618"/></svg></div><div class="pay-info"><h4>DR Congo</h4><p>Congolese Franc (CDF)</p></div></div>
     </div>
   </div>
 </div></div>
