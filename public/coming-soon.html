@@ -25,7 +25,7 @@
     @media(max-width:768px){.nav-links{display:none}}
     .hero{width:min(1120px,100%);margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:20px;padding:0 20px 32px;align-items:stretch}
     @media(max-width:920px){.hero{grid-template-columns:1fr}}
-    .map-card{background:#0d0907;border:1px solid rgba(212,168,83,.25);border-radius:var(--radius);box-shadow:0 24px 80px rgba(0,0,0,.6),inset 0 0 80px rgba(212,168,83,.05);overflow:hidden;position:relative;min-height:460px;display:flex;align-items:center;justify-content:center;padding:20px}
+    .map-card{background:transparent;border:none;border-radius:0;box-shadow:none;overflow:visible;position:relative;min-height:460px;display:flex;align-items:center;justify-content:center;padding:20px}
     .map-header{position:absolute;left:16px;top:14px;z-index:2;display:flex;gap:8px;align-items:center;padding:8px 14px;background:rgba(212,168,83,.12);border:1px solid rgba(212,168,83,.25);border-radius:999px}
     .map-dot{width:8px;height:8px;border-radius:50%}.map-dot.r{background:#ff4d4d}.map-dot.y{background:#ffd24d}.map-dot.g{background:#4dff9a}
     .map-label{font-weight:800;font-size:12px;letter-spacing:.3px;color:#d4a853}
@@ -305,8 +305,8 @@
 </nav>
 <main class="hero">
   <section class="map-card">
-    <div class="map-header"><span class="map-dot r"></span><span class="map-dot y"></span><span class="map-dot g"></span><span class="map-label">Africa Connected</span></div>
-    <img src="africa-map.png" alt="Africa — The Continent Connected" style="max-width:420px;width:100%;height:auto;filter:drop-shadow(0 0 40px rgba(184,134,11,.4));animation:africaFloat 4s ease-in-out infinite">
+    <!-- clean: no header box over the image -->
+    <img src="africa-map.png" alt="Africa — The Continent Connected" style="max-width:420px;width:100%;height:auto">
   </section>
   <section class="panel">
     <div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="WakilChat" style="width:34px;height:34px;border-radius:10px;object-fit:cover"><span style="font-weight:900;font-size:17px">WakilChat<span class="tm">&#8482;</span></span></div>
