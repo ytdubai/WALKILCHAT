@@ -224,9 +224,78 @@
     .swim-wrap::before { left: 0; background: linear-gradient(to right, rgba(20,18,15,1), transparent); }
     .swim-wrap::after { right: 0; background: linear-gradient(to left, rgba(20,18,15,1), transparent); }
     @media(max-width:768px){.carousel-slide{flex-direction:column;align-items:center}.sector-card,.feat-card{min-width:auto;max-width:100%;width:100%}.feat-card{max-width:100%}.pay-card{min-width:auto;max-width:100%;width:100%}}
+    /* === PREMIUM $100B POLISH === */
+    html{scroll-behavior:smooth}
+
+    /* Smooth page load */
+    @keyframes heroReveal{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+    .hero{animation:heroReveal 1.2s cubic-bezier(.16,1,.3,1) both}
+    .nav{animation:heroReveal .8s cubic-bezier(.16,1,.3,1) .1s both}
+
+    /* Scroll reveal */
+    .reveal{opacity:0;transform:translateY(50px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+    .reveal.visible{opacity:1;transform:none}
+
+    /* Stagger children animations */
+    .reveal-stagger > *{opacity:0;transform:translateY(30px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+    .reveal-stagger.visible > *:nth-child(1){transition-delay:.05s}
+    .reveal-stagger.visible > *:nth-child(2){transition-delay:.12s}
+    .reveal-stagger.visible > *:nth-child(3){transition-delay:.19s}
+    .reveal-stagger.visible > *:nth-child(4){transition-delay:.26s}
+    .reveal-stagger.visible > *:nth-child(5){transition-delay:.33s}
+    .reveal-stagger.visible > *:nth-child(6){transition-delay:.40s}
+    .reveal-stagger.visible > *{opacity:1;transform:none}
+
+    /* Floating gradient orbs (background decoration) */
+    .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+    .bg-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.04;animation:orbFloat 20s ease-in-out infinite}
+    .bg-orb:nth-child(1){width:600px;height:600px;background:radial-gradient(circle,#d4a853,transparent);top:-10%;left:-5%;animation-duration:25s}
+    .bg-orb:nth-child(2){width:500px;height:500px;background:radial-gradient(circle,#b8860b,transparent);bottom:-10%;right:-5%;animation-delay:-8s;animation-duration:22s}
+    .bg-orb:nth-child(3){width:400px;height:400px;background:radial-gradient(circle,#059669,transparent);top:40%;left:50%;animation-delay:-15s;animation-duration:28s;opacity:.02}
+    @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(50px,-30px) scale(1.05)}50%{transform:translate(-20px,40px) scale(.95)}75%{transform:translate(-40px,-20px) scale(1.02)}}
+
+    /* Button shimmer effect */
+    @keyframes btnShimmer{0%{left:-100%}100%{left:200%}}
+    .email-form button{position:relative;overflow:hidden}
+    .email-form button::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);animation:btnShimmer 3s ease-in-out infinite}
+
+    /* Card glow on hover */
+    .story-card,.feat-card,.stat-item,.quiz-opt,.pay-card{transition:all .4s cubic-bezier(.16,1,.3,1)}
+
+    /* Animated gradient border for hero panel */
+    @keyframes borderGlow{0%,100%{border-color:rgba(212,168,83,.2)}50%{border-color:rgba(212,168,83,.5)}}
+    .panel{animation:borderGlow 4s ease-in-out infinite}
+
+    /* Smooth number counter style */
+    .stat-num,.b-stat-num,.cd-num{transition:all .3s ease}
+
+    /* Premium hover lift for all interactive */
+    a,button,.quiz-opt,.emoji-item,.story-card,.feat-card,.pay-card{transition:all .3s cubic-bezier(.16,1,.3,1)}
+
+    /* Subtle parallax */
+    .map-card{transition:transform .3s ease}
+
+    /* Footer premium divider */
+    .site-footer{border-top:1px solid rgba(212,168,83,.1);margin-top:40px;padding-top:32px}
+
+    /* Gold line separator between sections */
+    .sections + .sections::before{content:'';display:block;width:60px;height:2px;background:linear-gradient(90deg,transparent,#d4a853,transparent);margin:0 auto 20px;border-radius:2px}
+
+    /* Smooth scroll snap feel */
+    .sec-card{transition:all .4s cubic-bezier(.16,1,.3,1)}
+
+    /* Premium text selection */
+    ::selection{background:rgba(212,168,83,.3);color:#fff}
+    ::-moz-selection{background:rgba(212,168,83,.3);color:#fff}
   </style>
 </head>
 <body>
+<!-- Premium floating background orbs -->
+<div class="bg-orbs" aria-hidden="true">
+  <div class="bg-orb"></div>
+  <div class="bg-orb"></div>
+  <div class="bg-orb"></div>
+</div>
 <nav class="nav">
   <a href="#" class="nav-brand"><span class="nav-logo"></span>WakilChat<span class="tm">&#8482;</span></a>
   <div class="nav-links"><a href="#quiz-sec">Discover</a><a href="#story-sec">Vision</a><a href="#feat-sec">Features</a><span class="nav-patent">Patent Pending</span></div>
@@ -288,22 +357,22 @@
     <div class="footer-row"><div class="f-links"><a href="#">Instagram</a><a href="#">X</a><a href="#">LinkedIn</a></div><div class="note">&copy; <span id="year"></span> WakilChat&#8482; Inc.</div></div>
   </section>
 </main>
-<div class="stats-bar"><div class="stats-inner">
+<div class="stats-bar reveal"><div class="stats-inner reveal-stagger">
   <div class="stat-item"><div class="stat-num">1.4B</div><div class="stat-lbl">People across Africa</div></div>
   <div class="stat-item"><div class="stat-num">2,000+</div><div class="stat-lbl">Languages spoken</div></div>
   <div class="stat-item"><div class="stat-num">54</div><div class="stat-lbl">Nations connected</div></div>
   <div class="stat-item"><div class="stat-num">$3.4T</div><div class="stat-lbl">Combined GDP</div></div>
 </div></div>
-<div class="sections" id="broker-sec" style="margin-top:8px"><div class="broker-banner">
+<div class="sections reveal" id="broker-sec" style="margin-top:8px"><div class="broker-banner">
   <h2 class="broker-headline">Tired of Brokers?</h2>
   <p class="broker-sub">Endless fees. Broken promises. Zero transparency. You're not alone — millions across Africa are demanding change.</p>
-  <div class="broker-pain"><span>Hidden Fees</span><span>Fake Listings</span><span>No Accountability</span><span>Wasted Time</span></div>
+  <div class="broker-pain reveal-stagger"><span>Hidden Fees</span><span>Fake Listings</span><span>No Accountability</span><span>Wasted Time</span></div>
   <div class="broker-story">
     <p>A good friend told me he had to <strong>beg brokers for 6 months</strong> just to get paid for his exported coffee. Six months of calling, waiting, pleading — and when they finally paid? <strong>They paid him less.</strong></p>
     <p class="bq-highlight">That conversation changed everything.</p>
     <div class="author"><div class="author-av"></div><div><span class="author-name">The Founder</span><br><span class="author-role">WakilChat&#8482; — Born from real experience</span></div></div>
   </div>
-  <div class="broker-stats">
+  <div class="broker-stats reveal-stagger">
     <div class="b-stat"><span class="b-stat-num">73%</span><span class="b-stat-lbl">Pay excessive middleman fees</span></div>
     <div class="b-stat"><span class="b-stat-num">$4.2B</span><span class="b-stat-lbl">Lost to intermediaries annually</span></div>
     <div class="b-stat"><span class="b-stat-num">6 mo</span><span class="b-stat-lbl">Average payment delay in exports</span></div>
@@ -312,7 +381,7 @@
   <div class="broker-badge">Built by people who understand</div>
   <p class="broker-promise">WakilChat&#8482; cuts out the middleman. Direct connections. Fair deals. <strong>Your money stays yours.</strong></p>
 </div></div>
-<div class="sections" id="quiz-sec" style="margin-top:20px"><div class="sec-card">
+<div class="sections reveal" id="quiz-sec" style="margin-top:20px"><div class="sec-card">
   <div class="sec-label">Discover Your Path</div><div class="sec-title">How Will You Use WakilChat?</div>
   <p class="sec-sub">Three quick questions to personalize your launch experience.</p>
   <div id="quiz-wrap"><div class="quiz-bar" id="qbar"><div class="quiz-bar-dot active"></div><div class="quiz-bar-dot"></div><div class="quiz-bar-dot"></div></div>
@@ -337,16 +406,16 @@
     <div class="quiz-done" id="qdone"><h3>You're an Early Pioneer</h3><p>Scroll up and drop your email to lock in your spot.</p></div>
   </div>
 </div></div>
-<div class="sections" id="story-sec"><div class="sec-card">
+<div class="sections reveal" id="story-sec"><div class="sec-card">
   <div class="sec-label">The Problem We're Solving</div><div class="sec-title">Communication Without Borders</div>
   <p class="sec-sub">1.4 billion people. 2,000+ languages. Zero platforms built for this reality.</p>
-  <div class="story-grid">
+  <div class="story-grid reveal-stagger">
     <div class="story-card"><div class="story-num">01</div><div class="story-label">The Problem</div><h3>A Disconnected Continent</h3><p>Existing platforms ignore African languages, local payment systems, and how communities actually communicate across borders.</p></div>
     <div class="story-card"><div class="story-num">02</div><div class="story-label">Our Solution</div><h3>Built From Africa</h3><p>AI that understands African languages, works on 2G networks, and integrates with mobile money natively — from day one.</p></div>
     <div class="story-card"><div class="story-num">03</div><div class="story-label">The Vision</div><h3>Africa to the World</h3><p>What starts as Africa's communication platform becomes the world's most inclusive tool for global connection and trade.</p></div>
   </div>
 </div></div>
-<div class="sections" id="feat-sec"><div class="sec-card">
+<div class="sections reveal" id="feat-sec"><div class="sec-card">
   <div class="sec-label">What's Coming</div><div class="sec-title">Features That Change Everything</div>
   <p class="sec-sub">Built for how Africa actually communicates and trades.</p>
   <div class="carousel-wrap" id="featCarousel">
@@ -367,7 +436,7 @@
   </div>
 </div></div>
 <!-- SECTOR USE CASES -->
-<div class="sections"><div class="sec-card">
+<div class="sections reveal"><div class="sec-card">
   <div class="sec-label">Built For Every Sector</div>
   <div class="sec-title">How Africa Will Use WakilChat</div>
   <p class="sec-sub">From coffee farms to city markets &#8212; one platform for all of Africa's commerce.</p>
@@ -407,7 +476,7 @@
   </div>
 </div></div>
 <!-- EMOJI REACTIONS &#8212; compact feature preview -->
-<div style="width:min(900px,100%);margin:0 auto;padding:24px 20px 0;text-align:center">
+<div class="reveal" style="width:min(900px,100%);margin:0 auto;padding:24px 20px 0;text-align:center">
   <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:rgba(212,168,83,.6);margin-bottom:16px;letter-spacing:1px">React the African Way</div>
   <div class="emoji-row" style="margin-bottom:20px">
     <!-- 1 Asante (Agree) -->
@@ -444,7 +513,7 @@
   </div>
 </div>
 <!-- AFRICAN PAYMENT GATEWAYS -->
-<div class="sections"><div class="sec-card" style="overflow:hidden">
+<div class="sections reveal"><div class="sec-card" style="overflow:hidden">
   <div class="sec-label">Payments Made African</div>
   <div class="sec-title">Pay the Way Africa Pays</div>
   <p class="sec-sub">Integrated with every major African payment provider. Send money as easily as sending a message.</p>
@@ -629,7 +698,7 @@
     </div>
   </div>
 </div></div>
-<footer class="site-footer"><div class="legal"><span>WakilChat&#8482; is a registered trademark</span><span>Patent Pending &#8212; Application Filed 2026</span><span>All intellectual property rights reserved</span></div><div class="copy">&copy; 2026 WakilChat Inc. All Rights Reserved.</div></footer>
+<footer class="site-footer reveal"><div class="legal"><span>WakilChat&#8482; is a registered trademark</span><span>Patent Pending &#8212; Application Filed 2026</span><span>All intellectual property rights reserved</span></div><div class="copy">&copy; 2026 WakilChat Inc. All Rights Reserved.</div></footer>
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
 const LD=new Date('2026-03-10T00:00:00').getTime();
@@ -680,6 +749,72 @@ function slideCarousel(id, dir) {
 }
 initCarousel('featCarousel');
 initCarousel('sectorCarousel');
+// === PREMIUM SCROLL REVEAL ===
+var revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+var revealObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(function(el) { revealObs.observe(el); });
+
+// === SMOOTH NUMBER COUNTER ===
+function animateCounter(el, target, suffix) {
+  suffix = suffix || '';
+  var start = 0;
+  var duration = 2000;
+  var startTime = null;
+  var isFloat = target % 1 !== 0;
+  function step(ts) {
+    if (!startTime) startTime = ts;
+    var progress = Math.min((ts - startTime) / duration, 1);
+    var ease = 1 - Math.pow(1 - progress, 3);
+    var current = start + (target - start) * ease;
+    if (isFloat) {
+      el.textContent = current.toFixed(1) + suffix;
+    } else {
+      el.textContent = Math.floor(current).toLocaleString() + suffix;
+    }
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// Animate stats on scroll
+var statsAnimated = false;
+var statsObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting && !statsAnimated) {
+      statsAnimated = true;
+      var nums = entry.target.querySelectorAll('.stat-num');
+      nums.forEach(function(n) {
+        var text = n.textContent;
+        if (text === '1.4B') animateCounter(n, 1.4, 'B');
+        else if (text === '2,000+') animateCounter(n, 2000, '+');
+        else if (text === '54') animateCounter(n, 54, '');
+        else if (text === '$3.4T') { n.textContent = '$0T'; animateCounter(n, 3.4, 'T'); setTimeout(function(){ n.textContent = '$' + n.textContent; }, 50); }
+      });
+    }
+  });
+}, { threshold: 0.3 });
+var statsBar = document.querySelector('.stats-inner');
+if (statsBar) statsObs.observe(statsBar);
+
+// === SMOOTH PARALLAX ON MOUSE MOVE (hero only) ===
+var mapCard = document.querySelector('.map-card');
+if (mapCard) {
+  document.querySelector('.hero').addEventListener('mousemove', function(e) {
+    var rect = this.getBoundingClientRect();
+    var x = (e.clientX - rect.left) / rect.width - 0.5;
+    var y = (e.clientY - rect.top) / rect.height - 0.5;
+    mapCard.style.transform = 'perspective(1000px) rotateY(' + (x * 3) + 'deg) rotateX(' + (-y * 3) + 'deg)';
+  });
+  document.querySelector('.hero').addEventListener('mouseleave', function() {
+    mapCard.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+  });
+}
 </script>
 </body>
 </html>
