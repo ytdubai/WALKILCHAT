@@ -152,9 +152,9 @@
     .emoji-item{display:flex;flex-direction:column;align-items:center;gap:6px;transition:.3s;cursor:pointer}
     .emoji-item:hover{transform:translateY(-6px) scale(1.08)}
     .emoji-item svg{width:56px;height:56px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3))}
-    .emoji-item .e-name{font-family:'Playfair Display',serif;font-size:11px;font-weight:700;color:#D4A853}
-    .emoji-item .e-swahili{font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1.5px}
-    .emoji-demo{max-width:560px;margin:0 auto;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px 20px;text-align:left}
+    .emoji-item .e-name{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#1c1917}
+    .emoji-item .e-swahili{font-size:10px;color:rgba(28,25,23,.5);text-transform:uppercase;letter-spacing:1.5px}
+    .emoji-demo{max-width:560px;margin:0 auto;background:linear-gradient(135deg,#0d1f2d,#1a2744);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px 20px;text-align:left;color:#fff}
     .emoji-demo .ed-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
     .emoji-demo .ed-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#b8860b,#d4a853)}
     .emoji-demo .ed-name{font-weight:700;font-size:13px;color:#fff}
@@ -188,6 +188,30 @@
       .emoji-pill{padding:4px 8px;gap:4px}
       .emoji-pill .ep-c{font-size:11px}
     }
+    /* === APPLE CAROUSEL === */
+    .carousel-wrap{position:relative;overflow:hidden;border-radius:16px}
+    .carousel-track{display:flex;transition:transform .6s cubic-bezier(.25,.1,.25,1);will-change:transform}
+    .carousel-slide{min-width:100%;padding:0 4px;box-sizing:border-box;display:flex;gap:12px;justify-content:center}
+    .carousel-dots{display:flex;justify-content:center;gap:8px;margin-top:16px}
+    .carousel-dot{width:8px;height:8px;border-radius:50%;background:rgba(28,25,23,.15);cursor:pointer;transition:.3s}
+    .carousel-dot.active{background:linear-gradient(135deg,#b8860b,#d4a853);width:24px;border-radius:4px}
+    .carousel-arrows{position:absolute;top:50%;left:0;right:0;display:flex;justify-content:space-between;transform:translateY(-50%);pointer-events:none;padding:0 8px}
+    .carousel-arrow{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);border:1px solid rgba(28,25,23,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;transition:.2s;font-size:16px;color:#1c1917;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+    .carousel-arrow:hover{background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+    /* === SECTOR CARDS === */
+    .sector-card{border-radius:16px;padding:28px 24px;color:#fff;flex:1;min-width:240px;max-width:400px}
+    .sector-icon{margin-bottom:14px}
+    .sector-card h4{font-family:'Playfair Display',serif;font-size:17px;font-weight:800;margin-bottom:8px}
+    .sector-card p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:12px}
+    .sector-stat{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#d4a853;background:rgba(212,168,83,.12);padding:4px 10px;border-radius:8px;border:1px solid rgba(212,168,83,.2)}
+    /* === PAYMENT CARDS === */
+    .pay-card{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.7);border:1px solid rgba(28,25,23,.06);border-radius:14px;padding:18px 16px;flex:1;min-width:220px;max-width:340px;transition:.3s}
+    .pay-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+    .pay-logo{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;flex-shrink:0;font-family:'Playfair Display',serif}
+    .pay-info h4{font-size:14px;font-weight:800;margin-bottom:2px;font-family:'Playfair Display',serif}
+    .pay-info p{font-size:11px;color:var(--muted);line-height:1.4}
+    .pay-badge{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#059669;background:rgba(5,150,105,.08);padding:3px 8px;border-radius:6px;white-space:nowrap;margin-left:auto}
+    @media(max-width:768px){.carousel-slide{flex-direction:column;align-items:center}.sector-card,.feat-card{min-width:auto;max-width:100%;width:100%}.feat-card{max-width:100%}.pay-card{min-width:auto;max-width:100%;width:100%}}
   </style>
 </head>
 <body>
@@ -471,13 +495,61 @@
 <div class="sections" id="feat-sec"><div class="sec-card">
   <div class="sec-label">What's Coming</div><div class="sec-title">Features That Change Everything</div>
   <p class="sec-sub">Built for how Africa actually communicates and trades.</p>
-  <div class="feat-scroll">
-    <div class="feat-card"><div class="feat-num">01</div><h4>AI Translation Engine</h4><p>Real-time translation across 50+ African languages. Chat in Amharic, receive in Swahili — instantly.</p><span class="feat-tag patent">Patent Pending</span></div>
-    <div class="feat-card"><div class="feat-num">02</div><h4>Low-Data Mode</h4><p>Full functionality on 2G networks. Compressed media, optimized for 100kbps connections.</p><span class="feat-tag opt">Optimized</span></div>
-    <div class="feat-card"><div class="feat-num">03</div><h4>Mobile Money</h4><p>Send payments via M-Pesa, Airtel Money, and 20+ providers directly in chat.</p><span class="feat-tag opt">Integrated</span></div>
-    <div class="feat-card"><div class="feat-num">04</div><h4>Community Spaces</h4><p>Channels, events, polls, and shared resources for groups of any size.</p><span class="feat-tag ai">Social</span></div>
-    <div class="feat-card"><div class="feat-num">05</div><h4>Business Suite</h4><p>Storefronts, invoicing, CRM — everything an African entrepreneur needs.</p><span class="feat-tag patent">Commerce</span></div>
-    <div class="feat-card"><div class="feat-num">06</div><h4>Voice-First AI</h4><p>Voice messages transcribed, summarized, and searchable. Because Africa speaks.</p><span class="feat-tag ai">AI Powered</span></div>
+  <div class="carousel-wrap" id="featCarousel">
+    <div class="carousel-track" id="featTrack">
+      <div class="carousel-slide">
+        <div class="feat-card"><div class="feat-num">01</div><h4>AI Translation Engine</h4><p>Real-time translation across 50+ African languages. Chat in Amharic, receive in Swahili &#8212; instantly.</p><span class="feat-tag patent">Patent Pending</span></div>
+        <div class="feat-card"><div class="feat-num">02</div><h4>Low-Data Mode</h4><p>Full functionality on 2G networks. Compressed media, optimized for 100kbps connections.</p><span class="feat-tag opt">Optimized</span></div>
+        <div class="feat-card"><div class="feat-num">03</div><h4>Mobile Money</h4><p>Send payments via M-Pesa, Airtel Money, and 20+ providers directly in chat.</p><span class="feat-tag opt">Integrated</span></div>
+      </div>
+      <div class="carousel-slide">
+        <div class="feat-card"><div class="feat-num">04</div><h4>Community Spaces</h4><p>Channels, events, polls, and shared resources for groups of any size.</p><span class="feat-tag ai">Social</span></div>
+        <div class="feat-card"><div class="feat-num">05</div><h4>Business Suite</h4><p>Storefronts, invoicing, CRM &#8212; everything an African entrepreneur needs.</p><span class="feat-tag patent">Commerce</span></div>
+        <div class="feat-card"><div class="feat-num">06</div><h4>Voice-First AI</h4><p>Voice messages transcribed, summarized, and searchable. Because Africa speaks.</p><span class="feat-tag ai">AI Powered</span></div>
+      </div>
+    </div>
+    <div class="carousel-arrows"><span class="carousel-arrow" onclick="slideCarousel('featCarousel',-1)">&#8249;</span><span class="carousel-arrow" onclick="slideCarousel('featCarousel',1)">&#8250;</span></div>
+    <div class="carousel-dots" id="featDots"></div>
+  </div>
+</div></div>
+<!-- SECTOR USE CASES -->
+<div class="sections"><div class="sec-card">
+  <div class="sec-label">Built For Every Sector</div>
+  <div class="sec-title">How Africa Will Use WakilChat</div>
+  <p class="sec-sub">From coffee farms to city markets &#8212; one platform for all of Africa's commerce.</p>
+  <div class="carousel-wrap" id="sectorCarousel">
+    <div class="carousel-track" id="sectorTrack">
+      <div class="carousel-slide">
+        <div class="sector-card" style="background:linear-gradient(135deg,#1a3c2a,#0d2818)">
+          <div class="sector-icon"><svg viewBox="0 0 80 80" width="48" height="48"><path d="M40,12 Q30,28 20,44 Q16,52 20,58 Q28,68 40,68 Q52,68 60,58 Q64,52 60,44 Q50,28 40,12Z" fill="#059669" stroke="#2C1810" stroke-width="2"/><path d="M40,68 L40,78" stroke="#8B4513" stroke-width="3"/><path d="M36,40 Q40,36 44,40" fill="none" stroke="#0f766e" stroke-width="1.5"/><path d="M34,48 Q40,44 46,48" fill="none" stroke="#0f766e" stroke-width="1.5"/><circle cx="40" cy="32" r="3" fill="#d4a853" opacity=".4"/></svg></div>
+          <h4>Agriculture &amp; Coffee Trade</h4>
+          <p>Connect farmers directly to global buyers. No middlemen, real-time price negotiation in local languages.</p>
+          <span class="sector-stat">$12B+ market connected</span>
+        </div>
+        <div class="sector-card" style="background:linear-gradient(135deg,#2d1810,#44251a)">
+          <div class="sector-icon"><svg viewBox="0 0 80 80" width="48" height="48"><rect x="16" y="24" width="48" height="40" rx="4" fill="#C4922F" stroke="#2C1810" stroke-width="2"/><path d="M16,36 L64,36" stroke="#2C1810" stroke-width="1.5"/><rect x="24" y="44" width="12" height="12" rx="2" fill="#FFF5E1" opacity=".3"/><rect x="44" y="44" width="12" height="12" rx="2" fill="#FFF5E1" opacity=".3"/><path d="M32,16 L40,8 L48,16" fill="none" stroke="#d4a853" stroke-width="2"/><circle cx="40" cy="8" r="3" fill="#d4a853"/></svg></div>
+          <h4>Retail &amp; E-Commerce</h4>
+          <p>Build your storefront inside chat. Catalog, cart, checkout &#8212; all powered by AI in any African language.</p>
+          <span class="sector-stat">500M+ shoppers</span>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <div class="sector-card" style="background:linear-gradient(135deg,#0d1f2d,#1a2744)">
+          <div class="sector-icon"><svg viewBox="0 0 80 80" width="48" height="48"><circle cx="40" cy="36" r="20" fill="none" stroke="#5DA4BF" stroke-width="2"/><circle cx="40" cy="36" r="14" fill="none" stroke="#5DA4BF" stroke-width="1" opacity=".5"/><path d="M40,16 L40,56" stroke="#d4a853" stroke-width="1.5"/><path d="M20,36 L60,36" stroke="#d4a853" stroke-width="1.5"/><circle cx="40" cy="36" r="4" fill="#d4a853"/><path d="M28,64 Q40,72 52,64" fill="none" stroke="#5DA4BF" stroke-width="2"/><circle cx="28" cy="64" r="3" fill="#059669"/><circle cx="52" cy="64" r="3" fill="#C0392B"/></svg></div>
+          <h4>Transport &amp; Logistics</h4>
+          <p>Track shipments across borders in real-time. Coordinate with drivers, customs, and warehouses in one chat.</p>
+          <span class="sector-stat">Cross-border enabled</span>
+        </div>
+        <div class="sector-card" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
+          <div class="sector-icon"><svg viewBox="0 0 80 80" width="48" height="48"><rect x="20" y="20" width="40" height="44" rx="4" fill="#B8860B" stroke="#2C1810" stroke-width="2"/><path d="M28,32 L52,32" stroke="#FFF5E1" stroke-width="1.5" opacity=".4"/><path d="M28,40 L52,40" stroke="#FFF5E1" stroke-width="1.5" opacity=".4"/><path d="M28,48 L44,48" stroke="#FFF5E1" stroke-width="1.5" opacity=".4"/><circle cx="40" cy="14" r="6" fill="#059669" stroke="#2C1810" stroke-width="1.5"/><path d="M37,14 L40,17 L46,11" fill="none" stroke="#fff" stroke-width="2"/></svg></div>
+          <h4>Finance &amp; Banking</h4>
+          <p>Mobile money, micro-loans, and cross-border payments integrated natively. Bank the unbanked through chat.</p>
+          <span class="sector-stat">20+ payment providers</span>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-arrows"><span class="carousel-arrow" onclick="slideCarousel('sectorCarousel',-1)">&#8249;</span><span class="carousel-arrow" onclick="slideCarousel('sectorCarousel',1)">&#8250;</span></div>
+    <div class="carousel-dots" id="sectorDots"></div>
   </div>
 </div></div>
 <!-- EMOJI REACTIONS &#8212; compact feature preview -->
@@ -518,6 +590,28 @@
   </div>
 </div>
 </div>
+<!-- AFRICAN PAYMENT GATEWAYS -->
+<div class="sections"><div class="sec-card" style="overflow:hidden">
+  <div class="sec-label">Payments Made African</div>
+  <div class="sec-title">Pay the Way Africa Pays</div>
+  <p class="sec-sub">Integrated with every major African payment provider. Send money as easily as sending a message.</p>
+  <div class="carousel-wrap" id="payCarousel">
+    <div class="carousel-track" id="payTrack">
+      <div class="carousel-slide" style="gap:16px">
+        <div class="pay-card" style="border-left:3px solid #4CAF50"><div class="pay-logo" style="background:#4CAF50">M</div><div class="pay-info"><h4>M-Pesa</h4><p>Kenya, Tanzania, DRC, Mozambique, Egypt</p></div><span class="pay-badge">750M+ transactions/yr</span></div>
+        <div class="pay-card" style="border-left:3px solid #E53935"><div class="pay-logo" style="background:#E53935">A</div><div class="pay-info"><h4>Airtel Money</h4><p>Uganda, Rwanda, Malawi, Chad, Niger, Congo</p></div><span class="pay-badge">14 African countries</span></div>
+        <div class="pay-card" style="border-left:3px solid #FF9800"><div class="pay-logo" style="background:#FF9800">O</div><div class="pay-info"><h4>Orange Money</h4><p>Senegal, Mali, Cameroon, C&#244;te d'Ivoire, Madagascar</p></div><span class="pay-badge">West &amp; Central Africa</span></div>
+      </div>
+      <div class="carousel-slide" style="gap:16px">
+        <div class="pay-card" style="border-left:3px solid #FFC107"><div class="pay-logo" style="background:#FFC107">MTN</div><div class="pay-info"><h4>MTN Mobile Money</h4><p>Ghana, Nigeria, Uganda, Cameroon, Rwanda, Benin</p></div><span class="pay-badge">60M+ wallets</span></div>
+        <div class="pay-card" style="border-left:3px solid #F97316"><div class="pay-logo" style="background:linear-gradient(135deg,#F97316,#F59E0B)">F</div><div class="pay-info"><h4>Flutterwave</h4><p>Pan-African: 34 countries, cards, bank, mobile money</p></div><span class="pay-badge">$16B+ processed</span></div>
+        <div class="pay-card" style="border-left:3px solid #00C3F7"><div class="pay-logo" style="background:linear-gradient(135deg,#00C3F7,#0070BA)">P</div><div class="pay-info"><h4>Paystack</h4><p>Nigeria, Ghana, South Africa, Kenya</p></div><span class="pay-badge">Backed by Stripe</span></div>
+      </div>
+    </div>
+    <div class="carousel-arrows"><span class="carousel-arrow" onclick="slideCarousel('payCarousel',-1)">&#8249;</span><span class="carousel-arrow" onclick="slideCarousel('payCarousel',1)">&#8250;</span></div>
+    <div class="carousel-dots" id="payDots"></div>
+  </div>
+</div></div>
 <footer class="site-footer"><div class="legal"><span>WakilChat&#8482; is a registered trademark</span><span>Patent Pending &#8212; Application Filed 2026</span><span>All intellectual property rights reserved</span></div><div class="copy">&copy; 2026 WakilChat Inc. All Rights Reserved.</div></footer>
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
@@ -530,6 +624,46 @@ function pick(el,s){el.parentElement.querySelectorAll('.quiz-opt').forEach(o=>o.
 function goStep(s){document.getElementById('qs'+(s-1)).classList.remove('active');document.getElementById('qs'+s).classList.add('active');const dots=document.querySelectorAll('.quiz-bar-dot');dots.forEach((d,i)=>{d.classList.remove('active','done');if(i<s-1)d.classList.add('done');if(i===s-1)d.classList.add('active')})}
 function showDone(){document.getElementById('qs3').classList.remove('active');document.getElementById('qdone').classList.add('active');document.getElementById('qbar').style.display='none'}
 function toggleR(el){el.classList.toggle('on');var c=el.querySelector('.ep-c');if(c){var n=parseInt(c.textContent);c.textContent=el.classList.contains('on')?n+1:Math.max(0,n-1)}}
+// === APPLE-STYLE CAROUSEL ===
+function initCarousel(id) {
+  var wrap = document.getElementById(id);
+  if (!wrap) return;
+  var track = wrap.querySelector('.carousel-track');
+  var slides = track.querySelectorAll('.carousel-slide');
+  var dotsId = id.replace('Carousel','Dots');
+  var dotsWrap = document.getElementById(dotsId);
+  var current = 0;
+  var total = slides.length;
+  if (dotsWrap) {
+    for (var i = 0; i < total; i++) {
+      var dot = document.createElement('span');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('data-i', i);
+      dot.onclick = function() { goTo(parseInt(this.getAttribute('data-i'))); };
+      dotsWrap.appendChild(dot);
+    }
+  }
+  function goTo(n) {
+    current = ((n % total) + total) % total;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    if (dotsWrap) {
+      dotsWrap.querySelectorAll('.carousel-dot').forEach(function(d, idx) {
+        d.className = 'carousel-dot' + (idx === current ? ' active' : '');
+      });
+    }
+  }
+  wrap._goTo = goTo;
+  wrap._getCurrent = function() { return current; };
+  wrap._getTotal = function() { return total; };
+  setInterval(function() { goTo(current + 1); }, 4000);
+}
+function slideCarousel(id, dir) {
+  var wrap = document.getElementById(id);
+  if (wrap && wrap._goTo) wrap._goTo(wrap._getCurrent() + dir);
+}
+initCarousel('featCarousel');
+initCarousel('sectorCarousel');
+initCarousel('payCarousel');
 </script>
 </body>
 </html>
