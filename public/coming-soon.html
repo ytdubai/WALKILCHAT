@@ -206,12 +206,23 @@
     .sector-card p{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:12px}
     .sector-stat{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#d4a853;background:rgba(212,168,83,.12);padding:4px 10px;border-radius:8px;border:1px solid rgba(212,168,83,.2)}
     /* === PAYMENT CARDS === */
-    .pay-card{display:flex;align-items:center;gap:14px;background:rgba(20,18,15,.8);border:1px solid rgba(212,168,83,.15);border-radius:14px;padding:18px 16px;flex:1;min-width:220px;max-width:340px;transition:.3s}
+    .pay-card{display:flex;align-items:center;gap:14px;background:rgba(20,18,15,.8);border:1px solid rgba(212,168,83,.15);border-radius:14px;padding:18px 16px;min-width:300px;max-width:300px;flex-shrink:0;transition:.3s}
     .pay-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(212,168,83,.2)}
     .pay-logo{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;flex-shrink:0;font-family:'Playfair Display',serif}
     .pay-info h4{font-size:14px;font-weight:800;margin-bottom:2px;font-family:'Playfair Display',serif;color:var(--ink)}
     .pay-info p{font-size:11px;color:var(--muted);line-height:1.4}
     .pay-badge{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#059669;background:rgba(5,150,105,.15);padding:3px 8px;border-radius:6px;white-space:nowrap;margin-left:auto}
+    /* === SWIMMING ANIMATION === */
+    @keyframes swimRight {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .swim-wrap { overflow: hidden; position: relative; border-radius: 16px; }
+    .swim-track { display: flex; gap: 16px; animation: swimRight 25s linear infinite; width: max-content; }
+    .swim-track:hover { animation-play-state: paused; }
+    .swim-wrap::before, .swim-wrap::after { content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none; }
+    .swim-wrap::before { left: 0; background: linear-gradient(to right, rgba(20,18,15,1), transparent); }
+    .swim-wrap::after { right: 0; background: linear-gradient(to left, rgba(20,18,15,1), transparent); }
     @media(max-width:768px){.carousel-slide{flex-direction:column;align-items:center}.sector-card,.feat-card{min-width:auto;max-width:100%;width:100%}.feat-card{max-width:100%}.pay-card{min-width:auto;max-width:100%;width:100%}}
   </style>
 </head>
@@ -223,7 +234,47 @@
 <main class="hero">
   <section class="map-card">
     <div class="map-header"><span class="map-dot r"></span><span class="map-dot y"></span><span class="map-dot g"></span><span class="map-label">Africa Connected</span></div>
-    <img src="africa-map.png" alt="Africa" style="max-width:420px;width:100%;height:auto;filter:drop-shadow(0 0 40px rgba(184,134,11,.3))">
+    <svg viewBox="0 0 500 540" style="max-width:380px;width:100%;height:auto">
+      <defs>
+        <linearGradient id="africaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#B8860B;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#D4A853;stop-opacity:1" />
+        </linearGradient>
+        <filter id="africaGlow">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="dropShadow">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+          <feOffset in="blur" dx="0" dy="4" result="offset"/>
+          <feComponentTransfer>
+            <feFuncA type="linear" slope="0.3"/>
+          </feComponentTransfer>
+          <feMerge>
+            <feMergeNode/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <style>
+        @keyframes africaPulse {
+          0%, 100% { filter: drop-shadow(0 0 10px rgba(212, 168, 83, 0.4)); }
+          50% { filter: drop-shadow(0 0 25px rgba(212, 168, 83, 0.8)); }
+        }
+        .africa-path { animation: africaPulse 3s ease-in-out infinite; }
+      </style>
+      <path class="africa-path" d="M 70.48 29.24 L 81.85 24.98 L 96.07 21.42 L 113.85 24.98 L 142.29 20.00 L 163.62 21.42 L 184.95 26.40 L 199.17 33.51 L 206.28 38.49 L 227.60 59.81 L 241.82 69.06 L 248.93 70.48 L 284.48 64.79 L 327.14 61.95 L 334.25 59.81 L 341.36 59.81 L 348.47 61.95 L 355.58 66.92 L 359.13 71.90 L 362.69 81.14 L 367.67 123.80 L 373.35 152.24 L 384.02 173.57 L 387.57 184.23 L 394.68 192.77 L 405.35 209.12 L 476.45 351.31 L 480.00 354.87 L 472.89 361.98 L 408.90 457.96 L 380.46 486.40 L 373.35 491.38 L 366.24 495.64 L 344.91 502.75 L 316.48 507.73 L 259.60 521.95 L 256.04 526.92 L 234.71 521.95 L 220.49 514.84 L 213.38 507.73 L 206.28 497.06 L 184.95 411.75 L 199.17 354.87 L 195.61 340.65 L 184.95 308.66 L 174.28 287.33 L 167.17 266.00 L 163.62 258.89 L 152.95 248.22 L 149.40 246.80 L 145.84 248.22 L 138.73 255.33 L 120.96 237.56 L 113.85 234.71 L 110.29 236.14 L 99.63 244.67 L 74.74 269.55 L 71.19 266.00 L 21.42 166.46 L 20.00 159.35 L 21.42 152.24 L 28.53 138.02 L 56.97 109.58 L 67.64 91.81 L 69.77 70.48 L 74.74 49.15 L 70.48 29.24 Z" fill="url(#africaGradient)" filter="url(#africaGlow)"/>
+      <!-- Decorative city dots -->
+      <circle cx="100" cy="150" r="3" fill="#D4A853" opacity="0.6"/>
+      <circle cx="200" cy="180" r="2.5" fill="#D4A853" opacity="0.5"/>
+      <circle cx="280" cy="200" r="3" fill="#D4A853" opacity="0.6"/>
+      <circle cx="350" cy="280" r="2.5" fill="#D4A853" opacity="0.5"/>
+      <circle cx="240" cy="380" r="3" fill="#D4A853" opacity="0.6"/>
+      <circle cx="150" cy="420" r="2.5" fill="#D4A853" opacity="0.5"/>
+    </svg>
   </section>
   <section class="panel">
     <div style="display:flex;align-items:center;gap:10px"><span class="nav-logo"></span><span style="font-weight:900;font-size:17px">WakilChat<span class="tm">&#8482;</span></span></div>
@@ -392,27 +443,190 @@
     </div>
   </div>
 </div>
-</div>
 <!-- AFRICAN PAYMENT GATEWAYS -->
 <div class="sections"><div class="sec-card" style="overflow:hidden">
   <div class="sec-label">Payments Made African</div>
   <div class="sec-title">Pay the Way Africa Pays</div>
   <p class="sec-sub">Integrated with every major African payment provider. Send money as easily as sending a message.</p>
-  <div class="carousel-wrap" id="payCarousel">
-    <div class="carousel-track" id="payTrack">
-      <div class="carousel-slide" style="gap:16px">
-        <div class="pay-card" style="border-left:3px solid #4CAF50"><div class="pay-logo" style="background:#4CAF50">M</div><div class="pay-info"><h4>M-Pesa</h4><p>Kenya, Tanzania, DRC, Mozambique, Egypt</p></div><span class="pay-badge">750M+ transactions/yr</span></div>
-        <div class="pay-card" style="border-left:3px solid #E53935"><div class="pay-logo" style="background:#E53935">A</div><div class="pay-info"><h4>Airtel Money</h4><p>Uganda, Rwanda, Malawi, Chad, Niger, Congo</p></div><span class="pay-badge">14 African countries</span></div>
-        <div class="pay-card" style="border-left:3px solid #FF9800"><div class="pay-logo" style="background:#FF9800">O</div><div class="pay-info"><h4>Orange Money</h4><p>Senegal, Mali, Cameroon, C&#244;te d'Ivoire, Madagascar</p></div><span class="pay-badge">West &amp; Central Africa</span></div>
+  <div class="swim-wrap">
+    <div class="swim-track">
+      <!-- First set of 6 payment cards -->
+      <div class="pay-card" style="border-left:3px solid #4CAF50">
+        <div class="pay-logo" style="background:#4CAF50">
+          <svg viewBox="0 0 42 42" width="42" height="42">
+            <defs>
+              <linearGradient id="mpesaGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#45a049;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="42" height="42" fill="url(#mpesaGrad)" rx="4"/>
+            <path d="M 12 10 Q 15 14 12 18 L 12 24 Q 12 28 16 30 L 20 32 Q 24 28 24 24 L 24 18 Q 21 14 24 10 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
+            <path d="M 26 10 Q 29 14 26 18 L 26 24 Q 26 28 30 30 L 30 32 Q 34 28 34 24 L 34 18 Q 31 14 34 10 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="pay-info"><h4>M-Pesa</h4><p>Kenya, Tanzania, DRC, Mozambique, Egypt</p></div><span class="pay-badge">750M+ transactions/yr</span>
       </div>
-      <div class="carousel-slide" style="gap:16px">
-        <div class="pay-card" style="border-left:3px solid #FFC107"><div class="pay-logo" style="background:#FFC107">MTN</div><div class="pay-info"><h4>MTN Mobile Money</h4><p>Ghana, Nigeria, Uganda, Cameroon, Rwanda, Benin</p></div><span class="pay-badge">60M+ wallets</span></div>
-        <div class="pay-card" style="border-left:3px solid #F97316"><div class="pay-logo" style="background:linear-gradient(135deg,#F97316,#F59E0B)">F</div><div class="pay-info"><h4>Flutterwave</h4><p>Pan-African: 34 countries, cards, bank, mobile money</p></div><span class="pay-badge">$16B+ processed</span></div>
-        <div class="pay-card" style="border-left:3px solid #00C3F7"><div class="pay-logo" style="background:linear-gradient(135deg,#00C3F7,#0070BA)">P</div><div class="pay-info"><h4>Paystack</h4><p>Nigeria, Ghana, South Africa, Kenya</p></div><span class="pay-badge">Backed by Stripe</span></div>
+      <div class="pay-card" style="border-left:3px solid #E53935">
+        <div class="pay-logo" style="background:#E53935">
+          <svg viewBox="0 0 42 42" width="42" height="42">
+            <defs>
+              <linearGradient id="airtelGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" style="stop-color:#E53935;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#d32f2f;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="42" height="42" fill="url(#airtelGrad)" rx="4"/>
+            <path d="M 21 8 Q 28 12 30 20 Q 28 18 21 18 Q 14 18 12 20 Q 14 12 21 8 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
+            <path d="M 21 16 Q 27 19 28 26 Q 27 24 21 24 Q 15 24 14 26 Q 15 19 21 16 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
+            <path d="M 21 24 Q 26 26 27 32 Q 26 30 21 30 Q 16 30 15 32 Q 16 26 21 24 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="pay-info"><h4>Airtel Money</h4><p>Uganda, Rwanda, Malawi, Chad, Niger, Congo</p></div><span class="pay-badge">14 African countries</span>
+      </div>
+      <div class="pay-card" style="border-left:3px solid #FF9800">
+        <div class="pay-logo" style="background:#FF9800">
+          <svg viewBox="0 0 42 42" width="42" height="42">
+            <defs>
+              <linearGradient id="orangeGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" style="stop-color:#FF9800;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#f57c00;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="42" height="42" fill="url(#orangeGrad)" rx="4"/>
+            <circle cx="21" cy="21" r="14" fill="#FFF"/>
+            <circle cx="21" cy="21" r="10" fill="#FF9800"/>
+            <circle cx="21" cy="21" r="6" fill="#FFF"/>
+          </svg>
+        </div>
+        <div class="pay-info"><h4>Orange Money</h4><p>Senegal, Mali, Cameroon, Côte d'Ivoire, Madagascar</p></div><span class="pay-badge">West &amp; Central Africa</span>
+      </div>
+      <div class="pay-card" style="border-left:3px solid #FFC107">
+        <div class="pay-logo" style="background:#FFC107">
+          <svg viewBox="0 0 42 42" width="42" height="42">
+            <defs>
+              <linearGradient id="mtnGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" style="stop-color:#FFC107;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#ffb300;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="42" height="42" fill="url(#mtnGrad)" rx="4"/>
+            <ellipse cx="21" cy="21" rx="13" ry="10" fill="#000"/>
+            <ellipse cx="21" cy="21" rx="10" ry="7" fill="#FFC107"/>
+            <text x="21" y="25" font-size="10" font-weight="bold" fill="#000" text-anchor="middle">MTN</text>
+          </svg>
+        </div>
+        <div class="pay-info"><h4>MTN Mobile Money</h4><p>Ghana, Nigeria, Uganda, Cameroon, Rwanda, Benin</p></div><span class="pay-badge">60M+ wallets</span>
+      </div>
+      <div class="pay-card" style="border-left:3px solid #F97316">
+        <div class="pay-logo" style="background:linear-gradient(135deg,#F97316,#F59E0B)">
+          <svg viewBox="0 0 42 42" width="42" height="42">
+            <path d="M 21 6 Q 28 8 30 15 Q 32 22 30 29 Q 28 36 21 38 Q 14 36 12 29 Q 10 22 12 15 Q 14 8 21 6 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
+            <path d="M 15 16 Q 18 14 21 16 L 21 28 Q 18 30 15 28 Z" fill="#F97316"/>
+            <path d="M 27 16 Q 24 14 21 16 L 21 28 Q 24 30 27 28 Z" fill="#F59E0B"/>
+          </svg>
+        </div>
+        <div class="pay-info"><h4>Flutterwave</h4><p>Pan-African: 34 countries, cards, bank, mobile money</p></div><span class="pay-badge">$16B+ processed</span>
+      </div>
+      <div class="pay-card" style="border-left:3px solid #00C3F7">
+        <div class="pay-logo" style="background:linear-gradient(135deg,#00C3F7,#0070BA)">
+          <svg viewBox="0 0 42 42" width="42" height="42">
+            <path d="M 12 12 L 30 12 Q 33 12 33 15 L 33 27 Q 33 30 30 30 L 12 30 Q 9 30 9 27 L 9 15 Q 9 12 12 12 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
+            <path d="M 15 18 L 27 18" stroke="#0070BA" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 15 23 L 27 23" stroke="#0070BA" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="pay-info"><h4>Paystack</h4><p>Nigeria, Ghana, South Africa, Kenya</p></div><span class="pay-badge">Backed by Stripe</span>
+      </div>
+      <!-- Duplicate set of 6 payment cards for seamless loop -->
+      <div class="pay-card" style="border-left:3px solid #4CAF50">
+        <div class="pay-logo" style="background:#4CAF50">
+          <svg viewBox="0 0 42 42" width="42" height="42">
+            <defs>
+              <linearGradient id="mpesaGrad2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#45a049;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="42" height="42" fill="url(#mpesaGrad2)" rx="4"/>
+            <path d="M 12 10 Q 15 14 12 18 L 12 24 Q 12 28 16 30 L 20 32 Q 24 28 24 24 L 24 18 Q 21 14 24 10 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
+            <path d="M 26 10 Q 29 14 26 18 L 26 24 Q 26 28 30 30 L 30 32 Q 34 28 34 24 L 34 18 Q 31 14 34 10 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="pay-info"><h4>M-Pesa</h4><p>Kenya, Tanzania, DRC, Mozambique, Egypt</p></div><span class="pay-badge">750M+ transactions/yr</span>
+      </div>
+      <div class="pay-card" style="border-left:3px solid #E53935">
+        <div class="pay-logo" style="background:#E53935">
+          <svg viewBox="0 0 42 42" width="42" height="42">
+            <defs>
+              <linearGradient id="airtelGrad2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" style="stop-color:#E53935;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#d32f2f;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="42" height="42" fill="url(#airtelGrad2)" rx="4"/>
+            <path d="M 21 8 Q 28 12 30 20 Q 28 18 21 18 Q 14 18 12 20 Q 14 12 21 8 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
+            <path d="M 21 16 Q 27 19 28 26 Q 27 24 21 24 Q 15 24 14 26 Q 15 19 21 16 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
+            <path d="M 21 24 Q 26 26 27 32 Q 26 30 21 30 Q 16 30 15 32 Q 16 26 21 24 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="pay-info"><h4>Airtel Money</h4><p>Uganda, Rwanda, Malawi, Chad, Niger, Congo</p></div><span class="pay-badge">14 African countries</span>
+      </div>
+      <div class="pay-card" style="border-left:3px solid #FF9800">
+        <div class="pay-logo" style="background:#FF9800">
+          <svg viewBox="0 0 42 42" width="42" height="42">
+            <defs>
+              <linearGradient id="orangeGrad2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" style="stop-color:#FF9800;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#f57c00;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="42" height="42" fill="url(#orangeGrad2)" rx="4"/>
+            <circle cx="21" cy="21" r="14" fill="#FFF"/>
+            <circle cx="21" cy="21" r="10" fill="#FF9800"/>
+            <circle cx="21" cy="21" r="6" fill="#FFF"/>
+          </svg>
+        </div>
+        <div class="pay-info"><h4>Orange Money</h4><p>Senegal, Mali, Cameroon, Côte d'Ivoire, Madagascar</p></div><span class="pay-badge">West &amp; Central Africa</span>
+      </div>
+      <div class="pay-card" style="border-left:3px solid #FFC107">
+        <div class="pay-logo" style="background:#FFC107">
+          <svg viewBox="0 0 42 42" width="42" height="42">
+            <defs>
+              <linearGradient id="mtnGrad2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" style="stop-color:#FFC107;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#ffb300;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect width="42" height="42" fill="url(#mtnGrad2)" rx="4"/>
+            <ellipse cx="21" cy="21" rx="13" ry="10" fill="#000"/>
+            <ellipse cx="21" cy="21" rx="10" ry="7" fill="#FFC107"/>
+            <text x="21" y="25" font-size="10" font-weight="bold" fill="#000" text-anchor="middle">MTN</text>
+          </svg>
+        </div>
+        <div class="pay-info"><h4>MTN Mobile Money</h4><p>Ghana, Nigeria, Uganda, Cameroon, Rwanda, Benin</p></div><span class="pay-badge">60M+ wallets</span>
+      </div>
+      <div class="pay-card" style="border-left:3px solid #F97316">
+        <div class="pay-logo" style="background:linear-gradient(135deg,#F97316,#F59E0B)">
+          <svg viewBox="0 0 42 42" width="42" height="42">
+            <path d="M 21 6 Q 28 8 30 15 Q 32 22 30 29 Q 28 36 21 38 Q 14 36 12 29 Q 10 22 12 15 Q 14 8 21 6 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
+            <path d="M 15 16 Q 18 14 21 16 L 21 28 Q 18 30 15 28 Z" fill="#F97316"/>
+            <path d="M 27 16 Q 24 14 21 16 L 21 28 Q 24 30 27 28 Z" fill="#F59E0B"/>
+          </svg>
+        </div>
+        <div class="pay-info"><h4>Flutterwave</h4><p>Pan-African: 34 countries, cards, bank, mobile money</p></div><span class="pay-badge">$16B+ processed</span>
+      </div>
+      <div class="pay-card" style="border-left:3px solid #00C3F7">
+        <div class="pay-logo" style="background:linear-gradient(135deg,#00C3F7,#0070BA)">
+          <svg viewBox="0 0 42 42" width="42" height="42">
+            <path d="M 12 12 L 30 12 Q 33 12 33 15 L 33 27 Q 33 30 30 30 L 12 30 Q 9 30 9 27 L 9 15 Q 9 12 12 12 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
+            <path d="M 15 18 L 27 18" stroke="#0070BA" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 15 23 L 27 23" stroke="#0070BA" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="pay-info"><h4>Paystack</h4><p>Nigeria, Ghana, South Africa, Kenya</p></div><span class="pay-badge">Backed by Stripe</span>
       </div>
     </div>
-    <div class="carousel-arrows"><span class="carousel-arrow" onclick="slideCarousel('payCarousel',-1)">&#8249;</span><span class="carousel-arrow" onclick="slideCarousel('payCarousel',1)">&#8250;</span></div>
-    <div class="carousel-dots" id="payDots"></div>
   </div>
 </div></div>
 <footer class="site-footer"><div class="legal"><span>WakilChat&#8482; is a registered trademark</span><span>Patent Pending &#8212; Application Filed 2026</span><span>All intellectual property rights reserved</span></div><div class="copy">&copy; 2026 WakilChat Inc. All Rights Reserved.</div></footer>
@@ -466,7 +680,6 @@ function slideCarousel(id, dir) {
 }
 initCarousel('featCarousel');
 initCarousel('sectorCarousel');
-initCarousel('payCarousel');
 </script>
 </body>
 </html>
