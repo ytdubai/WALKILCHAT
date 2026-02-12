@@ -14,7 +14,7 @@
     }
     h1,.sec-title,.broker-headline,.quiz-q,.story-card h3,.feat-card h4,.stat-num,.b-stat-num,.cd-num,.nav-brand{font-family:'Playfair Display',Georgia,serif}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{min-height:100vh;color:var(--ink);background:radial-gradient(ellipse 1200px 600px at 10% 10%,rgba(212,168,83,.08),transparent),radial-gradient(ellipse 1000px 600px at 90% 20%,rgba(212,168,83,.05),transparent),linear-gradient(180deg,var(--bg1),var(--bg2));overflow-x:hidden}
+    body{min-height:100vh;color:var(--ink);background:radial-gradient(ellipse 1200px 600px at 10% 10%,rgba(212,168,83,.08),transparent),radial-gradient(ellipse 1000px 600px at 90% 20%,rgba(212,168,83,.05),transparent),linear-gradient(180deg,var(--bg1),var(--bg2));overflow-x:hidden;position:relative;z-index:1}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;position:relative;z-index:10}
     .nav-brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px;color:var(--ink);text-decoration:none}
     .nav-logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#b8860b,#d4a853);box-shadow:0 6px 16px rgba(212,168,83,.3)}
@@ -218,7 +218,7 @@
       100% { transform: translateX(-50%); }
     }
     .swim-wrap { overflow: hidden; position: relative; border-radius: 16px; }
-    .swim-track { display: flex; gap: 16px; animation: swimRight 25s linear infinite; width: max-content; }
+    .swim-track { display: flex; gap: 16px; animation: swimRight 25s linear infinite; width: max-content; padding-right: 16px; }
     .swim-track:hover { animation-play-state: paused; }
     .swim-wrap::before, .swim-wrap::after { content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none; }
     .swim-wrap::before { left: 0; background: linear-gradient(to right, rgba(20,18,15,1), transparent); }
@@ -247,7 +247,7 @@
     .reveal-stagger.visible > *{opacity:1;transform:none}
 
     /* Floating gradient orbs (background decoration) */
-    .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+    .bg-orbs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;overflow:hidden}
     .bg-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.04;animation:orbFloat 20s ease-in-out infinite}
     .bg-orb:nth-child(1){width:600px;height:600px;background:radial-gradient(circle,#d4a853,transparent);top:-10%;left:-5%;animation-duration:25s}
     .bg-orb:nth-child(2){width:500px;height:500px;background:radial-gradient(circle,#b8860b,transparent);bottom:-10%;right:-5%;animation-delay:-8s;animation-duration:22s}
@@ -514,9 +514,9 @@
 </div>
 <!-- AFRICAN PAYMENT GATEWAYS -->
 <div class="sections reveal"><div class="sec-card" style="overflow:hidden">
-  <div class="sec-label">Payments Made African</div>
-  <div class="sec-title">Pay the Way Africa Pays</div>
-  <p class="sec-sub">Integrated with every major African payment provider. Send money as easily as sending a message.</p>
+  <div class="sec-label">Subscribe Your Way</div>
+  <div class="sec-title">Pay for WakilChat Your Way</div>
+  <p class="sec-sub">Subscribe to WakilChat using the payment method you already trust. No international cards needed.</p>
   <div class="swim-wrap">
     <div class="swim-track">
       <!-- First set of 6 payment cards -->
@@ -534,7 +534,7 @@
             <path d="M 26 10 Q 29 14 26 18 L 26 24 Q 26 28 30 30 L 30 32 Q 34 28 34 24 L 34 18 Q 31 14 34 10 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
           </svg>
         </div>
-        <div class="pay-info"><h4>M-Pesa</h4><p>Kenya, Tanzania, DRC, Mozambique, Egypt</p></div><span class="pay-badge">750M+ transactions/yr</span>
+        <div class="pay-info"><h4>M-Pesa</h4><p>Subscribe instantly via M-Pesa in Kenya, Tanzania, DRC &amp; more</p></div><span class="pay-badge">750M+ transactions/yr</span>
       </div>
       <div class="pay-card" style="border-left:3px solid #E53935">
         <div class="pay-logo" style="background:#E53935">
@@ -551,7 +551,7 @@
             <path d="M 21 24 Q 26 26 27 32 Q 26 30 21 30 Q 16 30 15 32 Q 16 26 21 24 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
           </svg>
         </div>
-        <div class="pay-info"><h4>Airtel Money</h4><p>Uganda, Rwanda, Malawi, Chad, Niger, Congo</p></div><span class="pay-badge">14 African countries</span>
+        <div class="pay-info"><h4>Airtel Money</h4><p>Pay your plan with Airtel Money across 14 African countries</p></div><span class="pay-badge">14 African countries</span>
       </div>
       <div class="pay-card" style="border-left:3px solid #FF9800">
         <div class="pay-logo" style="background:#FF9800">
@@ -568,7 +568,7 @@
             <circle cx="21" cy="21" r="6" fill="#FFF"/>
           </svg>
         </div>
-        <div class="pay-info"><h4>Orange Money</h4><p>Senegal, Mali, Cameroon, Côte d'Ivoire, Madagascar</p></div><span class="pay-badge">West &amp; Central Africa</span>
+        <div class="pay-info"><h4>Orange Money</h4><p>Subscribe via Orange Money in West &amp; Central Africa</p></div><span class="pay-badge">West &amp; Central Africa</span>
       </div>
       <div class="pay-card" style="border-left:3px solid #FFC107">
         <div class="pay-logo" style="background:#FFC107">
@@ -585,7 +585,7 @@
             <text x="21" y="25" font-size="10" font-weight="bold" fill="#000" text-anchor="middle">MTN</text>
           </svg>
         </div>
-        <div class="pay-info"><h4>MTN Mobile Money</h4><p>Ghana, Nigeria, Uganda, Cameroon, Rwanda, Benin</p></div><span class="pay-badge">60M+ wallets</span>
+        <div class="pay-info"><h4>MTN Mobile Money</h4><p>Use MTN MoMo to pay in Ghana, Nigeria, Uganda &amp; more</p></div><span class="pay-badge">60M+ wallets</span>
       </div>
       <div class="pay-card" style="border-left:3px solid #F97316">
         <div class="pay-logo" style="background:linear-gradient(135deg,#F97316,#F59E0B)">
@@ -595,7 +595,7 @@
             <path d="M 27 16 Q 24 14 21 16 L 21 28 Q 24 30 27 28 Z" fill="#F59E0B"/>
           </svg>
         </div>
-        <div class="pay-info"><h4>Flutterwave</h4><p>Pan-African: 34 countries, cards, bank, mobile money</p></div><span class="pay-badge">$16B+ processed</span>
+        <div class="pay-info"><h4>Flutterwave</h4><p>Cards, bank transfer, or mobile money across 34 countries</p></div><span class="pay-badge">$16B+ processed</span>
       </div>
       <div class="pay-card" style="border-left:3px solid #00C3F7">
         <div class="pay-logo" style="background:linear-gradient(135deg,#00C3F7,#0070BA)">
@@ -605,7 +605,7 @@
             <path d="M 15 23 L 27 23" stroke="#0070BA" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
-        <div class="pay-info"><h4>Paystack</h4><p>Nigeria, Ghana, South Africa, Kenya</p></div><span class="pay-badge">Backed by Stripe</span>
+        <div class="pay-info"><h4>Paystack</h4><p>Pay with cards or bank in Nigeria, Ghana, South Africa &amp; Kenya</p></div><span class="pay-badge">Backed by Stripe</span>
       </div>
       <!-- Duplicate set of 6 payment cards for seamless loop -->
       <div class="pay-card" style="border-left:3px solid #4CAF50">
@@ -622,7 +622,7 @@
             <path d="M 26 10 Q 29 14 26 18 L 26 24 Q 26 28 30 30 L 30 32 Q 34 28 34 24 L 34 18 Q 31 14 34 10 Z" fill="#FFF" stroke="#FFF" stroke-width="1.5"/>
           </svg>
         </div>
-        <div class="pay-info"><h4>M-Pesa</h4><p>Kenya, Tanzania, DRC, Mozambique, Egypt</p></div><span class="pay-badge">750M+ transactions/yr</span>
+        <div class="pay-info"><h4>M-Pesa</h4><p>Subscribe instantly via M-Pesa in Kenya, Tanzania, DRC &amp; more</p></div><span class="pay-badge">750M+ transactions/yr</span>
       </div>
       <div class="pay-card" style="border-left:3px solid #E53935">
         <div class="pay-logo" style="background:#E53935">
@@ -639,7 +639,7 @@
             <path d="M 21 24 Q 26 26 27 32 Q 26 30 21 30 Q 16 30 15 32 Q 16 26 21 24 Z" fill="#FFF" stroke="#FFF" stroke-width="1"/>
           </svg>
         </div>
-        <div class="pay-info"><h4>Airtel Money</h4><p>Uganda, Rwanda, Malawi, Chad, Niger, Congo</p></div><span class="pay-badge">14 African countries</span>
+        <div class="pay-info"><h4>Airtel Money</h4><p>Pay your plan with Airtel Money across 14 African countries</p></div><span class="pay-badge">14 African countries</span>
       </div>
       <div class="pay-card" style="border-left:3px solid #FF9800">
         <div class="pay-logo" style="background:#FF9800">
@@ -656,7 +656,7 @@
             <circle cx="21" cy="21" r="6" fill="#FFF"/>
           </svg>
         </div>
-        <div class="pay-info"><h4>Orange Money</h4><p>Senegal, Mali, Cameroon, Côte d'Ivoire, Madagascar</p></div><span class="pay-badge">West &amp; Central Africa</span>
+        <div class="pay-info"><h4>Orange Money</h4><p>Subscribe via Orange Money in West &amp; Central Africa</p></div><span class="pay-badge">West &amp; Central Africa</span>
       </div>
       <div class="pay-card" style="border-left:3px solid #FFC107">
         <div class="pay-logo" style="background:#FFC107">
@@ -673,7 +673,7 @@
             <text x="21" y="25" font-size="10" font-weight="bold" fill="#000" text-anchor="middle">MTN</text>
           </svg>
         </div>
-        <div class="pay-info"><h4>MTN Mobile Money</h4><p>Ghana, Nigeria, Uganda, Cameroon, Rwanda, Benin</p></div><span class="pay-badge">60M+ wallets</span>
+        <div class="pay-info"><h4>MTN Mobile Money</h4><p>Use MTN MoMo to pay in Ghana, Nigeria, Uganda &amp; more</p></div><span class="pay-badge">60M+ wallets</span>
       </div>
       <div class="pay-card" style="border-left:3px solid #F97316">
         <div class="pay-logo" style="background:linear-gradient(135deg,#F97316,#F59E0B)">
@@ -683,7 +683,7 @@
             <path d="M 27 16 Q 24 14 21 16 L 21 28 Q 24 30 27 28 Z" fill="#F59E0B"/>
           </svg>
         </div>
-        <div class="pay-info"><h4>Flutterwave</h4><p>Pan-African: 34 countries, cards, bank, mobile money</p></div><span class="pay-badge">$16B+ processed</span>
+        <div class="pay-info"><h4>Flutterwave</h4><p>Cards, bank transfer, or mobile money across 34 countries</p></div><span class="pay-badge">$16B+ processed</span>
       </div>
       <div class="pay-card" style="border-left:3px solid #00C3F7">
         <div class="pay-logo" style="background:linear-gradient(135deg,#00C3F7,#0070BA)">
@@ -693,7 +693,7 @@
             <path d="M 15 23 L 27 23" stroke="#0070BA" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
-        <div class="pay-info"><h4>Paystack</h4><p>Nigeria, Ghana, South Africa, Kenya</p></div><span class="pay-badge">Backed by Stripe</span>
+        <div class="pay-info"><h4>Paystack</h4><p>Pay with cards or bank in Nigeria, Ghana, South Africa &amp; Kenya</p></div><span class="pay-badge">Backed by Stripe</span>
       </div>
     </div>
   </div>
@@ -813,6 +813,55 @@ if (mapCard) {
   });
   document.querySelector('.hero').addEventListener('mouseleave', function() {
     mapCard.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+  });
+}
+
+// === IMAGE UPLOAD HELPER (press 'u' 3 times fast to activate) ===
+var uCount = 0, uTimer = null;
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'u' || e.key === 'U') {
+    uCount++;
+    clearTimeout(uTimer);
+    uTimer = setTimeout(function() { uCount = 0; }, 800);
+    if (uCount >= 3) {
+      uCount = 0;
+      showUploader();
+    }
+  }
+});
+function showUploader() {
+  if (document.getElementById('imgUploader')) { document.getElementById('imgUploader').remove(); return; }
+  var d = document.createElement('div');
+  d.id = 'imgUploader';
+  d.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px)';
+  d.innerHTML = '<div style="background:rgba(20,18,15,.95);border:2px dashed rgba(212,168,83,.5);border-radius:20px;padding:60px 40px;text-align:center;max-width:500px;width:90%">' +
+    '<div style="font-family:Playfair Display,serif;font-size:24px;font-weight:900;color:#d4a853;margin-bottom:12px">Upload Africa Map</div>' +
+    '<p style="color:rgba(255,255,255,.6);font-size:14px;margin-bottom:24px">Drop your image here or click to browse. It will replace the SVG map.</p>' +
+    '<input type="file" id="mapFileInput" accept="image/*" style="display:none">' +
+    '<label for="mapFileInput" style="display:inline-block;padding:14px 32px;background:linear-gradient(135deg,#b8860b,#d4a853);color:#1c1917;font-weight:800;border-radius:12px;cursor:pointer;font-family:Playfair Display,serif;font-size:14px;letter-spacing:1px">Choose Image</label>' +
+    '<div id="uploadPreview" style="margin-top:20px"></div>' +
+    '<p style="color:rgba(255,255,255,.3);font-size:11px;margin-top:16px">Press U 3 times to close</p>' +
+    '</div>';
+  document.body.appendChild(d);
+  d.addEventListener('click', function(e) { if (e.target === d) d.remove(); });
+  document.getElementById('mapFileInput').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      var mapCard = document.querySelector('.map-card');
+      var oldSvg = mapCard.querySelector('svg');
+      if (oldSvg) oldSvg.remove();
+      var oldImg = mapCard.querySelector('img');
+      if (oldImg) oldImg.remove();
+      var img = document.createElement('img');
+      img.src = ev.target.result;
+      img.alt = 'Africa';
+      img.style.cssText = 'max-width:420px;width:100%;height:auto;filter:drop-shadow(0 0 40px rgba(184,134,11,.3))';
+      mapCard.appendChild(img);
+      document.getElementById('uploadPreview').innerHTML = '<p style="color:#059669;font-weight:700;margin-top:12px">&#10003; Image applied! It will show until page refresh.</p><p style="color:rgba(255,255,255,.4);font-size:11px;margin-top:6px">To make it permanent, save the image as africa-map.png in your public/ folder and push to GitHub.</p>';
+    };
+    reader.readAsDataURL(file);
   });
 }
 </script>
