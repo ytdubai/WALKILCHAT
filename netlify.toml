@@ -8,3 +8,9 @@
 [build.environment]
   NODE_VERSION = "20"
   NPM_FLAGS = "--legacy-peer-deps"
+
+[[redirects]]
+  from = "/"
+  to = "/coming-soon.html"
+  status = 200
+  force = true
