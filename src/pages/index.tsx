@@ -291,7 +291,7 @@ export default function HomePage() {
               lineHeight: 1.7, maxWidth: 580, margin: '0 auto 40px',
             }}>
               Payments, messaging, and AI — unified in one app for African entrepreneurs.
-              Free to start. Pay only when you earn.
+              The longer you use it, the smarter it gets. Free to start.
             </p>
           </Reveal>
 
@@ -304,7 +304,7 @@ export default function HomePage() {
 
           <Reveal delay={0.4}>
             <div style={{ display: 'flex', gap: 32, justifyContent: 'center', flexWrap: 'wrap' }}>
-              {['No credit card required', '2-5% transaction fees', 'Cancel anytime'].map((text) => (
+              {['No credit card required', 'Plans from ₦2,500/mo', 'Cancel anytime'].map((text) => (
                 <span key={text} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>
                   <span style={{ color: '#10B981' }}><Icons.Check /></span> {text}
                 </span>
@@ -332,9 +332,9 @@ export default function HomePage() {
                 display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16,
               }}>
                 {[
-                  { label: 'Today\'s Revenue', value: '$2,847', change: '+12.5%', up: true },
+                  { label: 'Today\'s Revenue', value: '₦2.8M', change: '+12.5%', up: true },
                   { label: 'Messages', value: '1,284', change: '+8.2%', up: true },
-                  { label: 'Conversion', value: '24.8%', change: '+3.1%', up: true },
+                  { label: 'AI Automation', value: '87%', change: '+3.1%', up: true },
                 ].map((stat, i) => (
                   <div key={i} style={{
                     background: 'rgba(255,255,255,0.03)', borderRadius: 12, padding: 20,
@@ -406,34 +406,74 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ========== WHY STAY SECTION (Retention) ========== */}
+      <section style={{ padding: '100px 24px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <Reveal>
+            <div style={{ textAlign: 'center', marginBottom: 64 }}>
+              <h2 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: 700, marginBottom: 16 }}>
+                The longer you stay, the smarter it gets
+              </h2>
+              <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.5)', maxWidth: 550, margin: '0 auto' }}>
+                WakilChat learns your business. Every message, sale, and customer interaction makes your AI smarter.
+              </p>
+            </div>
+          </Reveal>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+            {[
+              { month: 'Month 1', title: 'AI learns your products', desc: 'Auto-replies handle 40% of customer questions. You save 2 hours/day.', icon: '🧠', pct: 40 },
+              { month: 'Month 3', title: 'Predicts demand', desc: 'AI knows which products sell when. Stock alerts prevent missed sales.', icon: '📊', pct: 65 },
+              { month: 'Month 6', title: 'Runs your business', desc: 'AI handles orders, invoicing, follow-ups, translations — while you scale.', icon: '🚀', pct: 90 },
+            ].map((step, i) => (
+              <Reveal key={i} delay={i * 0.1}>
+                <div className="card" style={{ padding: 32 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: '#D4AF37', letterSpacing: '0.1em', marginBottom: 12 }}>{step.month}</div>
+                  <div style={{ fontSize: 28, marginBottom: 12 }}>{step.icon}</div>
+                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>{step.title}</h3>
+                  <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, marginBottom: 16 }}>{step.desc}</p>
+                  <div style={{ height: 4, borderRadius: 2, background: 'rgba(255,255,255,0.05)' }}>
+                    <div style={{ height: '100%', borderRadius: 2, background: 'linear-gradient(90deg, #D4AF37, #F4D03F)', width: `${step.pct}%`, transition: 'width 1s ease' }} />
+                  </div>
+                  <div style={{ fontSize: 12, color: '#D4AF37', marginTop: 6, textAlign: 'right' }}>{step.pct}% automated</div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ========== PRICING SECTION ========== */}
       <section id="pricing" style={{ padding: '100px 24px', background: 'rgba(0,0,0,0.3)' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <Reveal>
             <div style={{ textAlign: 'center', marginBottom: 64 }}>
               <h2 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: 700, marginBottom: 16 }}>
                 Simple, honest pricing
               </h2>
               <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.5)' }}>
-                No monthly fees. No hidden charges. Pay only when you earn.
+                Pay for the service you receive — in your local currency. No international card needed.
               </p>
             </div>
           </Reveal>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24 }}>
             <Reveal>
-              <div className="card" style={{ padding: 40 }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: '#D4AF37', letterSpacing: '0.1em', marginBottom: 12 }}>FREE FOREVER</div>
-                <div style={{ fontSize: 56, fontWeight: 700, marginBottom: 8 }}>$0</div>
-                <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.5)', marginBottom: 32 }}>Perfect for getting started</div>
-                {['Unified messaging inbox', '100 AI responses/month', 'Basic dashboard', 'Community support'].map((item) => (
-                  <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+              <div className="card" style={{ padding: 36 }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: '#6366F1', letterSpacing: '0.1em', marginBottom: 12 }}>STARTER</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 8 }}>
+                  <span style={{ fontSize: 42, fontWeight: 700 }}>₦2,500</span>
+                  <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)' }}>/month</span>
+                </div>
+                <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginBottom: 28 }}>~KSh 450 · ~Br 180 · ~R 60</div>
+                {['50 AI messages/month', 'Basic analytics', '1 payment channel', 'Email support', '100 contacts'].map((item) => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                     <span style={{ color: '#10B981' }}><Icons.Check /></span>
                     <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)' }}>{item}</span>
                   </div>
                 ))}
-                <Link href="/signup" style={{ display: 'block', marginTop: 32 }}>
-                  <button className="btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>Start free</button>
+                <Link href="/signup" style={{ display: 'block', marginTop: 28 }}>
+                  <button className="btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>Start free trial</button>
                 </Link>
               </div>
             </Reveal>
@@ -442,38 +482,61 @@ export default function HomePage() {
               <div style={{
                 background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(244, 208, 63, 0.03))',
                 border: '2px solid rgba(212, 175, 55, 0.3)',
-                borderRadius: 16, padding: 40, position: 'relative',
+                borderRadius: 16, padding: 36, position: 'relative',
               }}>
                 <div style={{
                   position: 'absolute', top: 16, right: 16,
                   background: '#D4AF37', color: '#0f0f0f',
                   fontSize: 11, fontWeight: 700, padding: '4px 12px', borderRadius: 100,
-                }}>POPULAR</div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: '#D4AF37', letterSpacing: '0.1em', marginBottom: 12 }}>PAY AS YOU GROW</div>
-                <div style={{ fontSize: 56, fontWeight: 700, color: '#D4AF37', marginBottom: 8 }}>2-5%</div>
-                <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.5)', marginBottom: 32 }}>Per transaction, when you earn</div>
-                {['Everything in Free', '2% on consumer sales', '5% on B2B/exports', 'Unlimited AI responses', 'Priority support', 'Custom rates for volume'].map((item) => (
-                  <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0', borderBottom: '1px solid rgba(212, 175, 55, 0.1)' }}>
+                }}>BEST VALUE</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: '#D4AF37', letterSpacing: '0.1em', marginBottom: 12 }}>BUSINESS</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 8 }}>
+                  <span style={{ fontSize: 42, fontWeight: 700, color: '#D4AF37' }}>₦9,500</span>
+                  <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)' }}>/month</span>
+                </div>
+                <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginBottom: 28 }}>~KSh 1,700 · ~Br 700 · ~R 230</div>
+                {['Unlimited AI messages', 'Full analytics suite', 'All payment channels', 'Priority support', 'Unlimited contacts', 'Team members (5)', 'Custom branding'].map((item) => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid rgba(212, 175, 55, 0.08)' }}>
                     <span style={{ color: '#D4AF37' }}><Icons.Check /></span>
                     <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>{item}</span>
                   </div>
                 ))}
-                <Link href="/signup" style={{ display: 'block', marginTop: 32 }}>
+                <Link href="/signup" style={{ display: 'block', marginTop: 28 }}>
                   <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Get started</button>
+                </Link>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.2}>
+              <div className="card" style={{ padding: 36 }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: '#10B981', letterSpacing: '0.1em', marginBottom: 12 }}>ENTERPRISE</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 8 }}>
+                  <span style={{ fontSize: 42, fontWeight: 700 }}>₦35,000</span>
+                  <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)' }}>/month</span>
+                </div>
+                <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginBottom: 28 }}>~KSh 6,300 · ~Br 2,600 · ~R 840</div>
+                {['Everything in Business', 'Dedicated AI agents', 'API access', '24/7 phone support', 'Custom integrations', 'White-label option', 'SLA guarantee', 'Account manager'].map((item) => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                    <span style={{ color: '#10B981' }}><Icons.Check /></span>
+                    <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)' }}>{item}</span>
+                  </div>
+                ))}
+                <Link href="/signup" style={{ display: 'block', marginTop: 28 }}>
+                  <button className="btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>Contact sales</button>
                 </Link>
               </div>
             </Reveal>
           </div>
 
-          <Reveal delay={0.2}>
+          <Reveal delay={0.3}>
             <div style={{
               marginTop: 32, background: 'rgba(212, 175, 55, 0.05)',
               border: '1px solid rgba(212, 175, 55, 0.1)',
               borderRadius: 12, padding: 20, textAlign: 'center',
             }}>
               <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', margin: 0 }}>
-                <strong style={{ color: '#D4AF37' }}>Honest comparison:</strong> For businesses under $50K/month revenue, we're cheaper than subscriptions.
-                High volume? <a href="mailto:hello@wakilchat.com" style={{ color: '#D4AF37' }}>Contact us for custom rates</a>.
+                <strong style={{ color: '#D4AF37' }}>Pay in your currency:</strong> M-Pesa, Airtel Money, Telebirr, bank transfer, or USSD. No international card required.
+                Need custom pricing? <a href="mailto:hello@wakilchat.com" style={{ color: '#D4AF37' }}>Contact us</a>.
               </p>
             </div>
           </Reveal>
