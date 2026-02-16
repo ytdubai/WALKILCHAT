@@ -44,6 +44,7 @@ export default function MatchesPage() {
   const [matches, setMatches] = useState<Match[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('')
+  const [actionLoading, setActionLoading] = useState<string | null>(null)
 
   useEffect(() => {
     fetchMatches()
@@ -75,6 +76,29 @@ export default function MatchesPage() {
     if (score >= 80) return 'Excellent'
     if (score >= 65) return 'Good'
     return 'Fair'
+  }
+
+  const handleMatchAction = async (matchId: string, action: 'accept' | 'reject') => {
+    setActionLoading(matchId)
+    try {
+      const response = await fetch(`/api/matches/${matchId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update match')
+      }
+
+      // Refresh matches
+      await fetchMatches()
+    } catch (error) {
+      console.error('Failed to update match:', error)
+      alert('Failed to update match. Please try again.')
+    } finally {
+      setActionLoading(null)
+    }
   }
 
   return (
@@ -246,17 +270,39 @@ export default function MatchesPage() {
                 {/* Actions */}
                 {match.status === 'PENDING' && (
                   <div className="mt-6 pt-6 border-t border-border flex gap-4">
+                    <button
+                      onClick={() => handleMatchAction(match.id, 'accept')}
+                      disabled={actionLoading === match.id}
+                      className="flex-1 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {actionLoading === match.id ? 'Processing...' : 'Accept Match'}
+                    </button>
+                    <button
+                      onClick={() => handleMatchAction(match.id, 'reject')}
+                      disabled={actionLoading === match.id}
+                      className="px-6 py-3 bg-red-500/20 hover:bg-red-500/30 text-red-500 border border-red-500/20 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Reject
+                    </button>
+                  </div>
+                )}
+
+                {/* Accepted Match - Show Start Negotiation */}
+                {match.status === 'ACCEPTED' && (
+                  <div className="mt-6 pt-6 border-t border-border">
                     <Link
                       href={`/dashboard/deals/new?matchId=${match.id}`}
-                      className="flex-1 luxury-button text-center"
+                      className="block w-full luxury-button text-center"
                     >
                       Start Negotiation
                     </Link>
-                    <button
-                      className="px-6 py-3 bg-secondary hover:bg-accent border border-border rounded-lg font-semibold transition-all"
-                    >
-                      Dismiss
-                    </button>
+                  </div>
+                )}
+
+                {/* Rejected Match */}
+                {match.status === 'REJECTED' && (
+                  <div className="mt-6 pt-6 border-t border-border text-center text-sm text-muted-foreground">
+                    This match was declined
                   </div>
                 )}
               </div>
