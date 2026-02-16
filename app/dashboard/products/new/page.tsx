@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase/client'
 
 const CATEGORIES = [
   { value: 'AGRICULTURAL_PRODUCTS', label: 'Agricultural Products' },
@@ -22,25 +23,93 @@ export default function NewProductPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [images, setImages] = useState<File[]>([])
+  const [imagePreviews, setImagePreviews] = useState<string[]>([])
+  const [uploadProgress, setUploadProgress] = useState(0)
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    if (files.length + images.length > 5) {
+      setError('Maximum 5 images allowed')
+      return
+    }
+
+    setImages(prev => [...prev, ...files])
+    
+    // Create previews
+    files.forEach(file => {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImagePreviews(prev => [...prev, reader.result as string])
+      }
+      reader.readAsDataURL(file)
+    })
+  }
+
+  const removeImage = (index: number) => {
+    setImages(prev => prev.filter((_, i) => i !== index))
+    setImagePreviews(prev => prev.filter((_, i) => i !== index))
+  }
+
+  const uploadImages = async (): Promise<string[]> => {
+    if (images.length === 0) return []
+
+    const supabase = createClient()
+    const uploadedUrls: string[] = []
+
+    for (let i = 0; i < images.length; i++) {
+      const file = images[i]
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`
+      const filePath = `products/${fileName}`
+
+      setUploadProgress(((i + 1) / images.length) * 100)
+
+      const { data, error } = await supabase.storage
+        .from('product-images')
+        .upload(filePath, file)
+
+      if (error) {
+        console.error('Upload error:', error)
+        throw new Error(`Failed to upload image: ${file.name}`)
+      }
+
+      const { data: urlData } = supabase.storage
+        .from('product-images')
+        .getPublicUrl(filePath)
+
+      uploadedUrls.push(urlData.publicUrl)
+    }
+
+    return uploadedUrls
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
 
-    const formData = new FormData(e.currentTarget)
-    const data = {
-      title: formData.get('title') as string,
-      description: formData.get('description') as string,
-      category: formData.get('category') as string,
-      price: parseFloat(formData.get('price') as string),
-      quantity: parseInt(formData.get('quantity') as string),
-      unit: formData.get('unit') as string,
-      location: formData.get('location') as string,
-      minOrderQty: formData.get('minOrderQty') ? parseInt(formData.get('minOrderQty') as string) : undefined,
-    }
-
     try {
+      // Upload images first
+      let imageUrls: string[] = []
+      if (images.length > 0) {
+        imageUrls = await uploadImages()
+      }
+
+      const formData = new FormData(e.currentTarget)
+      const data = {
+        title: formData.get('title') as string,
+        description: formData.get('description') as string,
+        category: formData.get('category') as string,
+        price: parseFloat(formData.get('price') as string),
+        quantity: parseInt(formData.get('quantity') as string),
+        unit: formData.get('unit') as string,
+        location: formData.get('location') as string,
+        minOrderQty: formData.get('minOrderQty') ? parseInt(formData.get('minOrderQty') as string) : undefined,
+        currency: formData.get('currency') as string || 'ETB',
+        images: imageUrls,
+      }
+
       const response = await fetch('/api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -91,6 +160,73 @@ export default function NewProductPage() {
         )}
 
         <form onSubmit={handleSubmit} className="luxury-card p-8 space-y-6">
+          {/* Image Upload */}
+          <div>
+            <label className="block text-sm font-medium mb-2">
+              Product Images (Max 5)
+            </label>
+            
+            {imagePreviews.length > 0 && (
+              <div className="grid grid-cols-3 gap-4 mb-4">
+                {imagePreviews.map((preview, index) => (
+                  <div key={index} className="relative group">
+                    <img
+                      src={preview}
+                      alt={`Preview ${index + 1}`}
+                      className="w-full h-32 object-cover rounded-lg border border-border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeImage(index)}
+                      className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {images.length < 5 && (
+              <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer">
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleImageChange}
+                  className="hidden"
+                  id="image-upload"
+                />
+                <label htmlFor="image-upload" className="cursor-pointer">
+                  <svg className="w-12 h-12 text-muted-foreground mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <div className="text-sm text-muted-foreground">
+                    Click to upload images or drag and drop
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    PNG, JPG up to 5MB each
+                  </div>
+                </label>
+              </div>
+            )}
+
+            {uploadProgress > 0 && uploadProgress < 100 && (
+              <div className="mt-4">
+                <div className="flex items-center justify-between text-sm mb-2">
+                  <span className="text-muted-foreground">Uploading images...</span>
+                  <span className="text-primary">{Math.round(uploadProgress)}%</span>
+                </div>
+                <div className="w-full bg-secondary rounded-full h-2">
+                  <div
+                    className="bg-primary h-2 rounded-full transition-all"
+                    style={{ width: `${uploadProgress}%` }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Title */}
           <div>
             <label htmlFor="title" className="block text-sm font-medium mb-2">
@@ -241,7 +377,7 @@ export default function NewProductPage() {
               disabled={loading}
               className="flex-1 luxury-button disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Creating...' : 'Create Listing'}
+              {loading ? (uploadProgress > 0 ? 'Uploading...' : 'Creating...') : 'Create Listing'}
             </button>
 
             <Link

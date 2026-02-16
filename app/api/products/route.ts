@@ -25,6 +25,7 @@ const productSchema = z.object({
   location: z.string().min(2, 'Location is required'),
   minOrderQty: z.number().int().positive().optional(),
   currency: z.string().default('ETB'),
+  images: z.array(z.string()).max(5).default([]),
 })
 
 // GET: List products
@@ -117,6 +118,7 @@ export async function POST(request: Request) {
         unit: validated.unit,
         location: validated.location,
         minOrderQty: validated.minOrderQty,
+        images: validated.images,
         status: 'ACTIVE',
       },
       include: {
