@@ -55,6 +55,9 @@ export default function DealChatPage() {
   const [newMessage, setNewMessage] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [otherUserTyping, setOtherUserTyping] = useState(false)
+  const [translationEnabled, setTranslationEnabled] = useState(true)
+  const [translatedMessages, setTranslatedMessages] = useState<Record<string, string>>({})
+  const [translating, setTranslating] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -141,6 +144,44 @@ export default function DealChatPage() {
     }, 2000)
   }
 
+  const translateMessage = async (messageId: string, text: string) => {
+    if (translatedMessages[messageId]) {
+      // Toggle off translation (show original)
+      setTranslatedMessages(prev => {
+        const newState = { ...prev }
+        delete newState[messageId]
+        return newState
+      })
+      return
+    }
+
+    setTranslating(messageId)
+    try {
+      // Detect if Amharic or English, translate to opposite
+      const amharicPattern = /[\u1200-\u137F]/
+      const isAmharic = amharicPattern.test(text)
+      const targetLang = isAmharic ? 'en' : 'am'
+
+      const response = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, targetLang }),
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        setTranslatedMessages(prev => ({
+          ...prev,
+          [messageId]: data.translated,
+        }))
+      }
+    } catch (error) {
+      console.error('Translation failed:', error)
+    } finally {
+      setTranslating(null)
+    }
+  }
+
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
     
@@ -194,6 +235,23 @@ export default function DealChatPage() {
               {deal.status.replace(/_/g, ' ')}
             </div>
 
+            <button
+              onClick={() => setTranslationEnabled(!translationEnabled)}
+              className={`
+                flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors
+                ${translationEnabled
+                  ? 'bg-primary/20 text-primary border border-primary/30'
+                  : 'bg-secondary text-muted-foreground border border-border'
+                }
+              `}
+              title="Toggle auto-translation"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+              </svg>
+              {translationEnabled ? 'Translation ON' : 'Translation OFF'}
+            </button>
+
             {isConnected ? (
               <div className="w-2 h-2 bg-green-500 rounded-full" title="Connected" />
             ) : (
@@ -208,6 +266,7 @@ export default function DealChatPage() {
         <div className="container mx-auto max-w-4xl">
           {messages.map(message => {
             const isOwn = message.senderId === currentUserId
+            const hasTranslation = translatedMessages[message.id]
             return (
               <div
                 key={message.id}
@@ -225,9 +284,36 @@ export default function DealChatPage() {
                       {message.sender.firstName} {message.sender.lastName}
                     </div>
                   )}
-                  <div className="text-sm">{message.content}</div>
-                  <div className={`text-xs mt-1 ${isOwn ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
-                    {new Date(message.createdAt).toLocaleTimeString()}
+                  
+                  <div className="text-sm mb-2">
+                    {hasTranslation ? translatedMessages[message.id] : message.content}
+                  </div>
+
+                  {hasTranslation && (
+                    <div className="text-xs opacity-70 mb-2 pb-2 border-t border-current/20 pt-2">
+                      Original: {message.content}
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-between gap-3">
+                    <div className={`text-xs ${isOwn ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
+                      {new Date(message.createdAt).toLocaleTimeString()}
+                    </div>
+
+                    {translationEnabled && (
+                      <button
+                        onClick={() => translateMessage(message.id, message.content)}
+                        disabled={translating === message.id}
+                        className={`text-xs flex items-center gap-1 ${
+                          isOwn ? 'text-primary-foreground/70 hover:text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
+                        } transition-colors disabled:opacity-50`}
+                      >
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                        </svg>
+                        {translating === message.id ? '...' : hasTranslation ? 'Original' : 'Translate'}
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
