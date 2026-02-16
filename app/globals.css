@@ -178,3 +178,10 @@ p {
 .font-lora {
   font-family: var(--font-family-lora);
 }
+
+
+/* Button variations */
+.luxury-button-sm {
+  @apply px-4 py-2 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 text-sm;
+}
+
