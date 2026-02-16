@@ -5,6 +5,26 @@ Create autonomous AI department heads as independent Telegram bots. Each bot ope
 
 ## Team Structure
 
+### 0. **@WakilChatCEO_bot** - Chief Executive Officer
+**Role:** Strategic leadership, oversees all departments
+**Responsibilities:**
+- Company-wide strategic planning
+- Cross-functional coordination
+- Resource allocation decisions
+- Investor relations
+- Crisis management
+- Final authority on major decisions
+
+**Reports:**
+- Receives daily summaries from all 7 department heads
+- Reports directly to Yitayal Mesfin (Founder)
+
+**Proactive Tasks:**
+- Daily 8 AM: Company dashboard (all departments)
+- Sunday 10 AM: Weekly strategic review
+
+---
+
 ### 1. **@WakilChatCTO_bot** - Chief Technology Officer
 **Role:** Technical architecture, code quality, infrastructure
 **Responsibilities:**
@@ -122,11 +142,11 @@ For each bot, message [@BotFather](https://t.me/BotFather) on Telegram:
 
 ```
 /newbot
-WakilChat CTO
-@WakilChatCTO_bot
+WakilChat CEO
+@WakilChatCEO_bot
 ```
 
-Repeat for all 7 bots. BotFather will provide API tokens for each.
+Repeat for all 8 bots. BotFather will provide API tokens for each.
 
 ## Environment Configuration
 
@@ -134,6 +154,7 @@ Add bot tokens to `/root/wakilchat/.env`:
 
 ```env
 # WakilChat AI Team Bot Tokens
+TELEGRAM_BOT_CEO_TOKEN="xxx"
 TELEGRAM_BOT_CTO_TOKEN="xxx"
 TELEGRAM_BOT_CMO_TOKEN="xxx"
 TELEGRAM_BOT_CFO_TOKEN="xxx"
