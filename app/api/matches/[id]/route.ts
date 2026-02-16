@@ -10,7 +10,7 @@ const matchActionSchema = z.object({
 // PATCH: Accept or reject a match
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createClient()
@@ -23,7 +23,7 @@ export async function PATCH(
       )
     }
 
-    const matchId = params.id
+    const { id: matchId } = await params
     const body = await request.json()
     const validated = matchActionSchema.parse(body)
 
@@ -133,7 +133,7 @@ export async function PATCH(
 // GET: Get single match details
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createClient()
@@ -146,7 +146,7 @@ export async function GET(
       )
     }
 
-    const matchId = params.id
+    const { id: matchId } = await params
 
     const match = await prisma.match.findUnique({
       where: { id: matchId },

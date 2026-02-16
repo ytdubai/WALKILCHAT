@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma'
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createClient()
@@ -17,7 +17,7 @@ export async function GET(
       )
     }
 
-    const dealId = params.id
+    const { id: dealId } = await params
 
     const deal = await prisma.deal.findUnique({
       where: { id: dealId },
