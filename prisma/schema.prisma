@@ -1,0 +1,638 @@
+// WakilChat™ - Prisma Schema
+// Complete database schema for Phase 1 MVP
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============ USERS & AUTH ============
+model User {
+  id                String    @id @default(uuid())
+  email             String?   @unique
+  phone             String?   @unique
+  emailVerified     Boolean   @default(false)
+  phoneVerified     Boolean   @default(false)
+  passwordHash      String?
+  
+  // Profile
+  firstName         String?
+  lastName          String?
+  businessName      String?
+  avatar            String?
+  bio               String?
+  preferredLanguage String    @default("en") // en, am
+  
+  // Role & Status
+  role              UserRole  @default(BUYER)
+  accountType       AccountType @default(FREE)
+  accountStatus     AccountStatus @default(ACTIVE)
+  
+  // Verification
+  isVerified        Boolean   @default(false)
+  verifiedAt        DateTime?
+  kycStatus         KYCStatus @default(PENDING)
+  
+  // OAuth
+  googleId          String?   @unique
+  
+  // Timestamps
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  lastLoginAt       DateTime?
+  
+  // Relations
+  products          Product[]
+  buyRequests       BuyRequest[]
+  sellMatches       Match[]      @relation("SellerMatches")
+  buyMatches        Match[]      @relation("BuyerMatches")
+  deals             Deal[]
+  sentMessages      Message[]    @relation("SentMessages")
+  documents         Document[]
+  calls             Call[]       @relation("CallParticipant")
+  initiatedCalls    Call[]       @relation("CallInitiator")
+  subscriptions     Subscription[]
+  notifications     Notification[]
+  sentReactions     EmojiReaction[] @relation("ReactionSender")
+  
+  @@index([email])
+  @@index([phone])
+  @@index([role])
+  @@index([accountStatus])
+}
+
+enum UserRole {
+  BUYER
+  SELLER
+  BOTH
+}
+
+enum AccountType {
+  FREE
+  BASIC
+  PREMIUM
+  ENTERPRISE
+}
+
+enum AccountStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+  PENDING_VERIFICATION
+}
+
+enum KYCStatus {
+  PENDING
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+// ============ OTP ============
+model OTP {
+  id          String    @id @default(uuid())
+  phone       String
+  code        String
+  purpose     String    // SIGNUP, LOGIN, VERIFICATION
+  expiresAt   DateTime
+  verified    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  
+  @@index([phone, purpose])
+}
+
+// ============ PRODUCTS (Sell Listings) ============
+model Product {
+  id              String    @id @default(uuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Product Info
+  title           String
+  titleAm         String?   // Amharic translation
+  description     String
+  descriptionAm   String?
+  category        ProductCategory
+  subcategory     String?
+  
+  // Pricing
+  price           Float
+  currency        String    @default("ETB")
+  priceNegotiable Boolean   @default(true)
+  
+  // Inventory
+  quantity        Int       @default(1)
+  unit            String?   // kg, pieces, liters, etc.
+  minOrderQty     Int?
+  
+  // Media
+  images          String[]  // Array of image URLs
+  videos          String[]  // Array of video URLs
+  
+  // Location
+  location        String?
+  region          String?
+  city            String?
+  coordinates     String?   // "lat,lng"
+  
+  // Status
+  status          ProductStatus @default(ACTIVE)
+  featured        Boolean   @default(false)
+  verified        Boolean   @default(false)
+  
+  // AI Enhancement
+  aiEnhanced      Boolean   @default(false)
+  aiSummary       String?
+  aiTags          String[]
+  
+  // Metadata
+  views           Int       @default(0)
+  clicks          Int       @default(0)
+  expiresAt       DateTime?
+  
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // Relations
+  matches         Match[]
+  
+  @@index([userId])
+  @@index([category])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum ProductCategory {
+  AGRICULTURAL_PRODUCTS
+  LIVESTOCK
+  MACHINERY_EQUIPMENT
+  CONSTRUCTION_MATERIALS
+  TEXTILES_CLOTHING
+  FOOD_BEVERAGES
+  TECHNOLOGY_ELECTRONICS
+  AUTOMOTIVE
+  REAL_ESTATE
+  SERVICES
+  OTHER
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  SOLD
+  EXPIRED
+  SUSPENDED
+  DELETED
+}
+
+// ============ BUY REQUESTS ============
+model BuyRequest {
+  id              String    @id @default(uuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Request Info
+  title           String
+  titleAm         String?
+  description     String
+  descriptionAm   String?
+  category        ProductCategory
+  subcategory     String?
+  
+  // Budget
+  minBudget       Float?
+  maxBudget       Float?
+  currency        String    @default("ETB")
+  
+  // Quantity
+  quantity        Int?
+  unit            String?
+  
+  // Location
+  location        String?
+  region          String?
+  city            String?
+  
+  // Status
+  status          BuyRequestStatus @default(ACTIVE)
+  urgency         UrgencyLevel @default(NORMAL)
+  
+  // AI Enhancement
+  aiEnhanced      Boolean   @default(false)
+  aiSummary       String?
+  aiTags          String[]
+  
+  // Metadata
+  views           Int       @default(0)
+  expiresAt       DateTime?
+  
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // Relations
+  matches         Match[]
+  
+  @@index([userId])
+  @@index([category])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum BuyRequestStatus {
+  DRAFT
+  ACTIVE
+  FULFILLED
+  EXPIRED
+  CANCELLED
+}
+
+enum UrgencyLevel {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+// ============ MATCHES (AI-Generated) ============
+model Match {
+  id              String    @id @default(uuid())
+  
+  // Parties
+  productId       String
+  product         Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  buyRequestId    String
+  buyRequest      BuyRequest @relation(fields: [buyRequestId], references: [id], onDelete: Cascade)
+  sellerId        String
+  seller          User      @relation("SellerMatches", fields: [sellerId], references: [id], onDelete: Cascade)
+  buyerId         String
+  buyer           User      @relation("BuyerMatches", fields: [buyerId], references: [id], onDelete: Cascade)
+  
+  // Match Quality
+  aiScore         Float     // 0-100
+  matchReason     String?   // AI explanation
+  matchReasonAm   String?
+  
+  // Status
+  status          MatchStatus @default(PENDING)
+  sellerViewed    Boolean   @default(false)
+  buyerViewed     Boolean   @default(false)
+  sellerViewedAt  DateTime?
+  buyerViewedAt   DateTime?
+  
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  expiresAt       DateTime?
+  
+  // Relations
+  deal            Deal?
+  
+  @@index([productId])
+  @@index([buyRequestId])
+  @@index([sellerId])
+  @@index([buyerId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum MatchStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  EXPIRED
+  CONVERTED_TO_DEAL
+}
+
+// ============ DEALS (Active Negotiations) ============
+model Deal {
+  id              String    @id @default(uuid())
+  matchId         String    @unique
+  match           Match     @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  
+  // Parties
+  buyerId         String
+  buyer           User      @relation(fields: [buyerId], references: [id], onDelete: Cascade)
+  
+  // Deal Info
+  dealName        String
+  
+  // Pricing
+  agreedPrice     Float?
+  currency        String    @default("ETB")
+  quantity        Float?
+  unit            String?
+  
+  // Status
+  status          DealStatus @default(NEGOTIATING)
+  stage           DealStage @default(INITIAL_CONTACT)
+  
+  // Payment
+  paymentStatus   PaymentStatus @default(PENDING)
+  paymentMethod   String?
+  
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  closedAt        DateTime?
+  
+  // Relations
+  messages        Message[]
+  documents       Document[]
+  calls           Call[]
+  
+  @@index([buyerId])
+  @@index([status])
+  @@index([stage])
+  @@index([createdAt])
+}
+
+enum DealStatus {
+  NEGOTIATING
+  AGREEMENT_REACHED
+  PAYMENT_PROCESSING
+  COMPLETED
+  CANCELLED
+  DISPUTED
+}
+
+enum DealStage {
+  INITIAL_CONTACT
+  PRICE_NEGOTIATION
+  TERMS_DISCUSSION
+  CONTRACT_REVIEW
+  PAYMENT_PENDING
+  DELIVERY_ARRANGED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+// ============ MESSAGES ============
+model Message {
+  id              String    @id @default(uuid())
+  dealId          String
+  deal            Deal      @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  senderId        String
+  sender          User      @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  
+  // Content
+  content         String?
+  contentType     MessageType @default(TEXT)
+  
+  // Media
+  mediaUrl        String?
+  mediaType       String?   // image/jpeg, video/mp4, application/pdf
+  mediaSize       Int?
+  mediaThumbnail  String?
+  
+  // Translation
+  originalLang    String?   // en, am
+  translatedText  String?
+  
+  // Status
+  isRead          Boolean   @default(false)
+  isEdited        Boolean   @default(false)
+  isDeleted       Boolean   @default(false)
+  
+  // Metadata
+  replyToId       String?
+  systemMessage   Boolean   @default(false)
+  
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  readAt          DateTime?
+  
+  // Relations
+  reactions       EmojiReaction[]
+  
+  @@index([dealId])
+  @@index([senderId])
+  @@index([createdAt])
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  VIDEO
+  AUDIO
+  DOCUMENT
+  LOCATION
+  SYSTEM
+}
+
+// ============ EMOJI REACTIONS ============
+model EmojiReaction {
+  id          String    @id @default(uuid())
+  messageId   String
+  message     Message   @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User      @relation("ReactionSender", fields: [userId], references: [id], onDelete: Cascade)
+  emoji       String    // 👍, ❤️, 😂, etc.
+  createdAt   DateTime  @default(now())
+  
+  @@unique([messageId, userId, emoji])
+  @@index([messageId])
+}
+
+// ============ DOCUMENTS ============
+model Document {
+  id              String    @id @default(uuid())
+  dealId          String
+  deal            Deal      @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  uploaderId      String
+  uploader        User      @relation(fields: [uploaderId], references: [id], onDelete: Cascade)
+  
+  // File Info
+  filename        String
+  originalName    String
+  fileUrl         String
+  fileType        String    // application/pdf, image/jpeg
+  fileSize        Int       // bytes
+  
+  // Metadata
+  documentType    DocumentType
+  description     String?
+  
+  // Status
+  status          DocumentStatus @default(PENDING)
+  
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([dealId])
+  @@index([uploaderId])
+}
+
+enum DocumentType {
+  CONTRACT
+  INVOICE
+  RECEIPT
+  ID_DOCUMENT
+  LICENSE
+  CERTIFICATE
+  OTHER
+}
+
+enum DocumentStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+// ============ CALLS (Video/Voice) ============
+model Call {
+  id              String    @id @default(uuid())
+  dealId          String
+  deal            Deal      @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  initiatorId     String
+  initiator       User      @relation("CallInitiator", fields: [initiatorId], references: [id], onDelete: Cascade)
+  participantId   String
+  participant     User      @relation("CallParticipant", fields: [participantId], references: [id], onDelete: Cascade)
+  
+  // Call Info
+  callType        CallType  @default(VIDEO)
+  status          CallStatus @default(INITIATED)
+  
+  // Session
+  roomId          String?   // Daily.co/LiveKit room ID
+  startedAt       DateTime?
+  endedAt         DateTime?
+  duration        Int?      // seconds
+  
+  // Quality
+  quality         String?   // good, fair, poor
+  
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([dealId])
+  @@index([initiatorId])
+  @@index([participantId])
+}
+
+enum CallType {
+  VIDEO
+  AUDIO
+}
+
+enum CallStatus {
+  INITIATED
+  RINGING
+  ONGOING
+  COMPLETED
+  MISSED
+  REJECTED
+  FAILED
+}
+
+// ============ SUBSCRIPTIONS ============
+model Subscription {
+  id              String    @id @default(uuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Plan
+  plan            AccountType
+  billingCycle    BillingCycle
+  
+  // Pricing
+  amount          Float
+  currency        String    @default("ETB")
+  
+  // Status
+  status          SubscriptionStatus @default(ACTIVE)
+  
+  // Payment Method
+  paymentMethod   PaymentMethod
+  transactionId   String?
+  
+  // Dates
+  startDate       DateTime
+  endDate         DateTime
+  renewalDate     DateTime?
+  cancelledAt     DateTime?
+  
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([userId])
+  @@index([status])
+}
+
+enum BillingCycle {
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+  EXPIRED
+  FAILED
+}
+
+enum PaymentMethod {
+  CARRIER_BILLING
+  MOBILE_MONEY
+  BANK_TRANSFER
+  CARD
+}
+
+// ============ NOTIFICATIONS ============
+model Notification {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Content
+  type        NotificationType
+  title       String
+  titleAm     String?
+  message     String
+  messageAm   String?
+  
+  // Metadata
+  actionUrl   String?
+  metadata    Json?     // Additional data
+  
+  // Status
+  isRead      Boolean   @default(false)
+  readAt      DateTime?
+  
+  // Timestamps
+  createdAt   DateTime  @default(now())
+  
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+enum NotificationType {
+  NEW_MATCH
+  MESSAGE_RECEIVED
+  DEAL_UPDATE
+  CALL_INCOMING
+  CALL_MISSED
+  DOCUMENT_UPLOADED
+  PAYMENT_RECEIVED
+  SUBSCRIPTION_EXPIRING
+  SYSTEM_ANNOUNCEMENT
+}

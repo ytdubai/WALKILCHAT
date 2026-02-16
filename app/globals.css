@@ -1,26 +1,180 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Lora:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* WakilChat™ - Dark Luxury Theme */
+
+@theme {
+  /* Colors */
+  --color-background: #0a0a0a;
+  --color-foreground: #f5f5f5;
+  --color-card: #141414;
+  --color-card-foreground: #f5f5f5;
+  --color-primary: #d4a853;
+  --color-primary-foreground: #0a0a0a;
+  --color-primary-hover: #e5b964;
+  --color-secondary: #1a1a1a;
+  --color-secondary-foreground: #f5f5f5;
+  --color-muted: #1a1a1a;
+  --color-muted-foreground: #999999;
+  --color-accent: #2a2a2a;
+  --color-accent-foreground: #f5f5f5;
+  --color-border: #2a2a2a;
+  --color-input: #2a2a2a;
+  --color-ring: #d4a853;
+  --color-destructive: #dc2626;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  
+  /* Font families */
+  --font-family-playfair: 'Playfair Display', serif;
+  --font-family-lora: 'Lora', serif;
+  --font-family-sans: 'Inter', system-ui, sans-serif;
+  
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--color-border);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-family-sans);
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-playfair);
+}
+
+p {
+  font-family: var(--font-family-lora);
+}
+
+/* Utility classes */
+.text-gradient {
+  background: linear-gradient(to right, #d4a853, #e5b964, #d4a853);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.luxury-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(212, 168, 83, 0.15);
+  transition: all 0.3s;
+}
+
+.luxury-card:hover {
+  box-shadow: 0 8px 30px rgba(212, 168, 83, 0.2);
+}
+
+.luxury-button {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-lg);
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(212, 168, 83, 0.15);
+}
+
+.luxury-button:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: 0 8px 30px rgba(212, 168, 83, 0.2);
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    rgba(26, 26, 26, 0) 0%,
+    rgba(212, 168, 83, 0.1) 50%,
+    rgba(26, 26, 26, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: var(--color-secondary);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+/* Amharic font support */
+@font-face {
+  font-family: 'Noto Sans Ethiopic';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/notosansethiopic/v41/7cHPv50vjIepfJVOZZgcpQ.woff2') format('woff2');
+}
+
+.font-amharic {
+  font-family: 'Noto Sans Ethiopic', 'Lora', serif;
+}
+
+.font-playfair {
+  font-family: var(--font-family-playfair);
+}
+
+.font-lora {
+  font-family: var(--font-family-lora);
 }
